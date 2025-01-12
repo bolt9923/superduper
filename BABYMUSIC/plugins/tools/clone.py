@@ -3,6 +3,7 @@ import logging
 import asyncio
 import importlib
 import time
+from config import BANNED_USERS
 from datetime import datetime, timedelta
 from sys import argv
 from pyrogram import idle
@@ -16,10 +17,51 @@ from BABYMUSIC.utils.database import get_assistant
 from config import API_ID, API_HASH
 from BABYMUSIC import app
 from BABYMUSIC.misc import SUDOERS
-from BABYMUSIC.utils.database import get_assistant, clonebotdb, get_user_data
-from config import LOGGER_ID
+from BABYMUSIC.utils.database import get_assistant, clonebotdb, get_user_data, update_user_points
+from config import LOGGER_ID, OWNER_ID
 
 CLONES = set()
+
+@app.on_message(filters.command("addpoint") & filters.user(OWNER_ID))
+async def add_points(client, message):
+    # Check if the command is in the correct format
+    if len(message.command) != 3:
+        await message.reply_text("Usage: /addpoint <amount> <user_id>")
+        return
+
+    try:
+        # Parse the points and user_id from the message
+        points_to_add = int(message.command[1])  # Points to add
+        user_id = int(message.command[2])  # The user_id to add points to
+
+        # Fetch user data from the database
+        user_data = await get_user_data(user_id)
+        if not user_data:
+            await save_user(user_id)  # Save user if not exists
+            user_data = await get_user_data(user_id)
+
+        # Update the user's points in the database
+        current_points = user_data.get("points", 0)
+        new_points = current_points + points_to_add
+
+        # Update points in the database (this assumes you have a function to update user points)
+        await update_user_points(user_id, new_points)
+
+        # Notify the owner that points were added successfully
+        await message.reply_text(f"Successfully added {points_to_add} points to user {user_id}. Total points now: {new_points}")
+
+        # Optionally notify the user that their points were updated
+        try:
+            await client.send_message(
+                user_id,
+                f"Your points have been updated by the owner! You now have {new_points} points.",
+            )
+        except Exception as e:
+            print(f"Error notifying user: {e}")
+
+    except ValueError:
+        await message.reply_text("Invalid format. Please ensure that both the points and user ID are numbers.")
+
 
 @app.on_message(filters.private & filters.text & filters.regex("^Mybots 🤖$"))
 async def my_bots_handler(client, message):
