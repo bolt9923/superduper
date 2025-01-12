@@ -327,47 +327,53 @@ async def list_cloned_bots(client, message):
         logging.exception(e)
         await message.reply_text("An error occurred while listing cloned bots.")
 
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+
 
 @app.on_message(filters.command("delallclone") & SUDOERS)
 async def delete_all_clones(client, message):
     if message.from_user.id not in SUDOERS:
         await message.reply_text("❌ You are not authorized to use this command.")
         return
-    confirmation_msg = await message.reply_text(
-        "⚠️ **Are you sure you want to delete all cloned bots? This action cannot be undone.**",
-        reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton("✅ YES", callback_data="confirm_delete"),
-                    InlineKeyboardButton("❌ NO", callback_data="cancel_delete"),
-                ]
-            ]
-        ),
-    )
-
+    
     try:
-        @app.on_callback_query(filters.user(message.from_user.id))
-        async def handle_callback_query(client, callback_query):
-            if callback_query.message.id != confirmation_msg.id:
-                return
+        # Fetch all cloned bots' tokens from the database
+        cloned_bots = clonebotdb.find({})
 
-            if callback_query.data == "confirm_delete":
-                deleted_count = clonebotdb.delete_many({}).deleted_count
-                CLONES.clear()
-                await callback_query.message.edit_text(
-                    f"✅ Successfully deleted all {deleted_count} cloned bots from the database."
+        deleted_count = 0
+        for bot in cloned_bots:
+            bot_token = bot["token"]
+            try:
+                # Stop the cloned bot using its token
+                ai = Client(
+                    bot_token,
+                    API_ID,
+                    API_HASH,
+                    bot_token=bot_token,
+                    plugins=dict(root="BABYMUSIC.cplugin"),
                 )
-                await client.send_message(
-                    LOGGER_ID,
-                    f"**#Clones_Deleted**\n\nAll {deleted_count} cloned bots have been deleted by {message.from_user.mention}.",
-                )
-            elif callback_query.data == "cancel_delete":
-                await callback_query.message.edit_text("❌ Action canceled. No bots were deleted.")
-            await callback_query.answer()
+                await ai.start()
+                await ai.stop()  # Stop the bot
+                deleted_count += 1  # Increment deleted count after stopping the bot
+            except Exception as e:
+                logging.error(f"Error stopping bot with token {bot_token}: {e}")
 
-        await asyncio.sleep(30)
-        await confirmation_msg.edit_text("❌ Timeout. No bots were deleted.", reply_markup=None)
+        # Delete all cloned bots from the database
+        deleted_count += clonebotdb.delete_many({}).deleted_count
+        
+        # Clear the cached cloned bots list (if applicable)
+        CLONES.clear()  # Assuming CLONES is a list or cache
+
+        # Send confirmation message to the user
+        await message.reply_text(
+            f"✅ Successfully deleted and stopped all {deleted_count} cloned bots."
+        )
+
+        # Log the deletion and stopping of bots to the logger
+        await client.send_message(
+            LOGGER_ID,
+            f"**#Clones_Deleted_And_Stopped**\n\nAll {deleted_count} cloned bots have been deleted and stopped by {message.from_user.mention}.",
+        )
+
     except Exception as e:
-        logging.exception(e)
-        await message.reply_text("❌ An error occurred while processing your request.")
+        logging.exception("Error deleting and stopping clones.")
+        await message.reply_text("❌ An error occurred while deleting and stopping cloned bots.")
