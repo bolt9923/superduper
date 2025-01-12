@@ -22,17 +22,6 @@ user_command_count = {}
 SPAM_THRESHOLD = 2
 SPAM_WINDOW_SECONDS = 5
 
-CLONES = """Create your own music bot
-Complete 𝐘ᴛ-𝐌ᴜsɪᴄ clone futures
-best quality smooth streaming on vc
-:- Gᴏ to @BotFather make /newbot 
-forward here complete message"""
-
-@app.on_message(filters.private & filters.text & ~BANNED_USERS)
-async def clone_handler(client, message):
-    if message.text.strip() == "Cʟᴏɴᴇ 📁":
-        await message.reply_text(CLONES)
-
 @app.on_message(filters.command(["help"]) & filters.private & ~BANNED_USERS)
 @app.on_callback_query(filters.regex("settings_back_helper") & ~BANNED_USERS)
 async def helper_private(
