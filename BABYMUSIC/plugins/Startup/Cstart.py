@@ -194,11 +194,8 @@ async def support_handler(client, message):
         )
         await message.reply_text(SUPPORT, reply_markup=replyinlinemarkup)
 
-        
-
 @app.on_message(filters.private & filters.text & ~BANNED_USERS)
 async def refer_handler(client, message):
-    # Check if the message text matches "Rᴇғᴇʀ 📢"
     if message.text.strip() == "Rᴇғᴇʀ 📢":
         user_id = message.from_user.id
         mention = message.from_user.mention
