@@ -111,7 +111,7 @@ async def clone_txt(client, message):
 
     # Check if user_data is a dictionary and contains 'points'
     if not user_data or 'points' not in user_data:
-        await message.reply_text("❌ User data not found or invalid.")
+        await message.reply_text("User data not found or invalid.")
         return
 
     # Print the user_data to check the structure
@@ -125,7 +125,7 @@ async def clone_txt(client, message):
         points = points.get("points", 0)
 
     if points < 400:
-        await message.reply_text("❌ You need 400 points to clone a bot.")
+        await message.reply_text("You don't have enough balance 💵")
         return
 
     # Deduct 400 points from the user
@@ -135,7 +135,7 @@ async def clone_txt(client, message):
     # Process the cloning command
     if len(message.command) > 1:
         bot_token = message.text.split("/clone", 1)[1].strip()
-        mi = await message.reply_text("Please wait while I process the bot token.")
+        mi = await message.reply_text("Processing..")
         try:
             ai = Client(
                 bot_token,
@@ -160,7 +160,7 @@ async def clone_txt(client, message):
 
         # Proceed with the cloning process
         await mi.edit_text(
-            "Cloning process started. Please wait for the bot to be started."
+            "Processing..."
         )
         try:
             # Save the cloned bot details with an expiration date (30 days from now)
@@ -186,13 +186,13 @@ async def clone_txt(client, message):
             await userbot.send_message(bot.username, "/start")
 
             await mi.edit_text(
-                f"Bot @{bot.username} has been successfully cloned and started ✅.\n\n**You will have access to this bot for 30 days.**"
+                f"Bot @{bot.username} has been successfully hosted and started ✅.\n\n**For 30 days.**\nVisit new update @Baby09_World"
             )
 
         except Exception as e:
             logging.exception("Error while cloning bot.")
             await mi.edit_text(
-                f"⚠️ <b>ᴇʀʀᴏʀ:</b>\n\n<code>{e}</code>\n\n**ᴋɪɴᴅʟʏ ғᴏᴡᴀʀᴅ ᴛʜɪs ᴍᴇssᴀɢᴇ ᴛᴏ @vk_zone ᴛᴏ ɢᴇᴛ ᴀssɪsᴛᴀɴᴄᴇ**"
+                f"⚠️ <b>Error:</b>\n\n<code>{e}</code>\n\n**Now forward this message to support chat**"
             )
 
     else:
