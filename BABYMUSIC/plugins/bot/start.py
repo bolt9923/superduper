@@ -49,10 +49,10 @@ SUPPORT = """👉🏻 Send me any message with a request to support.
 💡 Visit support chat"""
 
 CLONES = """Create your own music bot
-Complete 𝐘ᴛ-ᴜsɪᴄ clone futures
+Complete 𝐘ᴛ-𝐌ᴜsɪᴄ clone futures
 best quality smooth streaming on vc
 :- Gᴏ to @BotFather make /newbot 
-copy bot token then user
+copy bot token then try
 /clone &lt;bot token&gt;
 
 <b><u>NOTE 👇</u></b>
@@ -60,9 +60,12 @@ copy bot token then user
 special vip tag
 For 30 days
 
+<u><b>EARN POINTS</b> 🪙</u>
+referral link share
+
 <u><b>BUY POINTS</b> 🪙</u>
 Do you want directly purchase points
-@UTTAM470"""
+contact:- @UTTAM470"""
 
 CLONESS = [
     ["Mybots 🤖"],
