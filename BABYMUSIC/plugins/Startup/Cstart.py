@@ -56,18 +56,58 @@ CHOICE = [
     ["Language 🌐", "Support 📞"],
 ]
 
-@app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
-@LanguageStart
-async def start_pm(client, message: Message, _):
-    await add_served_user(message.from_user.id)
+@app.on_message(filters.private & filters.text & ~BANNED_USERS)
+async def main_handler(client, message: Message, _):
     user_id = message.from_user.id
     mention = message.from_user.mention
+    text = message.text.strip()
 
-    # Handle if the message contains extra text
-    if len(message.text.split()) > 1:
-        name = message.text.split(None, 1)[1].lower()
+    # Handle '/start' command
+    if text.startswith("/start"):
+        await add_served_user(user_id)
+        
+        # Check if the user already exists in the database
+        user_data = await get_user_data(user_id)
+        if not user_data:
+            await save_user(user_id)
+            user_data = await get_user_data(user_id)
 
-        # Handle the 'help' command
+        # Fetch user data
+        points = user_data.get("points", 0)
+        referrals = user_data.get("referrals", 0)
+
+        # Generate referral link
+        referral_link = f"https://t.me/{client.me.username}?start={user_id}"
+
+        # Send user dashboard
+        response = f"""**Hey {mention} 👋**
+**This is 𝐘ᴛ-𝐌ᴜsɪᴄ**
+**The best music|video streaming on VC**
+
+**Your points:** {points}
+**Referrals:** {referrals}
+**User:** [regular]
+
+**Your Referral Link:** [Click Here]({referral_link})"""
+
+        await message.reply_text(
+            text=response,
+            reply_markup=ReplyKeyboardMarkup(CHOICE, resize_keyboard=True),
+            disable_web_page_preview=True,
+        )
+
+        # Log the start event if enabled
+        if await is_on_off(2):
+            await app.send_message(
+                chat_id=config.LOGGER_ID,
+                text=f"✦ {mention} just started the bot.\n\n✦ <b>User ID ➠</b> <code>{user_id}</code>\n✦ <b>Username ➠</b> @{message.from_user.username}",
+            )
+
+    # Handle extra message commands
+    elif len(text.split()) > 1:
+        name = text.split(None, 1)[1].lower()
+
+        # Handle 'help' command
         if name.startswith("help"):
             keyboard = help_pannel(_)
             return await message.send_message(
@@ -75,7 +115,7 @@ async def start_pm(client, message: Message, _):
                 reply_markup=keyboard,
             )
 
-        # Handle the 'sud' command
+        # Handle 'sud' command
         elif name.startswith("sud"):
             await sudoers_list(client=client, message=message, _=_)
             if await is_on_off(2):
@@ -85,7 +125,7 @@ async def start_pm(client, message: Message, _):
                 )
             return
 
-        # Handle the 'inf' command
+        # Handle 'inf' command
         elif name.startswith("inf"):
             m = await message.reply_text("🔎")
             query = name.replace("info_", "", 1)
@@ -139,51 +179,11 @@ async def start_pm(client, message: Message, _):
                     text=f"🎉 New user {mention} joined using your referral link!",
                 )
 
-    # Check if the user already exists in the database
-    user_data = await get_user_data(user_id)
-    if not user_data:
-        await save_user(user_id)
-        user_data = await get_user_data(user_id)
-
-    # Fetch user data
-    points = user_data.get("points", 0)
-    referrals = user_data.get("referrals", 0)
-
-    # Generate referral link
-    referral_link = f"https://t.me/{client.me.username}?start={user_id}"
-
-    # Send user dashboard
-    response = f"""**Hey {mention} 👋**
-**This is 𝐘ᴛ-𝐌ᴜsɪᴄ**
-**The best music|video streaming on VC**
-
-**Your points:** {points}
-**Referrals:** {referrals}
-**User:** [regular]
-
-**Your Referral Link:** [Click Here]({referral_link})"""
-
-    await message.reply_text(
-        text=response,
-        reply_markup=ReplyKeyboardMarkup(CHOICE, resize_keyboard=True),
-        disable_web_page_preview=True,
-    )
-
-    # Log the start event if enabled
-    if await is_on_off(2):
-        await app.send_message(
-            chat_id=config.LOGGER_ID,
-            text=f"✦ {mention} just started the bot.\n\n✦ <b>User ID ➠</b> <code>{user_id}</code>\n✦ <b>Username ➠</b> @{message.from_user.username}",
-        )
-
-@app.on_message(filters.private & filters.text & ~BANNED_USERS)
-async def clone_handler(client, message):
-    if message.text.strip() == "Cʟᴏɴᴇ 📁":
+    # Handle other predefined commands
+    elif text == "Cʟᴏɴᴇ 📁":
         await message.reply_text(CLONES)
 
-@app.on_message(filters.private & filters.text & ~BANNED_USERS)
-async def support_handler(client, message):
-    if message.text.strip() == "Support 📞":
+    elif text == "Support 📞":
         replyinlinemarkup = InlineKeyboardMarkup(
             [
                 [
@@ -194,13 +194,7 @@ async def support_handler(client, message):
         )
         await message.reply_text(SUPPORT, reply_markup=replyinlinemarkup)
 
-@app.on_message(filters.private & filters.text & ~BANNED_USERS)
-async def refer_handler(client, message):
-    if message.text.strip() == "Rᴇғᴇʀ 📢":
-        user_id = message.from_user.id
-        mention = message.from_user.mention
-
-        # Fetch user data from the database
+    elif text == "Rᴇғᴇʀ 📢":
         user_data = await get_user_data(user_id)
         if not user_data:
             await save_user(user_id)
