@@ -50,12 +50,42 @@ best quality smooth streaming on vc
 :- Gᴏ to @BotFather make /newbot 
 forward here complete message"""
 
+CLONESS = [
+    ["Mybots 🤖"],
+    ["Back to home 🏠"],
+]
+
 
 CHOICE = [
     ["Profile 🪪", "Settings ⚙️"],
     ["Clone 📁", "Refer 📢"],
     ["Language 🌐", "Support 📞"],
 ]
+
+@app.on_message(filters.private & filters.text & ~BANNED_USERS & filters.regex("^Clone 📁$"))
+async def refer_handler(client, message):
+    await message.reply_text(
+        text=CLONE,
+        reply_markup=ReplyKeyboardMarkup(
+            CLONESS,
+            resize_keyboard=True
+        )
+    )
+
+@app.on_message(filters.private & filters.text & ~BANNED_USERS & filters.regex("^Support 📞$"))
+async def refer_handler(client, message):
+    await message.reply_text(
+        text=SUPPORT,
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton("Support 📞", url="https://t.me/+OL6jdTL7JAJjYzVl"),
+                    InlineKeyboardButton("Update 🔔", url="https://t.me/BABY09_WORLD")
+                ]
+            ]
+        )
+    )
+
 
 @app.on_message(filters.private & filters.text & ~BANNED_USERS & filters.regex("^Refer 📢$"))
 async def refer_handler(client, message):
@@ -219,7 +249,16 @@ async def start_pm(client, message: Message, _):
             text=f"✦ {mention} just started the bot.\n\n✦ <b>User ID ➠</b> <code>{user_id}</code>\n✦ <b>Username ➠</b> @{message.from_user.username}",
         )
 
-
+@app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
+@LanguageStart
+async def start_gp(client, message: Message, _):
+    out = start_panel(_)
+    uptime = int(time.time() - _boot_)
+    await message.reply_text(
+        text=_["start_1"].format(app.mention, get_readable_time(uptime)),
+        reply_markup=InlineKeyboardMarkup(out),
+    )
+    return await add_served_chat(message.chat.id)
 
 @app.on_message(filters.new_chat_members, group=-1)
 async def welcome(client, message: Message):
