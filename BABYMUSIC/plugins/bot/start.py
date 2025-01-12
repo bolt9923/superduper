@@ -67,7 +67,7 @@ CHOICE = [
 @app.on_message(filters.private & filters.text & ~BANNED_USERS & filters.regex("^Clone 📁$"))
 async def refer_handler(client, message):
     await message.reply_text(
-        text=CLONE,
+        text=CLONES,
         reply_markup=ReplyKeyboardMarkup(
             CLONESS,
             resize_keyboard=True
@@ -86,8 +86,8 @@ async def profile_handler(client, message):
     # Get current time in Delhi time zone
     delhi_tz = pytz.timezone("Asia/Kolkata")
     delhi_time = datetime.now(delhi_tz)
-    current_time = delhi_time.strftime("%H:%M:%S")
-    current_date = delhi_time.strftime("%Y-%m-%d")
+    current_time = delhi_time.strftime("%I:%M:%S %p")  # 12-hour format with AM/PM
+    current_date = delhi_time.strftime("%d-%m-%Y")  # DD-MM-YYYY format
 
     profile_text = f"""👤 **Name:** {mention}
 🆔 **User ID:** {user_id}
