@@ -13,6 +13,12 @@ async def save_user(user_id: int):
         "referrals": 0
     })
 
+# Update user's points
+async def update_user_points(user_id: int, new_points: int):
+    await users_collection.update_one(
+        {"user_id": user_id},
+        {"$set": {"points": new_points}}
+    )
 # Get user data
 async def get_user_data(user_id: int) -> Union[Dict, None]:
     return await users_collection.find_one({"user_id": user_id})
