@@ -50,11 +50,6 @@ best quality smooth streaming on vc
 :- Gᴏ to @BotFather make /newbot 
 forward here complete message"""
 
-CHOICE = [
-    ["Profile 🪪", "Settings ⚙️"],
-    ["Clone 📁", "Refer 📢"],
-    ["Language 🌐", "Support 📞"],
-]
 
 CHOICE = [
     ["Profile 🪪", "Settings ⚙️"],
