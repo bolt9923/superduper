@@ -1,5 +1,7 @@
 import time
 import random
+import pytz
+from datetime import datetime
 from pyrogram import filters
 from pyrogram.enums import ChatType
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, Message
@@ -71,6 +73,34 @@ async def refer_handler(client, message):
             resize_keyboard=True
         )
     )
+
+
+@app.on_message(filters.private & filters.text & ~BANNED_USERS & filters.regex("^Profile 🪪$"))
+async def profile_handler(client, message):
+    user_id = message.from_user.id
+    mention = message.from_user.mention
+    user_data = await get_user_data(user_id)
+    points = user_data.get("points", 0) if user_data else 0
+    referrals = user_data.get("referrals", 0) if user_data else 0
+
+    # Get current time in Delhi time zone
+    delhi_tz = pytz.timezone("Asia/Kolkata")
+    delhi_time = datetime.now(delhi_tz)
+    current_time = delhi_time.strftime("%H:%M:%S")
+    current_date = delhi_time.strftime("%Y-%m-%d")
+
+    profile_text = f"""👤 **Name:** {mention}
+🆔 **User ID:** {user_id}
+
+💵 **Balance:** {points} points
+💰 **Total Referrals:** {referrals}
+
+⌚ **Updated On:** {current_time}
+📆 **Date:** {current_date}
+"""
+    await message.reply_text(profile_text)
+
+
 
 @app.on_message(filters.private & filters.text & ~BANNED_USERS & filters.regex("^Support 📞$"))
 async def refer_handler(client, message):
