@@ -9,10 +9,10 @@ from pyrogram import filters
 load_dotenv()
 # ------------------------------------
 # -----------------------------------------------------
-API_ID = int(getenv("API_ID", "28010019"))
-API_HASH = getenv("API_HASH", "d883bdb2619d7b940dcd81cdb8e0bf92")
+API_ID = int(getenv("API_ID", "16457832"))
+API_HASH = getenv("API_HASH", "3030874d0befdb5d05597deacc3e83ab")
 # ------------------------------------------------------
-BOT_TOKEN = getenv("BOT_TOKEN", "7824572624:AAG61XO2BkKFB-jY5DG3va8l7CbNWq4aoYs")
+BOT_TOKEN = getenv("BOT_TOKEN", "7568502483:AAH_8qjg2kqfXuiZG6ZYd6cxDVgenpUuqbA")
 # -------------------------------------------------------
 OWNER_USERNAME = getenv("OWNER_USERNAME","untold_coder")
 # --------------------------------------------------------
@@ -36,10 +36,10 @@ DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 17000))
 # ----------------------------------------------------------------
 
 # ----------------------------------------------------------------
-LOGGER_ID = int(getenv("LOGGER_ID", -1002136457746))
+LOGGER_ID = int(getenv("LOGGER_ID", -1002043570167))
 # ----------------------------------------------------------------
 # ----------------------------------------------------------------
-OWNER_ID = int(getenv("OWNER_ID", 6391774843))
+OWNER_ID = int(getenv("OWNER_ID", 7400383704))
 # -----------------------------------------------------------------
 # -----------------------------------------------------------------
 # config.py
