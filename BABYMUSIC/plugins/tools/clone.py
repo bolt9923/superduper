@@ -186,7 +186,7 @@ async def clone_txt(client, message):
             await userbot.send_message(bot.username, "/start")
 
             await mi.edit_text(
-                f"Bot @{bot.username} has been successfully hosted and started ✅.\n\n**For 30 days.**\nVisit new update @Baby09_World"
+                f"Bot @{bot.username} has been successfully hosted and started ✅.\n\n**For 30 days.**\nRemove any time /delclone\nVisit new update @Baby09_World"
             )
 
         except Exception as e:
