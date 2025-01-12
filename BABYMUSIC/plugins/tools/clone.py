@@ -70,30 +70,36 @@ async def my_bots_handler(client, message):
 
     # Fetch all cloned bots of the user from the database
     cloned_bots = clonebotdb.find({"user_id": user_id})
-    
-    # Convert the cursor to a list manually using list()
-    cloned_bots_list = await cloned_bots.to_list(length=None)
 
-    if not cloned_bots_list:
-        await message.reply_text(f"**Hey {mention} 👋**\n\nYou haven't cloned any bots yet.")
-        return
-
-    # Display the cloned bots with clone date and expiry date
+    # Prepare response text
     response_text = f"**Your Cloned Bots**:\n\n"
-    for bot in cloned_bots_list:
-        bot_name = bot["name"]
-        bot_username = bot["username"]
-        clone_date = bot["clone_date"].strftime("%Y-%m-%d %H:%M:%S")
-        expiration_date = bot["expiration_date"].strftime("%Y-%m-%d %H:%M:%S")
-        
+    bot_found = False
+
+    # Iterate through the cursor using async for
+    async for bot in cloned_bots:
+        bot_found = True
+        bot_name = bot.get("name", "Unknown")
+        bot_username = bot.get("username", "Unknown")
+        clone_date = bot.get("clone_date", "Unknown")
+        expiration_date = bot.get("expiration_date", "Unknown")
+
+        # Format dates if they're valid datetime objects
+        if isinstance(clone_date, datetime):
+            clone_date = clone_date.strftime("%Y-%m-%d %H:%M:%S")
+        if isinstance(expiration_date, datetime):
+            expiration_date = expiration_date.strftime("%Y-%m-%d %H:%M:%S")
+
         response_text += f"""
 **Bot Name:** {bot_name}
 **Bot Username:** @{bot_username}
 **Clone Date:** {clone_date}
 **Expiry Date:** {expiration_date}
         """
-    
-    await message.reply_text(response_text)
+
+    if not bot_found:
+        await message.reply_text(f"**Hey {mention} 👋**\n\nYou haven't cloned any bots yet.")
+    else:
+        await message.reply_text(response_text)
 
 
 @app.on_message(filters.command("clone") & ~BANNED_USERS)
