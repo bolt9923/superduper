@@ -1,5 +1,6 @@
 import time
 import random
+from BABYMUSIC.core.bot import BABY
 from pyrogram import filters
 from pyrogram.enums import ChatType
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, Message
@@ -49,12 +50,12 @@ CHOICE = [
     ["Language 🌐", "Support 📞"],
 ]
 
-@app.on_message(filters.private & filters.text & ~BANNED_USERS)
+@BABY.on_message(filters.private & filters.text & ~BANNED_USERS)
 async def clone_handler(client, message):
     if message.text.strip() == "Cʟᴏɴᴇ 📁":
         await message.reply_text(CLONES)
 
-@app.on_message(filters.private & filters.text & ~BANNED_USERS)
+@BABY.on_message(filters.private & filters.text & ~BANNED_USERS)
 async def support_handler(client, message):
     if message.text.strip() == "Support 📞":
         replyinlinemarkup = InlineKeyboardMarkup(
@@ -69,7 +70,7 @@ async def support_handler(client, message):
 
         
 
-@app.on_message(filters.private & filters.text & ~BANNED_USERS)
+@BABY.on_message(filters.private & filters.text & ~BANNED_USERS)
 async def refer_handler(client, message):
     # Check if the message text matches "Rᴇғᴇʀ 📢"
     if message.text.strip() == "Rᴇғᴇʀ 📢":
