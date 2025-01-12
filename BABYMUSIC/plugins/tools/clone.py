@@ -107,6 +107,7 @@ async def my_bots_handler(client, message):
 async def clone_txt(client, message):
     user_id = message.from_user.id
     user_data = await get_user_data(user_id)
+    userbot = await get_assistant(message.chat.id)
 
     # Check if user_data is a dictionary and contains 'points'
     if not user_data or 'points' not in user_data:
