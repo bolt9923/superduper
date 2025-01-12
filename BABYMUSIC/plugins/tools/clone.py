@@ -54,7 +54,7 @@ async def add_points(client, message):
         try:
             await client.send_message(
                 user_id,
-                f"Your points have been updated by the owner! You now have {new_points} points.",
+                f"Your points have been updated by admin! You now have {new_points} points.",
             )
         except Exception as e:
             print(f"Error notifying user: {e}")
@@ -268,11 +268,11 @@ async def delete_cloned_bot(client, message):
             clonebotdb.delete_one({"token": bot_token})
             CLONES.remove(cloned_bot["bot_id"])
             await message.reply_text(
-                "**🤖 your cloned bot has been disconnected from my server ☠️\nClone by :- /clone**"
+                "**Your cloned bot has been disconnected from my server ☠️\nClone by :- /clone**"
             )
         else:
             await message.reply_text(
-                "**⚠️ The provided bot token is not in the cloned list.**"
+                "**The provided bot token is not in the cloned list.**"
             )
     except Exception as e:
         await message.reply_text("An error occurred while deleting the cloned bot.")
