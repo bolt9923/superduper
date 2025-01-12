@@ -79,13 +79,14 @@ CHOICE = [
 @app.on_message(filters.private & filters.text & ~BANNED_USERS & filters.regex("^Clone 📁$"))
 async def refer_handler(client, message):
     await message.reply_text(
-        text=CLONES,  # Ensure CLONES contains the valid text
+        text=CLONES,  # Ensure CLONES contains valid text
         reply_markup=ReplyKeyboardMarkup(
-            CLONESS,
-            parse_mode="html",  # Corrected to 'parse_mode'
+            CLONESS,  # This should be a list of button rows
             resize_keyboard=True
-        )
+        ),
+        parse_mode="html"  # Apply parse_mode here for text formatting
     )
+
 
 
 @app.on_message(filters.private & filters.text & ~BANNED_USERS & filters.regex("^Back to home 🏠$"))
