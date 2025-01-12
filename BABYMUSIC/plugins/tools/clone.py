@@ -2,6 +2,8 @@ import re
 import logging
 import asyncio
 import importlib
+import time
+from datetime import datetime, timedelta
 from sys import argv
 from pyrogram import idle
 from pyrogram import Client, filters
@@ -14,15 +16,57 @@ from BABYMUSIC.utils.database import get_assistant
 from config import API_ID, API_HASH
 from BABYMUSIC import app
 from BABYMUSIC.misc import SUDOERS
-from BABYMUSIC.utils.database import get_assistant, clonebotdb
+from BABYMUSIC.utils.database import get_assistant, clonebotdb, get_user_data
 from config import LOGGER_ID
 
 CLONES = set()
 
+@app.on_message(filters.private & filters.text & filters.regex("^Mybots 🤖$"))
+async def my_bots_handler(client, message):
+    user_id = message.from_user.id
+    mention = message.from_user.mention
 
-@app.on_message(filters.command("clone"))
+    # Fetch all cloned bots of the user from the database
+    cloned_bots = clonebotdb.find({"user_id": user_id})
+    cloned_bots_list = await cloned_bots.to_list(length=None)
+
+    if not cloned_bots_list:
+        await message.reply_text(f"**Hey {mention} 👋**\n\nYou haven't cloned any bots yet.")
+        return
+
+    # Display the cloned bots with clone date and expiry date
+    response_text = f"**Your Cloned Bots**:\n\n"
+    for bot in cloned_bots_list:
+        bot_name = bot["name"]
+        bot_username = bot["username"]
+        clone_date = bot["clone_date"].strftime("%Y-%m-%d %H:%M:%S")
+        expiration_date = bot["expiration_date"].strftime("%Y-%m-%d %H:%M:%S")
+        
+        response_text += f"""
+**Bot Name:** {bot_name}
+**Bot Username:** @{bot_username}
+**Clone Date:** {clone_date}
+**Expiry Date:** {expiration_date}
+        """
+    
+    await message.reply_text(response_text)
+
+@app.on_message(filters.command("clone") & ~BANNED_USERS)
 async def clone_txt(client, message):
-    userbot = await get_assistant(message.chat.id)
+    user_id = message.from_user.id
+    user_data = await get_user_data(user_id)
+
+    # Check if the user has enough points (400 points)
+    points = user_data.get("points", 0)
+    if points < 400:
+        await message.reply_text("❌ You need 400 points to clone a bot.")
+        return
+
+    # Deduct 400 points from the user
+    new_points = points - 400
+    await save_user(user_id, {"points": new_points})  # Update points in the database
+
+    # Process the cloning command
     if len(message.command) > 1:
         bot_token = message.text.split("/clone", 1)[1].strip()
         mi = await message.reply_text("Please wait while I process the bot token.")
@@ -50,37 +94,83 @@ async def clone_txt(client, message):
 
         # Proceed with the cloning process
         await mi.edit_text(
-            "Cloning process started. Please wait for the bot to be start."
+            "Cloning process started. Please wait for the bot to be started."
         )
         try:
-
-            await app.send_message(
-                LOGGER_ID, f"**#New_Clones**\n\n**Bot:- @{bot.username}**"
-            )
-            await userbot.send_message(bot.username, "/start")
+            # Save the cloned bot details with an expiration date (30 days from now)
+            expiration_date = datetime.now() + timedelta(days=30)
 
             details = {
                 "bot_id": bot.id,
                 "is_bot": True,
-                "user_id": message.from_user.id,
+                "user_id": user_id,
                 "name": bot.first_name,
                 "token": bot_token,
                 "username": bot.username,
+                "cloned_by": message.from_user.id,
+                "clone_date": datetime.now(),  # Record the cloning date
+                "expiration_date": expiration_date,  # Set the expiration date (30 days later)
             }
             clonebotdb.insert_one(details)
-            CLONES.add(bot.id)
-            await mi.edit_text(
-                f"Bot @{bot.username} has been successfully cloned and started ✅.\n**Remove cloned by :- /delclone**"
+
+            # Log the cloning event
+            await app.send_message(
+                LOGGER_ID, f"**#New_Clone**\n\n**Bot:- @{bot.username}**"
             )
-        except BaseException as e:
+            await userbot.send_message(bot.username, "/start")
+
+            await mi.edit_text(
+                f"Bot @{bot.username} has been successfully cloned and started ✅.\n\n**You will have access to this bot for 30 days.**"
+            )
+
+        except Exception as e:
             logging.exception("Error while cloning bot.")
             await mi.edit_text(
                 f"⚠️ <b>ᴇʀʀᴏʀ:</b>\n\n<code>{e}</code>\n\n**ᴋɪɴᴅʟʏ ғᴏᴡᴀʀᴅ ᴛʜɪs ᴍᴇssᴀɢᴇ ᴛᴏ @vk_zone ᴛᴏ ɢᴇᴛ ᴀssɪsᴛᴀɴᴄᴇ**"
             )
+
     else:
         await message.reply_text(
             "**Give Bot Token After /clone Command From @Botfather.**"
         )
+
+
+# Add the function to check the clone expiration periodically
+
+async def check_clone_expiration():
+    try:
+        # Find all clones and check if they have expired
+        now = datetime.now()
+        expired_clones = clonebotdb.find({"expiration_date": {"$lt": now}})
+
+        for clone in expired_clones:
+            bot_token = clone['token']
+            bot_id = clone['bot_id']
+            
+            # Stop and delete the cloned bot
+            ai = Client(
+                bot_token,
+                API_ID,
+                API_HASH,
+                bot_token=bot_token,
+                plugins=dict(root="BABYMUSIC.cplugin"),
+            )
+            await ai.start()
+
+            # Remove the bot from the database
+            clonebotdb.delete_one({"bot_id": bot_id})
+            
+            # Log the removal
+            await app.send_message(
+                LOGGER_ID, f"**#Clone_Expired**\n\nBot @{clone['username']} has expired and been removed."
+            )
+
+            # Stop the bot
+            await ai.stop()
+
+    except Exception as e:
+        logging.exception("Error while checking for expired clones.")
+
 
 
 @app.on_message(
