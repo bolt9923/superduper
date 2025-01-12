@@ -70,6 +70,8 @@ async def my_bots_handler(client, message):
 
     # Fetch all cloned bots of the user from the database
     cloned_bots = clonebotdb.find({"user_id": user_id})
+    
+    # Convert the cursor to a list manually using list()
     cloned_bots_list = await cloned_bots.to_list(length=None)
 
     if not cloned_bots_list:
@@ -92,6 +94,7 @@ async def my_bots_handler(client, message):
         """
     
     await message.reply_text(response_text)
+
 
 @app.on_message(filters.command("clone") & ~BANNED_USERS)
 async def clone_txt(client, message):
