@@ -134,10 +134,12 @@ async def profile_handler(client, message):
 
     # Check if the user has cloned any bots to determine their status
     cloned_bots = clonebotdb.find({"user_id": user_id})  # Assuming clonebotdb is the collection for cloned bots
-    cloned_bots_list = await cloned_bots.to_list(length=None)  # Convert cursor to list
+
+    # Convert cursor to a list of cloned bots
+    cloned_bots_list = [bot async for bot in cloned_bots]  # Using async for to iterate over the cursor
 
     if cloned_bots_list:
-        user_status = "ᴠɪᴘ 🜲"
+        user_status = "Premium"
     else:
         user_status = "Regular"
 
@@ -148,14 +150,12 @@ async def profile_handler(client, message):
 💵 **Balance:** {points} points
 💰 **Total Referrals:** {referrals}
 
-💎 **User Tag:** {user_status}  # Display the user's status (Premium/Regular)
+💎 **Status:** {user_status}  # Display the user's status (Premium/Regular)
 
 ⌚ **Updated On:** {current_time}
 📆 **Date:** {current_date}
 """
     await message.reply_text(profile_text)
-
-
 
 
 @app.on_message(filters.private & filters.text & ~BANNED_USERS & filters.regex("^Support 📞$"))
