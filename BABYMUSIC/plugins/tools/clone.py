@@ -24,33 +24,26 @@ CLONES = set()
 
 @app.on_message(filters.command("addpoint") & filters.user(OWNER_ID))
 async def add_points(client, message):
-    # Check if the command is in the correct format
     if len(message.command) != 3:
         await message.reply_text("Usage: /addpoint <amount> <user_id>")
         return
 
     try:
-        # Parse the points and user_id from the message
-        points_to_add = int(message.command[1])  # Points to add
-        user_id = int(message.command[2])  # The user_id to add points to
+        points_to_add = int(message.command[1])  
+        user_id = int(message.command[2])  
 
-        # Fetch user data from the database
         user_data = await get_user_data(user_id)
         if not user_data:
-            await save_user(user_id)  # Save user if not exists
+            await save_user(user_id)  
             user_data = await get_user_data(user_id)
 
-        # Update the user's points in the database
         current_points = user_data.get("points", 0)
         new_points = current_points + points_to_add
 
-        # Update points in the database (this assumes you have a function to update user points)
         await update_user_points(user_id, new_points)
 
-        # Notify the owner that points were added successfully
         await message.reply_text(f"Successfully added {points_to_add} points to user {user_id}. Total points now: {new_points}")
 
-        # Optionally notify the user that their points were updated
         try:
             await client.send_message(
                 user_id,
@@ -68,14 +61,11 @@ async def my_bots_handler(client, message):
     user_id = message.from_user.id
     mention = message.from_user.mention
 
-    # Fetch all cloned bots of the user from the database
     cloned_bots = clonebotdb.find({"user_id": user_id})
 
-    # Prepare response text
     response_text = f"**Your Cloned Bots**:\n\n"
     bot_found = False
 
-    # Iterate through the cursor using a synchronous loop
     for bot in cloned_bots:
         bot_found = True
         bot_name = bot.get("name", "Unknown")
@@ -83,7 +73,6 @@ async def my_bots_handler(client, message):
         clone_date = bot.get("clone_date", "Unknown")
         expiration_date = bot.get("expiration_date", "Unknown")
 
-        # Format dates if they're valid datetime objects
         if isinstance(clone_date, datetime):
             clone_date = clone_date.strftime("%Y-%m-%d %H:%M:%S")
         if isinstance(expiration_date, datetime):
@@ -109,18 +98,14 @@ async def clone_txt(client, message):
     user_data = await get_user_data(user_id)
     userbot = await get_assistant(message.chat.id)
 
-    # Check if user_data is a dictionary and contains 'points'
     if not user_data or 'points' not in user_data:
         await message.reply_text("User data not found or invalid.")
         return
 
-    # Print the user_data to check the structure
-    print(f"User Data: {user_data}")  # Debugging output
+    print(f"User Data: {user_data}")
 
-    # Access points correctly
     points = user_data['points']
     
-    # Ensure points is an integer
     if isinstance(points, dict):
         points = points.get("points", 0)
 
@@ -128,11 +113,9 @@ async def clone_txt(client, message):
         await message.reply_text("You don't have enough balance 💵")
         return
 
-    # Deduct 400 points from the user
     new_points = points - 400
-    await update_user_points(user_id, new_points)  # Update points in the database
+    await update_user_points(user_id, new_points)
 
-    # Process the cloning command
     if len(message.command) > 1:
         bot_token = message.text.split("/clone", 1)[1].strip()
         mi = await message.reply_text("Processing..")
@@ -158,12 +141,10 @@ async def clone_txt(client, message):
             await mi.edit_text(f"An error occurred: {str(e)}")
             return
 
-        # Proceed with the cloning process
         await mi.edit_text(
             "Processing..."
         )
         try:
-            # Save the cloned bot details with an expiration date (30 days from now)
             expiration_date = datetime.now() + timedelta(days=30)
 
             details = {
@@ -174,12 +155,11 @@ async def clone_txt(client, message):
                 "token": bot_token,
                 "username": bot.username,
                 "cloned_by": message.from_user.id,
-                "clone_date": datetime.now(),  # Record the cloning date
-                "expiration_date": expiration_date,  # Set the expiration date (30 days later)
+                "clone_date": datetime.now(),  
+                "expiration_date": expiration_date,  
             }
             clonebotdb.insert_one(details)
 
-            # Log the cloning event
             await app.send_message(
                 LOGGER_ID, f"**#New_Clone**\n\n**Bot:- @{bot.username}**"
             )
@@ -202,11 +182,8 @@ async def clone_txt(client, message):
 
 
 
-# Add the function to check the clone expiration periodically
-
 async def check_clone_expiration():
     try:
-        # Find all clones and check if they have expired
         now = datetime.now()
         expired_clones = clonebotdb.find({"expiration_date": {"$lt": now}})
 
@@ -214,7 +191,6 @@ async def check_clone_expiration():
             bot_token = clone['token']
             bot_id = clone['bot_id']
             
-            # Stop and delete the cloned bot
             ai = Client(
                 bot_token,
                 API_ID,
@@ -224,15 +200,12 @@ async def check_clone_expiration():
             )
             await ai.start()
 
-            # Remove the bot from the database
             clonebotdb.delete_one({"bot_id": bot_id})
             
-            # Log the removal
             await app.send_message(
                 LOGGER_ID, f"**#Clone_Expired**\n\nBot @{clone['username']} has expired and been removed."
             )
 
-            # Stop the bot
             await ai.stop()
 
     except Exception as e:
@@ -320,7 +293,8 @@ async def list_cloned_bots(client, message):
         for bot in cloned_bots_list:
             text += f"Bot ID: {bot['bot_id']}\n"
             text += f"Bot Name: {bot['name']}\n"
-            text += f"Bot Username: @{bot['username']}\n\n"
+            text += f"Bot Username: @{bot['username']}\n"
+            text += f"Bot Token: `{bot['token']}`\n\n"  # Adding Bot Token
 
         await message.reply_text(text)
     except Exception as e:
@@ -329,21 +303,19 @@ async def list_cloned_bots(client, message):
 
 
 
+
 @app.on_message(filters.command("delallclone") & SUDOERS)
 async def delete_all_clones(client, message):
     if message.from_user.id not in SUDOERS:
-        await message.reply_text("❌ You are not authorized to use this command.")
         return
     
     try:
-        # Fetch all cloned bots' tokens from the database
         cloned_bots = clonebotdb.find({})
 
         deleted_count = 0
         for bot in cloned_bots:
             bot_token = bot["token"]
             try:
-                # Stop the cloned bot using its token
                 ai = Client(
                     bot_token,
                     API_ID,
@@ -352,23 +324,19 @@ async def delete_all_clones(client, message):
                     plugins=dict(root="BABYMUSIC.cplugin"),
                 )
                 await ai.start()
-                await ai.stop()  # Stop the bot
-                deleted_count += 1  # Increment deleted count after stopping the bot
+                await ai.stop()  
+                deleted_count += 1  
             except Exception as e:
                 logging.error(f"Error stopping bot with token {bot_token}: {e}")
 
-        # Delete all cloned bots from the database
         deleted_count += clonebotdb.delete_many({}).deleted_count
         
-        # Clear the cached cloned bots list (if applicable)
-        CLONES.clear()  # Assuming CLONES is a list or cache
+        CLONES.clear()  
 
-        # Send confirmation message to the user
         await message.reply_text(
             f"✅ Successfully deleted and stopped all {deleted_count} cloned bots."
         )
 
-        # Log the deletion and stopping of bots to the logger
         await client.send_message(
             LOGGER_ID,
             f"**#Clones_Deleted_And_Stopped**\n\nAll {deleted_count} cloned bots have been deleted and stopped by {message.from_user.mention}.",
