@@ -2,7 +2,7 @@ import time
 import random
 from pyrogram import filters
 from pyrogram.enums import ChatType
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, Message
 from youtubesearchpython.__future__ import VideosSearch
 
 import config
@@ -36,6 +36,11 @@ YUMI_PICS = [
 
 ]
 
+CHOICE = [
+    ["Pʀᴏғɪʟᴇ 🪪", "Hᴇʟᴘᴇʀ ⚙️"],
+    ["Cʟᴏɴᴇ 📁", "Rᴇғᴇʀ 📢"],
+    ["Pʀᴏᴍᴏᴛɪᴏɴ ᴀᴠᴀɪʟᴀʙʟᴇ 🚩"],
+]
 
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
