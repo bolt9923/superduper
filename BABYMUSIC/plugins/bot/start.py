@@ -1,4 +1,5 @@
 import time
+import asyncio
 import random
 import pytz
 from datetime import datetime
@@ -89,7 +90,9 @@ async def refer_handler(client, message):
     points = user_data.get("points", 0) if user_data else 0
     referrals = user_data.get("referrals", 0) if user_data else 0
     cloned_bots = clonebotdb.find({"user_id": user_id})  # Assuming clonebotdb is the collection for cloned bots
-    cloned_bots_list = await cloned_bots.to_list(length=None)  # Convert cursor to list
+
+    # Use list() to convert the cursor to a list asynchronously
+    cloned_bots_list = await asyncio.to_thread(list, cloned_bots)  # Run list conversion in a separate thread
 
     if cloned_bots_list:
         user_status = "ᴠɪᴘ 🜲"
@@ -118,8 +121,6 @@ async def refer_handler(client, message):
     )
 
 
-import asyncio
-
 @app.on_message(filters.private & filters.text & ~BANNED_USERS & filters.regex("^Profile 🪪$"))
 async def profile_handler(client, message):
     user_id = message.from_user.id
@@ -141,7 +142,7 @@ async def profile_handler(client, message):
     cloned_bots_list = await asyncio.to_thread(list, cloned_bots)  # Run list conversion in a separate thread
 
     if cloned_bots_list:
-        user_status = "Premium"
+        user_status = "ᴠɪᴘ 🜲"
     else:
         user_status = "Regular"
 
@@ -152,7 +153,7 @@ async def profile_handler(client, message):
 💵 **Balance:** {points} points
 💰 **Total Referrals:** {referrals}
 
-💎 **Status:** {user_status}  # Display the user's status (Premium/Regular)
+💎 **User Tag:** {user_status}
 
 ⌚ **Updated On:** {current_time}
 📆 **Date:** {current_date}
@@ -310,7 +311,9 @@ async def start_pm(client, message: Message, _):
     points = user_data.get("points", 0)
     referrals = user_data.get("referrals", 0)
     cloned_bots = clonebotdb.find({"user_id": user_id})  # Assuming clonebotdb is the collection for cloned bots
-    cloned_bots_list = await cloned_bots.to_list(length=None)  # Convert cursor to list
+
+    # Use list() to convert the cursor to a list asynchronously
+    cloned_bots_list = await asyncio.to_thread(list, cloned_bots)  # Run list conversion in a separate thread
 
     if cloned_bots_list:
         user_status = "ᴠɪᴘ 🜲"
