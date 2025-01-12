@@ -49,10 +49,20 @@ SUPPORT = """👉🏻 Send me any message with a request to support.
 💡 Visit support chat"""
 
 CLONES = """Create your own music bot
-Complete 𝐘ᴛ-𝐌ᴜsɪᴄ clone futures
+Complete 𝐘ᴛ-ᴜsɪᴄ clone futures
 best quality smooth streaming on vc
 :- Gᴏ to @BotFather make /newbot 
-forward here complete message"""
+copy bot token then user
+/clone &lt;bot token&gt;
+
+<b><u>NOTE 👇</u></b>
+1 bot need 400 points
+special vip tag
+For 30 days
+
+<u><b>BUY POINTS</b> 🪙</u>
+Do you want directly purchase points
+@UTTAM470"""
 
 CLONESS = [
     ["Mybots 🤖"],
@@ -69,12 +79,14 @@ CHOICE = [
 @app.on_message(filters.private & filters.text & ~BANNED_USERS & filters.regex("^Clone 📁$"))
 async def refer_handler(client, message):
     await message.reply_text(
-        text=CLONES,
+        text=CLONES,  # Ensure CLONES contains the valid text
         reply_markup=ReplyKeyboardMarkup(
             CLONESS,
+            parse_mode="html",  # Corrected to 'parse_mode'
             resize_keyboard=True
         )
     )
+
 
 @app.on_message(filters.private & filters.text & ~BANNED_USERS & filters.regex("^Back to home 🏠$"))
 async def refer_handler(client, message):
@@ -95,9 +107,9 @@ async def refer_handler(client, message):
     cloned_bots_list = await asyncio.to_thread(list, cloned_bots)  # Run list conversion in a separate thread
 
     if cloned_bots_list:
-        user_status = "ᴠɪᴘ 🜲"
+        user_status = "[VIP 💳]"
     else:
-        user_status = "Regular"
+        user_status = "[Regular 👥]"
     # Generate referral link
     referral_link = f"https://t.me/{client.me.username}?start={user_id}"
 
@@ -106,9 +118,9 @@ async def refer_handler(client, message):
 **This is 𝐘ᴛ-𝐌ᴜsɪᴄ**
 **The best music|video streaming on VC**
 
-**Your points:** {points}
-**Referrals:** {referrals}
-💎 **User Tag:** {user_status}
+🪙 **Your points:** {points}
+📢 **Referrals:** {referrals}
+🏷️ **User Tag:** {user_status}
 
 **Your Referral Link:** [Click Here]({referral_link})
 """
@@ -142,9 +154,9 @@ async def profile_handler(client, message):
     cloned_bots_list = await asyncio.to_thread(list, cloned_bots)  # Run list conversion in a separate thread
 
     if cloned_bots_list:
-        user_status = "ᴠɪᴘ 🜲"
+        user_status = "[VIP 💳]"
     else:
-        user_status = "Regular"
+        user_status = "[Regular 👥]"
 
     # Build the profile text with the user's status
     profile_text = f"""👤 **Name:** {mention}
@@ -316,9 +328,9 @@ async def start_pm(client, message: Message, _):
     cloned_bots_list = await asyncio.to_thread(list, cloned_bots)  # Run list conversion in a separate thread
 
     if cloned_bots_list:
-        user_status = "ᴠɪᴘ 🜲"
+        user_status = "[VIP 💳]"
     else:
-        user_status = "Regular"
+        user_status = "[Regular 👥]"
     # Generate referral link
     referral_link = f"https://t.me/{client.me.username}?start={user_id}"
 
@@ -327,9 +339,9 @@ async def start_pm(client, message: Message, _):
 **This is 𝐘ᴛ-𝐌ᴜsɪᴄ**
 **The best music|video streaming on VC**
 
-**Your points:** {points}
-**Referrals:** {referrals}
-💎 **User Tag:** {user_status}
+🪙 **Your points:** {points}
+📢 **Referrals:** {referrals}
+🏷️ **User Tag:** {user_status}
 
 **Your Referral Link:** [Click Here]({referral_link})"""
 
