@@ -218,16 +218,7 @@ async def start_pm(client, message: Message, _):
             chat_id=config.LOGGER_ID,
             text=f"✦ {mention} just started the bot.\n\n✦ <b>User ID ➠</b> <code>{user_id}</code>\n✦ <b>Username ➠</b> @{message.from_user.username}",
         )
-@app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
-@LanguageStart
-async def start_gp(client, message: Message, _):
-    out = start_panel(_)
-    uptime = int(time.time() - _boot_)
-    await message.reply_photo(
-        text=_["start_1"].format(app.mention, get_readable_time(uptime)),
-        reply_markup=InlineKeyboardMarkup(out),
-    )
-    return await add_served_chat(message.chat.id)
+
 
 
 @app.on_message(filters.new_chat_members, group=-1)
