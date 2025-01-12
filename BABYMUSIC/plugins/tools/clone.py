@@ -108,15 +108,20 @@ async def clone_txt(client, message):
     user_id = message.from_user.id
     user_data = await get_user_data(user_id)
 
+    # Ensure user_data is valid and contains 'points'
+    if not user_data or 'points' not in user_data:
+        await message.reply_text("❌ User data not found.")
+        return
+
     # Check if the user has enough points (400 points)
-    points = user_data.get("points", 0)
+    points = user_data['points']  # Access the 'points' value correctly
     if points < 400:
         await message.reply_text("❌ You need 400 points to clone a bot.")
         return
 
     # Deduct 400 points from the user
     new_points = points - 400
-    await update_user_points(user_id, {"points": new_points})  # Update points in the database
+    await update_user_points(user_id, new_points)  # Update points in the database
 
     # Process the cloning command
     if len(message.command) > 1:
