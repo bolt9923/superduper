@@ -233,7 +233,6 @@ Here is your referral link. Share and earn points!
         disable_web_page_preview=True,
     )
 
-
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
 async def start_pm(client, message: Message, _):
@@ -309,8 +308,19 @@ async def start_pm(client, message: Message, _):
         elif name.isdigit():
             referrer_id = int(name)
             referrer = await get_user_data(referrer_id)
+
+            # Check if the user has already used the referral link
+            user_data = await get_user_data(user_id)
+            if user_data and 'referrer' in user_data and user_data['referrer'] == referrer_id:
+                # If the referral is already used
+                await message.reply_text("❌ This referral link has already been used by you.")
+                return
+
             if referrer and referrer_id != user_id:
                 await update_referrer(referrer_id)
+                # Mark the user as using this referral link
+                await update_user_data(user_id, {"referrer": referrer_id})
+
                 # Send message to the referrer
                 await app.send_message(
                     referrer_id,
