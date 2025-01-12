@@ -216,13 +216,6 @@ async def welcome(client, message: Message):
         except Exception as ex:
             print(ex)
             
-SUPPORT = """👉🏻 Send me any message with a request to support.
-
-💡 The send message like discussion, facing issues, other message sender [spam, time waste] ban.
-
-⚠️ We do NOT provide support for ban, mute or other things related to this bot: for this kind of requests contact the group administrators directly.
-
-💡 Visit support chat"""
 
 CLONES = """Create your own music bot
 Complete 𝐘ᴛ-𝐌ᴜsɪᴄ clone futures
@@ -240,20 +233,6 @@ CHOICE = [
 async def clone_handler(client, message):
     if message.text.strip() == "Cʟᴏɴᴇ 📁":
         await message.reply_text(CLONES)
-
-@app.on_message(filters.private & filters.text & ~BANNED_USERS)
-async def support_handler(client, message):
-    if message.text.strip() == "Support 📞":
-        replyinlinemarkup = InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(text="Update 🔔", url=config.SUPPORT_CHANNEL),
-                    InlineKeyboardButton(text="Support 📞", url=config.SUPPORT_CHAT),
-                ],
-            ]
-        )
-        await message.reply_text(SUPPORT, reply_markup=replyinlinemarkup)
-
         
 
 @app.on_message(filters.private & filters.text & ~BANNED_USERS)
