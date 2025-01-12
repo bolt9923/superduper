@@ -74,6 +74,42 @@ async def refer_handler(client, message):
         )
     )
 
+@app.on_message(filters.private & filters.text & ~BANNED_USERS & filters.regex("^Back to home 🏠$"))
+async def refer_handler(client, message):
+    user_id = message.from_user.id
+    mention = message.from_user.mention
+    
+    # Fetch user data from the database
+    user_data = await get_user_data(user_id)
+    if not user_data:
+        await save_user(user_id)
+        user_data = await get_user_data(user_id)
+
+    points = user_data.get("points", 0) if user_data else 0
+    referrals = user_data.get("referrals", 0) if user_data else 0
+
+    # Generate referral link
+    referral_link = f"https://t.me/{client.me.username}?start={user_id}"
+
+    # Prepare response message
+    response = f"""**Hey {mention} 👋**
+**This is 𝐘ᴛ-𝐌ᴜsɪᴄ**
+**The best music|video streaming on VC**
+
+**Your points:** {points}
+**Referrals:** {referrals}
+**User:** [regular]
+
+**Your Referral Link:** [Click Here]({referral_link})
+"""
+
+    # Send response with user dashboard and buttons
+    await message.reply_text(
+        text=response,
+        reply_markup=ReplyKeyboardMarkup(CHOICE, resize_keyboard=True),
+        disable_web_page_preview=True,
+    )
+
 
 @app.on_message(filters.private & filters.text & ~BANNED_USERS & filters.regex("^Profile 🪪$"))
 async def profile_handler(client, message):
