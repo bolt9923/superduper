@@ -108,13 +108,21 @@ async def clone_txt(client, message):
     user_id = message.from_user.id
     user_data = await get_user_data(user_id)
 
-    # Ensure user_data is valid and contains 'points'
+    # Check if user_data is a dictionary and contains 'points'
     if not user_data or 'points' not in user_data:
-        await message.reply_text("❌ User data not found.")
+        await message.reply_text("❌ User data not found or invalid.")
         return
 
-    # Check if the user has enough points (400 points)
-    points = user_data['points']  # Access the 'points' value correctly
+    # Print the user_data to check the structure
+    print(f"User Data: {user_data}")  # Debugging output
+
+    # Access points correctly
+    points = user_data['points']
+    
+    # Ensure points is an integer
+    if isinstance(points, dict):
+        points = points.get("points", 0)
+
     if points < 400:
         await message.reply_text("❌ You need 400 points to clone a bot.")
         return
@@ -190,6 +198,7 @@ async def clone_txt(client, message):
         await message.reply_text(
             "**Give Bot Token After /clone Command From @Botfather.**"
         )
+
 
 
 # Add the function to check the clone expiration periodically
