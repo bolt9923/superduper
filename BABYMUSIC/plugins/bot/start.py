@@ -57,29 +57,28 @@ CHOICE = [
     ["Language 🌐", "Support 📞"],
 ]
 
-@app.on_message(filters.private & filters.text & ~BANNED_USERS)
+@app.on_message(filters.private & filters.text & ~BANNED_USERS & filters.regex("^Refer 📢$"))
 async def refer_handler(client, message):
-    # Check if the message text matches "Rᴇғᴇʀ 📢"
-    if message.text.strip() == "Refer 📢":
-        user_id = message.from_user.id
-        mention = message.from_user.mention
+    # Check if the message text matches "Refer 📢"
+    user_id = message.from_user.id
+    mention = message.from_user.mention
 
-        # Fetch user data from the database
+    # Fetch user data from the database
+    user_data = await get_user_data(user_id)
+    if not user_data:
+        await save_user(user_id)
         user_data = await get_user_data(user_id)
-        if not user_data:
-            await save_user(user_id)
-            user_data = await get_user_data(user_id)
 
-        # User points and referral details
-        points = user_data.get("points", 0)
-        referrals = user_data.get("referrals", 0)
+    # User points and referral details
+    points = user_data.get("points", 0)
+    referrals = user_data.get("referrals", 0)
 
-        # Generate referral link
-        referral_link = f"https://t.me/{client.me.username}?start={user_id}"
-        share_url = f"https://t.me/share/url?url={referral_link}&text=Join%20this%20amazing%20bot%20and%20earn%20points!"
+    # Generate referral link
+    referral_link = f"https://t.me/{client.me.username}?start={user_id}"
+    share_url = f"https://t.me/share/url?url={referral_link}&text=Join%20this%20amazing%20bot%20and%20earn%20points!"
 
-        # Prepare response message
-        response = f"""**Hey {mention} 👋**
+    # Prepare response message
+    response = f"""**Hey {mention} 👋**
 
 Here is your referral link. Share and earn points!
 
@@ -90,14 +89,15 @@ Here is your referral link. Share and earn points!
 
 **Your Referral Link:** [Click Here]({referral_link})
 """
-        # Send response with a button
-        await message.reply_text(
-            response,
-            reply_markup=InlineKeyboardMarkup(
-                [[InlineKeyboardButton("Share Referral Link", url=share_url)]]
-            ),
-            disable_web_page_preview=True,
-        )
+    # Send response with a button
+    await message.reply_text(
+        response,
+        reply_markup=InlineKeyboardMarkup(
+            [[InlineKeyboardButton("Share Referral Link", url=share_url)]]
+        ),
+        disable_web_page_preview=True,
+    )
+
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
