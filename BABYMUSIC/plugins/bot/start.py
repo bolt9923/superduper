@@ -23,6 +23,7 @@ from BABYMUSIC.utils.database import (
     save_user,
     get_user_data,
     update_referrer,
+    clonebotdb,
 )
 from BABYMUSIC.utils.decorators.language import LanguageStart
 from BABYMUSIC.utils.formatters import get_readable_time
@@ -125,16 +126,29 @@ async def profile_handler(client, message):
     current_time = delhi_time.strftime("%I:%M:%S %p")  # 12-hour format with AM/PM
     current_date = delhi_time.strftime("%d-%m-%Y")  # DD-MM-YYYY format
 
+    # Check if the user has cloned any bots to determine their status
+    cloned_bots = clonebotdb.find({"user_id": user_id})  # Assuming clonebotdb is the collection for cloned bots
+    cloned_bots_list = await cloned_bots.to_list(length=None)  # Convert cursor to list
+
+    if cloned_bots_list:
+        user_status = "Premium"
+    else:
+        user_status = "Regular"
+
+    # Build the profile text with the user's status
     profile_text = f"""👤 **Name:** {mention}
 🆔 **User ID:** {user_id}
 
 💵 **Balance:** {points} points
 💰 **Total Referrals:** {referrals}
 
+💎 **Status:** {user_status}  # Display the user's status (Premium/Regular)
+
 ⌚ **Updated On:** {current_time}
 📆 **Date:** {current_date}
 """
     await message.reply_text(profile_text)
+
 
 
 
