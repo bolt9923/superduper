@@ -116,7 +116,7 @@ async def clone_txt(client, message):
 
     # Deduct 400 points from the user
     new_points = points - 400
-    await save_user(user_id, {"points": new_points})  # Update points in the database
+    await update_user_points(user_id, {"points": new_points})  # Update points in the database
 
     # Process the cloning command
     if len(message.command) > 1:
