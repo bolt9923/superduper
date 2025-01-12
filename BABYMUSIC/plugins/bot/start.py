@@ -118,6 +118,8 @@ async def refer_handler(client, message):
     )
 
 
+import asyncio
+
 @app.on_message(filters.private & filters.text & ~BANNED_USERS & filters.regex("^Profile 🪪$"))
 async def profile_handler(client, message):
     user_id = message.from_user.id
@@ -135,8 +137,8 @@ async def profile_handler(client, message):
     # Check if the user has cloned any bots to determine their status
     cloned_bots = clonebotdb.find({"user_id": user_id})  # Assuming clonebotdb is the collection for cloned bots
 
-    # Convert cursor to a list of cloned bots
-    cloned_bots_list = [bot async for bot in cloned_bots]  # Using async for to iterate over the cursor
+    # Use list() to convert the cursor to a list asynchronously
+    cloned_bots_list = await asyncio.to_thread(list, cloned_bots)  # Run list conversion in a separate thread
 
     if cloned_bots_list:
         user_status = "Premium"
