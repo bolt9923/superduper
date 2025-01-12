@@ -57,7 +57,7 @@ CHOICE = [
 ]
 
 @app.on_message(filters.private & filters.text & ~BANNED_USERS)
-async def main_handler(client, message: Message, _):
+async def main_handler(client, message: Message):
     user_id = message.from_user.id
     mention = message.from_user.mention
     text = message.text.strip()
