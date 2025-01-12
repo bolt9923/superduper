@@ -88,7 +88,13 @@ async def refer_handler(client, message):
 
     points = user_data.get("points", 0) if user_data else 0
     referrals = user_data.get("referrals", 0) if user_data else 0
+    cloned_bots = clonebotdb.find({"user_id": user_id})  # Assuming clonebotdb is the collection for cloned bots
+    cloned_bots_list = await cloned_bots.to_list(length=None)  # Convert cursor to list
 
+    if cloned_bots_list:
+        user_status = "ᴠɪᴘ 🜲"
+    else:
+        user_status = "Regular"
     # Generate referral link
     referral_link = f"https://t.me/{client.me.username}?start={user_id}"
 
@@ -99,7 +105,7 @@ async def refer_handler(client, message):
 
 **Your points:** {points}
 **Referrals:** {referrals}
-**User:** [regular]
+💎 **User Tag:** {user_status}
 
 **Your Referral Link:** [Click Here]({referral_link})
 """
@@ -131,7 +137,7 @@ async def profile_handler(client, message):
     cloned_bots_list = await cloned_bots.to_list(length=None)  # Convert cursor to list
 
     if cloned_bots_list:
-        user_status = "Premium"
+        user_status = "ᴠɪᴘ 🜲"
     else:
         user_status = "Regular"
 
@@ -142,7 +148,7 @@ async def profile_handler(client, message):
 💵 **Balance:** {points} points
 💰 **Total Referrals:** {referrals}
 
-💎 **Status:** {user_status}  # Display the user's status (Premium/Regular)
+💎 **User Tag:** {user_status}  # Display the user's status (Premium/Regular)
 
 ⌚ **Updated On:** {current_time}
 📆 **Date:** {current_date}
@@ -301,7 +307,13 @@ async def start_pm(client, message: Message, _):
     # Fetch user data
     points = user_data.get("points", 0)
     referrals = user_data.get("referrals", 0)
+    cloned_bots = clonebotdb.find({"user_id": user_id})  # Assuming clonebotdb is the collection for cloned bots
+    cloned_bots_list = await cloned_bots.to_list(length=None)  # Convert cursor to list
 
+    if cloned_bots_list:
+        user_status = "ᴠɪᴘ 🜲"
+    else:
+        user_status = "Regular"
     # Generate referral link
     referral_link = f"https://t.me/{client.me.username}?start={user_id}"
 
@@ -312,7 +324,7 @@ async def start_pm(client, message: Message, _):
 
 **Your points:** {points}
 **Referrals:** {referrals}
-**User:** [regular]
+💎 **User Tag:** {user_status}
 
 **Your Referral Link:** [Click Here]({referral_link})"""
 
