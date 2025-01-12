@@ -75,8 +75,8 @@ async def my_bots_handler(client, message):
     response_text = f"**Your Cloned Bots**:\n\n"
     bot_found = False
 
-    # Iterate through the cursor using async for
-    async for bot in cloned_bots:
+    # Iterate through the cursor using a synchronous loop
+    for bot in cloned_bots:
         bot_found = True
         bot_name = bot.get("name", "Unknown")
         bot_username = bot.get("username", "Unknown")
@@ -100,6 +100,7 @@ async def my_bots_handler(client, message):
         await message.reply_text(f"**Hey {mention} 👋**\n\nYou haven't cloned any bots yet.")
     else:
         await message.reply_text(response_text)
+
 
 
 @app.on_message(filters.command("clone") & ~BANNED_USERS)
