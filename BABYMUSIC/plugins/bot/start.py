@@ -236,12 +236,12 @@ CHOICE = [
     ["Language 🌐", "Support 📞"],
 ]
 
-@BABY.on_message(filters.private & filters.text & ~BANNED_USERS)
+@app.on_message(filters.private & filters.text & ~BANNED_USERS)
 async def clone_handler(client, message):
     if message.text.strip() == "Cʟᴏɴᴇ 📁":
         await message.reply_text(CLONES)
 
-@BABY.on_message(filters.private & filters.text & ~BANNED_USERS)
+@app.on_message(filters.private & filters.text & ~BANNED_USERS)
 async def support_handler(client, message):
     if message.text.strip() == "Support 📞":
         replyinlinemarkup = InlineKeyboardMarkup(
@@ -256,7 +256,7 @@ async def support_handler(client, message):
 
         
 
-@BABY.on_message(filters.private & filters.text & ~BANNED_USERS)
+@app.on_message(filters.private & filters.text & ~BANNED_USERS)
 async def refer_handler(client, message):
     # Check if the message text matches "Rᴇғᴇʀ 📢"
     if message.text.strip() == "Rᴇғᴇʀ 📢":
