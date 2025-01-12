@@ -4,7 +4,7 @@ import random
 import pytz
 from datetime import datetime
 from pyrogram import filters
-from pyrogram.enums import ChatType
+from pyrogram.enums import ChatType, ParseMode
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, Message
 from youtubesearchpython.__future__ import VideosSearch
 
@@ -84,7 +84,7 @@ async def refer_handler(client, message):
             CLONESS,  # This should be a list of button rows
             resize_keyboard=True
         ),
-        parse_mode="html"  # Apply parse_mode here for text formatting
+        parse_mode=ParseMode.HTML  # Apply parse_mode here for text formatting
     )
 
 
