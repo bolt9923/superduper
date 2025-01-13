@@ -3,7 +3,6 @@ from BABYMUSIC import app
 from pyrogram.types import Message
 from pyrogram.enums import ChatAction, ParseMode
 from pyrogram import filters
-from pyrogram import Client
 
 API_KEY = "abacf43bf0ef13f467283e5bc03c2e1f29dae4228e8c612d785ad428b32db6ce"
 
@@ -69,7 +68,7 @@ async def chat_gpt(bot, message):
                     if "choices" in response_data and len(response_data["choices"]) > 0:
                         result = response_data["choices"][0]["message"]["content"]
                         await message.reply_text(
-                            f"{result} \n\nQuery by @{client.username}",
+                            f"{result} \n\nQuery by @{bot.username}",
                             parse_mode=ParseMode.MARKDOWN
                         )
                     else:
