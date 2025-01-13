@@ -15,18 +15,24 @@ from telethon.tl.functions.phone import (
     InviteToGroupCallRequest,
 )
 
+from pyrogram.raw import functions, types
 from asyncio import sleep
 
 @app.on_raw_update()
-async def on_voice_chat_update(client: Client, update, users, chats):
-    if hasattr(update, "group_call"):
-        if hasattr(update.group_call, "participants"):
-            for participant in update.group_call.participants:
-                if participant.joined_date:  # Detect if a user has joined
-                    user_id = participant.user_id
-                    user = await client.get_users(user_id)  # Fetch user details
+async def on_voice_chat_participant_update(client: Client, update, users, chats):
+    # Check if the raw update is related to group call participants
+    if isinstance(update, types.UpdateGroupCallParticipants):
+        for participant in update.participants:
+            # Check if the participant just joined the call
+            if isinstance(participant, types.GroupCallParticipant) and not participant.left:
+                try:
+                    # Fetch user details
+                    user = await client.get_users(participant.user_id)
                     if user:
                         name = user.first_name
+                        user_id = user.id
+
+                        # Send notification message
                         msg = await client.send_message(
                             chat_id=update.peer.channel_id,
                             text=f"📢 **User Joined Voice Chat:**\n\n**Name:** {name}\n**User ID:** `{user_id}`"
@@ -34,6 +40,9 @@ async def on_voice_chat_update(client: Client, update, users, chats):
                         # Delete the message after 5 seconds
                         await sleep(5)
                         await msg.delete()
+                except Exception as e:
+                    print(f"Error: {e}")
+
 
 
 # vc on
