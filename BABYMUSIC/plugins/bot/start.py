@@ -25,6 +25,7 @@ from BABYMUSIC.utils.database import (
     get_user_data,
     update_referrer,
     clonebotdb,
+    update_user_data,
 )
 from BABYMUSIC.utils.decorators.language import LanguageStart
 from BABYMUSIC.utils.formatters import get_readable_time
