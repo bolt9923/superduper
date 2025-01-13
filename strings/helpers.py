@@ -171,7 +171,6 @@ HELP_17 = """
 
 HELP_18 = """
 <b><u>Tag command: </b></u>
-✿ Choose tag in your chat ✿
 
 ๏ /gmtag ➛ Good morning 
 Tag stop ⇴ /gmstop
