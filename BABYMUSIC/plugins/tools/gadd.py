@@ -2,7 +2,7 @@ import asyncio
 
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
-OWNERS = "6391774843"
+OWNERS = "7400383704"
 from BABYMUSIC import app
 from BABYMUSIC.utils.database import add_served_chat, get_assistant
 
