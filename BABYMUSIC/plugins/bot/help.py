@@ -81,8 +81,12 @@ async def help_com_group(client, message: Message, _):
         user_command_count[user_id] = 1
         user_last_message_time[user_id] = current_time
 
-    keyboard = private_help_panel(_)
-    await message.reply_text(_["help_2"], reply_markup=InlineKeyboardMarkup(keyboard))
+    # Create an inline button with correct URL format
+    keyboard = InlineKeyboardMarkup(
+        [[InlineKeyboardButton(text="Click me for help!", url=f"http://t.me/{client.username}?start=help")]]
+    )
+    await message.reply_text("Contact me in PM for help!", reply_markup=keyboard)
+
 
 
 @app.on_callback_query(filters.regex("help_callback") & ~BANNED_USERS)
