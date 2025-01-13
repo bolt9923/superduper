@@ -8,7 +8,7 @@ from pyrogram.types import CallbackQuery, InputMediaPhoto, Message
 import config
 from BABYMUSIC import app
 from BABYMUSIC.misc import db
-from BABYMUSIC.utils import UTTAM_bin, get_channeplayCB, seconds_to_min
+from BABYMUSIC.utils import PROBin, get_channeplayCB, seconds_to_min
 from BABYMUSIC.utils.database import get_cmode, is_active_chat, is_music_playing
 from BABYMUSIC.utils.decorators.language import language, languageCB
 from BABYMUSIC.utils.inline import queue_back_markup, queue_markup
