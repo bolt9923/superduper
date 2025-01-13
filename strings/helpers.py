@@ -167,7 +167,7 @@ HELP_17 = """
 
 /packkang ➠ Creates a pack of stickers from a other pack.
 /stickerid ➠ Get the stickers id of a sticker.
-'''
+"""
 
 HELP_18 = """
 <b><u>Tag command: </b></u>
