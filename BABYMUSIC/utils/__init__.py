@@ -5,3 +5,4 @@ from .extraction import *
 from .formatters import *
 from .inline import *
 from .sys import *
+from .pastebin import *
