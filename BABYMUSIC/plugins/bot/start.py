@@ -249,6 +249,7 @@ async def start_pm(client, message: Message, _):
         if name.startswith("help"):
             keyboard = help_pannel(_)
             return await app.send_message(
+                chat_id=user_id,
                 text=_["help_1"],
                 reply_markup=keyboard,
             )
