@@ -15,9 +15,8 @@ from config import BANNED_USERS
 @language
 async def ping_com(client, message: Message, _):
     start = datetime.now()
-    response = await message.reply_video(
-        video="https://graph.org/file/5690109178f081adf464d.mp4",
-        caption=_["ping_1"].format(app.mention),
+    response = await message.reply_text(
+        text=_["ping_1"].format(app.mention),
     )
     pytgping = await BABY.ping()
     UP, CPU, RAM, DISK = await bot_sys_stats()
