@@ -1,4 +1,3 @@
-
 import asyncio
 import importlib
 
@@ -14,6 +13,8 @@ from BABYMUSIC.utils.database import get_banned_users, get_gbanned
 from BABYMUSIC.plugins.tools.clone import restart_bots
 from config import BANNED_USERS
 
+# Import auto_end and auto_leave functions
+from BABYMUSIC.plugins.misc.autoleave import auto_end, auto_leave
 
 async def init():
     if not config.STRING1:
@@ -49,7 +50,15 @@ async def init():
     LOGGER("BABYMUSIC").info(
         "CONTACT ︎MADE BY UNTOLDCODER"
     )
+
+    # Run auto_end and auto_leave asynchronously
+    asyncio.create_task(auto_end())
+    asyncio.create_task(auto_leave())
+
+    # Wait for events
     await idle()
+
+    # Stop services
     await app.stop()
     await userbot.stop()
     LOGGER("BABYMUSIC").info("𝗦𝗧𝗢𝗣 𝗣𝗿𝗼𝗕𝗼𝘁 𝗠𝗨𝗦𝗜𝗖🎻 𝗕𝗢𝗧..")
