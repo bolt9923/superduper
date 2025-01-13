@@ -23,9 +23,8 @@ from config import BANNED_USERS
 @language
 async def stats_global(client, message: Message, _):
     upl = stats_buttons(_, True if message.from_user.id in SUDOERS else False)
-    await message.reply_photo(
-        photo=config.STATS_IMG_URL,
-        caption=_["gstats_2"].format(app.mention),
+    await message.reply_text(
+        text=_["gstats_2"].format(app.mention),
         reply_markup=upl,
     )
 
@@ -50,11 +49,13 @@ async def overall_stats(client, CallbackQuery, _):
     except:
         pass
     await CallbackQuery.edit_message_text(_["gstats_1"].format(app.mention))
+    
     served_chats = len(await get_served_chats())
     served_users = len(await get_served_users())
-    #proof
+    # Proof adjustments
     served_chats += 617
     served_users += 517
+
     text = _["gstats_3"].format(
         app.mention,
         len(assistants),
@@ -66,13 +67,15 @@ async def overall_stats(client, CallbackQuery, _):
         config.AUTO_LEAVING_ASSISTANT,
         config.DURATION_LIMIT_MIN,
     )
-    med = InputMediaPhoto(media=config.STATS_IMG_URL, caption=text)
+    
     try:
-        await CallbackQuery.edit_message_media(media=med, reply_markup=upl)
-    except MessageIdInvalid:
-        await CallbackQuery.message.reply_photo(
-            photo=config.STATS_IMG_URL, caption=text, reply_markup=upl
-        )
+        # Directly edit the message text without a photo
+        await CallbackQuery.edit_message_text(text, reply_markup=upl)
+    except Exception as e:
+        LOGGER.error(f"Error editing message text: {e}")
+        # Fallback to sending a new message if editing fails
+        await CallbackQuery.message.reply_text(text, reply_markup=upl)
+
 
 
 @app.on_callback_query(filters.regex("bot_stats_sudo"))
@@ -80,35 +83,42 @@ async def overall_stats(client, CallbackQuery, _):
 async def bot_stats(client, CallbackQuery, _):
     if CallbackQuery.from_user.id not in SUDOERS:
         return await CallbackQuery.answer(_["gstats_4"], show_alert=True)
+    
     upl = back_stats_buttons(_)
     try:
         await CallbackQuery.answer()
     except:
         pass
+    
     await CallbackQuery.edit_message_text(_["gstats_1"].format(app.mention))
+    
     p_core = psutil.cpu_count(logical=False)
     t_core = psutil.cpu_count(logical=True)
-    ram = str(round(psutil.virtual_memory().total / (1024.0**3))) + " ɢʙ"
+    ram = str(round(psutil.virtual_memory().total / (1024.0**3))) + " GB"
     try:
         cpu_freq = psutil.cpu_freq().current
         if cpu_freq >= 1000:
-            cpu_freq = f"{round(cpu_freq / 1000, 2)}ɢʜᴢ"
+            cpu_freq = f"{round(cpu_freq / 1000, 2)} GHz"
         else:
-            cpu_freq = f"{round(cpu_freq, 2)}ᴍʜᴢ"
+            cpu_freq = f"{round(cpu_freq, 2)} MHz"
     except:
-        cpu_freq = "ғᴀɪʟᴇᴅ ᴛᴏ ғᴇᴛᴄʜ"
+        cpu_freq = "Failed to fetch"
+    
     hdd = psutil.disk_usage("/")
     total = hdd.total / (1024.0**3)
     used = hdd.used / (1024.0**3)
     free = hdd.free / (1024.0**3)
+    
     call = await mongodb.command("dbstats")
     datasize = call["dataSize"] / 1024
     storage = call["storageSize"] / 1024
     served_chats = len(await get_served_chats())
     served_users = len(await get_served_users())
-    #proof
+    
+    # Proof adjustments
     served_chats += 617
     served_users += 517
+
     text = _["gstats_5"].format(
         app.mention,
         len(ALL_MODULES),
@@ -132,10 +142,11 @@ async def bot_stats(client, CallbackQuery, _):
         call["collections"],
         call["objects"],
     )
-    med = InputMediaPhoto(media=config.STATS_IMG_URL, caption=text)
+    
     try:
-        await CallbackQuery.edit_message_media(media=med, reply_markup=upl)
-    except MessageIdInvalid:
-        await CallbackQuery.message.reply_photo(
-            photo=config.STATS_IMG_URL, caption=text, reply_markup=upl
-        )
+        # Directly edit the message text without using a photo
+        await CallbackQuery.edit_message_text(text, reply_markup=upl)
+    except Exception as e:
+        LOGGER.error(f"Error editing message text: {e}")
+        # Fallback to sending a new message if editing fails
+        await CallbackQuery.message.reply_text(text, reply_markup=upl)
