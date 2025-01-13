@@ -6,21 +6,21 @@ from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
 from config import BANNED_USERS, SERVER_PLAYLIST_LIMIT
-from SONALI import Carbon, YouTube, app
-from SONALI.utils.database import (
+from BABYMUSIC import Carbon, YouTube, app
+from BABYMUSIC.utils.database import (
     delete_playlist,
     get_playlist,
     get_playlist_names,
     save_playlist,
 )
-from SONALI.utils.decorators.language import language, languageCB
-from SONALI.utils.inline.playlist import (
+from BABYMUSIC.utils.decorators.language import language, languageCB
+from BABYMUSIC.utils.inline.playlist import (
     botplaylist_markup,
     get_playlist_markup,
     warning_markup,
 )
-from SONALI.utils.pastebin import RAUSHANBin as UTTAMbin
-from SONALI.utils.stream.stream import stream
+from BABYMUSIC.utils.pastebin import PROBin 
+from BABYMUSIC.utils.stream.stream import stream
 
 # Command
 PLAYLIST_COMMAND = ["playlist"]
@@ -97,7 +97,7 @@ async def check_playlist(client, message: Message, _):
         count += 1
         msg += f"\n\n{count}- {title[:70]}\n"
         msg += _["playlist_5"].format(duration)
-    link = await UTTAMbin(msg)
+    link = await PRObin(msg)
     lines = msg.count("\n")
     if lines >= 17:
         car = os.linesep.join(msg.split(os.linesep)[:17])
