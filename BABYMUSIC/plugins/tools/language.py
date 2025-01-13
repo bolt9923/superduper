@@ -23,22 +23,25 @@ def lanuages_keyboard(_):
         ]
     )
     keyboard.row(
-        InlineKeyboardButton(
-            text=_["BACK_BUTTON"],
-            callback_data=f"settingsback_helper",
-        ),
         InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data=f"close"),
     )
     return keyboard
 
 
-@app.on_message(filters.command(["lang", "setlang", "language"]) & ~BANNED_USERS)
+@app.on_message(
+    (filters.text & filters.regex("^(Language 🌐)$")) | 
+    (filters.command(["lang", "language"])) & ~BANNED_USERS
+)
 @language
 async def langs_command(client, message: Message, _):
-    keyboard = lanuages_keyboard(_)
+    # Get the language selection keyboard
+    keyboard = languages_keyboard(_)
+    
+    # Respond with the language selection message
     await message.reply_text(
-        _["lang_1"],
-        reply_markup=keyboard,
+        _["lang_1"],  # Placeholder text for the language selection message
+        reply_markup=InlineKeyboardMarkup(keyboard),  # InlineKeyboardMarkup for languages
+        parse_mode="markdown",  # Optional: Format text as Markdown
     )
 
 
