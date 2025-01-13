@@ -313,12 +313,12 @@ async def start_pm(client, message: Message, _):
             user_data = await get_user_data(user_id)
             if user_data and 'referrer' in user_data and user_data['referrer'] == referrer_id:
                 # If the referral is already used
-                await message.reply_text("❌ This referral link has already been used by you.")
+                await message.reply_text("This referral link has already been used by you.")
                 return
 
             if referrer and referrer_id != user_id:
+                # Save the referral in the database and update referrer points
                 await update_referrer(referrer_id)
-                # Mark the user as using this referral link
                 await update_user_data(user_id, {"referrer": referrer_id})
 
                 # Send message to the referrer
@@ -345,6 +345,7 @@ async def start_pm(client, message: Message, _):
         user_status = "[VIP 💳]"
     else:
         user_status = "[Regular 👥]"
+
     # Generate referral link
     referral_link = f"https://t.me/{client.me.username}?start={user_id}"
 
@@ -371,6 +372,7 @@ async def start_pm(client, message: Message, _):
             chat_id=config.LOGGER_ID,
             text=f"✦ {mention} just started the bot.\n\n✦ <b>User ID ➠</b> <code>{user_id}</code>\n✦ <b>Username ➠</b> @{message.from_user.username}",
         )
+
 
 @app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
 @LanguageStart
