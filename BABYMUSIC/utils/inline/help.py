@@ -117,13 +117,16 @@ def second_page(_):
 
 
 def help_pannel(_, START: Union[bool, int] = None):
-    first = [InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data=f"close")]
+    first = [InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close")]
     second = [
         InlineKeyboardButton(
             text=_["BACK_BUTTON"],
-            callback_data=f"settingsback_helper",
+            callback_data="settingsback_helper",
         ),
-        InlineKeyboardButton(text=_["CLOSEMENU_BUTTON"], callback_data=f"close"),
+        InlineKeyboardButton(
+            text=_["CLOSEMENU_BUTTON"] if "CLOSEMENU_BUTTON" in _ else "Close Menu",
+            callback_data="close",
+        ),
     ]
     mark = second if START else first
     upl = InlineKeyboardMarkup(
@@ -167,8 +170,8 @@ def help_pannel(_, START: Union[bool, int] = None):
                 ),
             ],
             [
-                            InlineKeyboardButton(text="🔸UNTOLD CODER🔸", url=f"https://t.me/UNTOLD_CODER4"),
-                            InlineKeyboardButton(text="▪️ABOUT UNTOLD▪️", url=f"https://t.me/UNTOLD_CODER"),
+                InlineKeyboardButton(text="🔸UNTOLD CODER🔸", url=f"https://t.me/UNTOLD_CODER4"),
+                InlineKeyboardButton(text="▪️ABOUT UNTOLD▪️", url=f"https://t.me/UNTOLD_CODER"),
             ],
             [
                 InlineKeyboardButton(
@@ -190,6 +193,7 @@ def help_pannel(_, START: Union[bool, int] = None):
         ]
     )
     return upl
+
 
 
 def help_back_markup(_):
