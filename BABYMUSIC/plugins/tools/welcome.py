@@ -1,14 +1,8 @@
-from SONALI import app
-from pyrogram.errors import RPCError, UserAlreadyParticipant, ChatAdminRequired, InviteRequestSent, UserNotParticipant
-from pyrogram.types import ChatMemberUpdated, InlineKeyboardMarkup, InlineKeyboardButton, Message, ChatJoinRequest
-from pyrogram import Client, filters, enums
-from pyrogram.enums import ParseMode, ChatMemberStatus
+from BABYMUSIC import app
+from pyrogram.errors import RPCError
+from pyrogram.types import ChatMemberUpdated, InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram import filters, enums
 from logging import getLogger
-from SONALI.utils.database import add_served_chat, get_assistant, is_active_chat
-from SONALI.misc import SUDOERS
-import asyncio
-import random
-import os
 
 LOGGER = getLogger(__name__)
 
@@ -17,92 +11,69 @@ class WelDatabase:
         self.data = {}
 
     async def find_one(self, chat_id):
-        return chat_id in self.data
+        """Check the welcome notification state for a chat."""
+        return self.data.get(chat_id, {"state": "on"})  # Default state is "on"
 
-    async def add_wlcm(self, chat_id):
-        if chat_id not in self.data:
-            self.data[chat_id] = {"state": "on"}  # Default state is "on"
-
-    async def rm_wlcm(self, chat_id):
-        if chat_id in self.data:
-            del self.data[chat_id]
+    async def set_state(self, chat_id, state):
+        """Set the state of welcome notifications for a chat."""
+        self.data[chat_id] = {"state": state}
 
 wlcm = WelDatabase()
 
-class temp:
-    ME = None
-    CURRENT = 2
-    CANCEL = False
-    MELCOW = {}
-    U_NAME = None
-    B_NAME = None
-
 @app.on_message(filters.command("welcome") & ~filters.private)
 async def auto_state(_, message):
-    usage = "**ᴜsᴀɢᴇ:**\n**⦿ /welcome [on|off]**"
+    usage = "**Usage:**\n`/welcome [on|off]`"
     if len(message.command) == 1:
         return await message.reply_text(usage)
     
     chat_id = message.chat.id
-    user = await app.get_chat_member(message.chat.id, message.from_user.id)
+    user = await app.get_chat_member(chat_id, message.from_user.id)
     
-    if user.status in (
-        enums.ChatMemberStatus.ADMINISTRATOR,
-        enums.ChatMemberStatus.OWNER,
-    ):
-        A = await wlcm.find_one(chat_id)
-        state = message.text.split(None, 1)[1].strip().lower()
-        
-        if state == "off":
-            if A:
-                await message.reply_text("**ᴡᴇʟᴄᴏᴍᴇ ɴᴏᴛɪғɪᴄᴀᴛɪᴏɴ ᴀʟʀᴇᴀᴅʏ ᴅɪsᴀʙʟᴇᴅ !**")
-            else:
-                await wlcm.add_wlcm(chat_id)
-                await message.reply_text(f"**ᴅɪsᴀʙʟᴇᴅ ᴡᴇʟᴄᴏᴍᴇ ɴᴏᴛɪғɪᴄᴀᴛɪᴏɴ ɪɴ** {message.chat.title}")
-        
-        elif state == "on":
-            if not A:
-                await wlcm.add_wlcm(chat_id)  # Corrected from rm_wlcm to add_wlcm for "on"
-                await message.reply_text(f"**ᴇɴᴀʙʟᴇᴅ ᴡᴇʟᴄᴏᴍᴇ ɴᴏᴛɪғɪᴄᴀᴛɪᴏɴ ɪɴ** {message.chat.title}")
-        else:
-            await message.reply_text(usage)
-    else:
-        await message.reply("**sᴏʀʀʏ ᴏɴʟʏ ᴀᴅᴍɪɴs ᴄᴀɴ ᴇɴᴀʙʟᴇ ᴡᴇʟᴄᴏᴍᴇ ɴᴏᴛɪғɪᴄᴀᴛɪᴏɴ!**")
+    if user.status not in (enums.ChatMemberStatus.ADMINISTRATOR, enums.ChatMemberStatus.OWNER):
+        return await message.reply("**You need to be an admin to do this.!**")
+    
+    state = message.text.split(None, 1)[1].strip().lower()
+    if state not in ["on", "off"]:
+        return await message.reply_text(usage)
+    
+    current_state = await wlcm.find_one(chat_id)
+    if current_state["state"] == state:
+        return await message.reply_text(
+            f"**Welcome notifications are already `{state}` for this chat!**"
+        )
+    
+    # Update the state in the database
+    await wlcm.set_state(chat_id, state)
+    await message.reply_text(
+        f"**Welcome notifications have been turned `{state}` in {message.chat.title}.**"
+    )
 
 @app.on_chat_member_updated(filters.group, group=-3)
 async def greet_new_member(_, member: ChatMemberUpdated):
     chat_id = member.chat.id
-    count = await app.get_chat_members_count(chat_id)
-    A = await wlcm.find_one(chat_id)
+    welcome_state = await wlcm.find_one(chat_id)
 
-    # If the welcome message is disabled for the chat, do nothing
-    if A:
+    # Skip sending welcome messages if the state is "off"
+    if welcome_state["state"] == "off":
         return
 
-    user = None
-    if member.new_chat_member:
-        user = member.new_chat_member.user
-    elif member.old_chat_member:
-        user = member.old_chat_member.user
-    
+    user = member.new_chat_member.user if member.new_chat_member else None
     if not user:
-        return  # Exit if no user found in the update
-    
+        return
+
     try:
-        # Welcome message
-        welcome_message = f"**👋 {user.mention}, Wᴇʟᴄᴏᴍᴇ Tᴏ {member.chat.title}!\n\n" \
-                          "• I Hᴏᴘᴇ Yᴏᴜ Aʀᴇ Fɪɴᴇ!\n\n" \
-                          "• Pʟᴇᴀsᴇ Aʟᴡᴀʏs Fᴏʟʟᴏᴡ Tʜᴇ Gʀᴏᴜᴘ Rᴜʟᴇs!\n" \
-                          "────────────────────\n" \
-                          f"ᴛ ᴏ ᴛ ᴀ ʟ ᴍ ᴇ ᴍ ʙ ᴇ ʀ: {count}\n" \
-                          "────────────────────**"
-        
-        # Creating an inline button to "Join 👋" with the link
+        count = await app.get_chat_members_count(chat_id)
+        welcome_message = (
+            f"**Hey {user.mention} how are you?, Welcome to {member.chat.title}!\n\n"
+            "• I hope you are doing well!\n"
+            "• Please make sure to follow the group rules.\n"
+            "────────────────────\n"
+            f"Total Members: {count}\n"
+            "────────────────────**"
+        )
         keyboard = InlineKeyboardMarkup(
             [[InlineKeyboardButton("Join 👋", url="https://t.me/BABY09_WORLD")]]
         )
-
-        # Send the welcome message with the inline button
         await app.send_message(chat_id, welcome_message, reply_markup=keyboard)
     except Exception as e:
         LOGGER.error(f"Error sending welcome message: {e}")
