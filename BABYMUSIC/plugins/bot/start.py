@@ -68,11 +68,44 @@ referral link share
 Do you want directly purchase points
 contact:- @UTTAM470"""
 
+SETTING = """ Select settings options
+what do you want to know"""
+
+ABOUT = """
+🎶 About Music Bot Clone Features 🎧
+
+Our Music Bot Clone comes with advanced features to make your streaming experience even better! 🚀
+
+✨ **Top Features:**
+  
+🔊 **High-Quality Audio** – Enjoy crystal-clear sound on all tracks.  
+🎥 **Video Streaming** – Supports video as well as audio streaming.  
+⚡ **Fast Response Time** – Instant playback without any lag.  
+🛡️ **No YouTube IP Block** – Stream without any interruptions.  
+🧑‍💻 **Customizable Commands** – Tailor the bot's commands to fit your needs.  
+🎚️ **Adjust Playback Speed** – Control audio speed in both group and channel.  
+💬 **Interactive Features** – Includes user commands like play, pause, skip, volume control, and more.  
+💻 **Supports Multiple Sources** – Works with YouTube, SoundCloud, and other media platforms.  
+📈 **Minimal Downtime** – High uptime with a reliable server structure.  
+🛠️ **Regular Updates** – Stay up-to-date with continuous improvements.
+
+🔒 **Security and Privacy:**
+🔑 **Admin Control** – Only admins can modify settings and manage playback.  
+🚫 **Anti-Spam** – Protects groups and channels from spam.  
+👥 **Role-based Access** – Grant different levels of access to users.
+
+🎉 **Join Now and Enjoy Seamless Streaming!**
+🌐 More info. Join @BABY09_WORLD 📢
+"""
+
 CLONESS = [
     ["Mybots 🤖"],
     ["Back to home 🏠"],
 ]
 
+CHOICE = [
+    ["About 🖥️", "Help Menu ❗️"],
+    ["Back to home 🏠"],
 
 CHOICE = [
     ["Profile 🪪", "Settings ⚙️"],
@@ -91,7 +124,22 @@ async def refer_handler(client, message):
         parse_mode=ParseMode.HTML  # Apply parse_mode here for text formatting
     )
 
+@app.on_message(filters.private & filters.text & ~BANNED_USERS & filters.regex("^About 🖥️$"))
+async def about_handler(client, message):
+    await message.reply_text(
+        text=ABOUT  # Ensure ABOUT contains valid text
+    )
 
+    
+@app.on_message(filters.private & filters.text & ~BANNED_USERS & filters.regex("^Settings ⚙️$"))
+async def setting_handler(client, message):
+    await message.reply_text(
+        text=SETTING,  # Ensure CLONES contains valid text
+        reply_markup=ReplyKeyboardMarkup(
+            SETTINGS,  # This should be a list of button rows
+            resize_keyboard=True
+        ),
+    )
 
 @app.on_message(filters.private & filters.text & ~BANNED_USERS & filters.regex("^Back to home 🏠$"))
 async def refer_handler(client, message):
