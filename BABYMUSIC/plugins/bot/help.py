@@ -22,7 +22,7 @@ user_command_count = {}
 SPAM_THRESHOLD = 2
 SPAM_WINDOW_SECONDS = 5
 
-@app.on_message(filters.command(["help"]) & filters.private & ~BANNED_USERS)
+@app.on_message(filters.private & filters.text & ~BANNED_USERS & filters.regex("^Help Menu ❗️$"))
 @app.on_callback_query(filters.regex("settings_back_helper") & ~BANNED_USERS)
 async def helper_private(
     client: app, update: Union[types.Message, types.CallbackQuery]
@@ -94,7 +94,7 @@ async def helper_cb(client, CallbackQuery, _):
     if cb == "hb9":
         if CallbackQuery.from_user.id not in SUDOERS:
             return await CallbackQuery.answer(
-                "😎𝗣𝗔𝗛𝗟𝗘 𓆩𝗦𝗛𝗜𝗩𝗔𝗡𝗦𝗛𓆪 𝗞𝗢 𝗣𝗔𝗣𝗔 𝗕𝗢𝗟 𝗝𝗔𝗞𝗘 😆😆", show_alert=True
+                "Fuck you mc! 🤭", show_alert=True
             )
         else:
             await CallbackQuery.edit_message_text(helpers.HELP_9, reply_markup=keyboard)
