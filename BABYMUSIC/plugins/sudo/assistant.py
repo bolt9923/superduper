@@ -2,9 +2,9 @@ import os
 from inspect import getfullargspec
 from pyrogram.types import Message
 from pyrogram import filters
-from SONALI import app
-from SONALI.misc import SUDOERS
-from SONALI.utils.database import get_client
+from BABYMUSIC import app
+from BABYMUSIC.misc import SUDOERS
+from BABYMUSIC.utils.database import get_client
 
 ASSISTANT_PREFIX = "."
 
