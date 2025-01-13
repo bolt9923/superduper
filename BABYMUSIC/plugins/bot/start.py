@@ -103,9 +103,10 @@ CLONESS = [
     ["Back to home 🏠"],
 ]
 
-CHOICE = [
+SETTINGS = [
     ["About 🖥️", "Help Menu ❗️"],
     ["Back to home 🏠"],
+]
 
 CHOICE = [
     ["Profile 🪪", "Settings ⚙️"],
