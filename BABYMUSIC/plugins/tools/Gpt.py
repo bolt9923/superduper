@@ -22,7 +22,7 @@ async def chat_gpt(bot, message):
         if len(message.command) < 2:
             # If no question is asked, send an example message
             await message.reply_text(
-                "❍ ᴇxᴀᴍᴘʟᴇ:**\n\n/gpt where is tajmahal?"
+                "Example :**\n\n/gpt where is tajmahal?"
             )
         else:
             # Extract the query from the user's message
