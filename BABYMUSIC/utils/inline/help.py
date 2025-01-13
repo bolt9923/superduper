@@ -85,7 +85,7 @@ def first_page(_):
                     text=_["H_B_23"], callback_data="help_callback hb23"
                 ),
                 InlineKeyboardButton(
-                    text=_["H_B_24"], callback_data="help_callback hb21"
+                    text=_["H_B_24"], callback_data="help_callback hb24"
                 ),
             ],
             #[
