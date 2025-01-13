@@ -13,7 +13,7 @@ from BABYMUSIC.utils.database import get_client, is_active_chat, is_autoend
 async def auto_leave():
     if config.AUTO_LEAVING_ASSISTANT:
         while not await asyncio.sleep(900):  # हर 15 मिनट में चेक करता रहेगा
-            from SONALI.core.userbot import assistants
+            from BABYMUSIC.core.userbot import assistants
 
             for num in assistants:
                 client = await get_client(num)
