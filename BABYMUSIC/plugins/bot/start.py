@@ -378,13 +378,24 @@ async def start_pm(client, message: Message, _):
 @app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
 @LanguageStart
 async def start_gp(client, message: Message, _):
-    out = start_panel(_)
-    uptime = int(time.time() - _boot_)
-    await message.reply_text(
-        text=_["start_1"].format(app.mention, get_readable_time(uptime)),
-        reply_markup=InlineKeyboardMarkup(out),
+    # Create an InlineKeyboardButton with the correct URL
+    help_button = InlineKeyboardButton(
+        text="Click me for help!",
+        url=f"http://t.me/{client.me.username}?start=help_"
     )
+
+    # Create an InlineKeyboardMarkup with the button
+    reply_markup = InlineKeyboardMarkup([[help_button]])
+
+    # Send the message with the button
+    await message.reply_text(
+        text="Contact me in PM for help!",
+        reply_markup=reply_markup
+    )
+
+    # Add the served chat to the database
     return await add_served_chat(message.chat.id)
+
 
 @app.on_message(filters.new_chat_members, group=-1)
 async def welcome(client, message: Message):
