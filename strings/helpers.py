@@ -156,3 +156,121 @@ CLONE_HELP = """
 
 Give Bot Token After /clone Command From @Botfather.
 """
+
+HELP_16 = """
+<b><u>GPT ai command :</b></u>
+/ask ➠ Queries the ai model to get a response to your questions.
+"""
+
+HELP_17 = """
+<b><u>STICKER COMMAND :</b></u>
+
+/packkang ➠ Creates a pack of stickers from a other pack.
+/stickerid ➠ Get the stickers id of a sticker.
+'''
+
+HELP_18 = """
+<b><u>Tᴀɢ ᴄᴏᴍᴍᴀɴᴅꜱ:</b></u>
+
+✿ ᴄʜᴏᴏsᴇ ᴛᴀɢ ɪɴ ʏᴏᴜʀ ᴄʜᴀᴛ ✿
+
+๏ /gmtag ➛ ɢᴏᴏᴅ ᴍᴏʀɴɪɴɢ 
+ᴛᴀɢ sᴛᴏᴘ ⇴ /gmstop
+
+๏ /gntag ➛ ɢᴏᴏᴅ ɴɪɢʜᴛ ᴛᴀɢ sᴛᴏᴘ ⇴ /gnstop
+
+๏ /tagall ➛ ʀᴀɴᴅᴏᴍ ᴍᴇssᴀɢᴇ ᴛᴀɢ sᴛᴏᴘ ⇴ /tagoff /tagstop
+
+๏ /hitag ➛ ʀᴀɴᴅᴏᴍ ʜɪɴᴅɪ ᴍᴇssᴀɢᴇ ᴛᴀɢ sᴛᴏᴘ ⇴/histop
+
+๏ /shayari ➛ ʀᴀɴᴅᴏᴍ sʜᴀʏᴀʀɪ ᴛᴀɢ sᴛᴏᴘ ⇴ /shstop
+
+๏ /utag ➛ ᴀɴʏ ᴡʀɪᴛᴛᴇɴ ᴛᴇxᴛ ᴛᴀɢ sᴛᴏᴘ ⇴ /cancel 
+
+๏ /vctag ➛ ᴠᴏɪᴄᴇ ᴄʜᴀᴛ ɪɴᴠɪᴛᴇ ᴛᴀɢ sᴛᴏᴘ ⇴ /vcstop
+"""
+
+HELP_Info = '''Iɴꜰᴏ
+
+<b><u>Iɴꜰᴏ ᴄᴏᴍᴍᴀɴᴅꜱ :</b></u>
+
+/id : ɢᴇᴛ ᴛʜᴇ ᴄᴜʀʀᴇɴᴛ ɢʀᴏᴜᴘ ɪᴅ. ɪғ ᴜsᴇᴅ ʙʏ ʀᴇᴘʟʏɪɴɢ ᴛᴏ ᴀ ᴍᴇssᴀɢᴇ, ɢᴇᴛs ᴛʜᴀᴛ ᴜsᴇʀ's ɪᴅ.
+/info : ɢᴇᴛ ɪɴғᴏʀᴍᴀᴛɪᴏɴ ᴀʙᴏᴜᴛ ᴀ ᴜsᴇʀ.
+/github <ᴜsᴇʀɴᴀᴍᴇ> : ɢᴇᴛ ɪɴғᴏʀᴍᴀᴛɪᴏɴ ᴀʙᴏᴜᴛ ᴀ ɢɪᴛʜᴜʙ ᴜsᴇʀ.
+'''
+HELP_Group = '''Gʀᴏᴜᴘ
+
+<b><u>Gʀᴏᴜᴘ ᴄᴏᴍᴍᴀɴᴅꜱ :</b></u>
+
+ᴛʜᴇsᴇ ᴀʀᴇ ᴛʜᴇ ᴀᴠᴀɪʟᴀʙʟᴇ ɢʀᴏᴜᴘ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ ᴄᴏᴍᴍᴀɴᴅs:
+
+⦿ /pin ➠ ᴘɪɴs ᴀ ᴍᴇssᴀɢᴇ ɪɴ ᴛʜᴇ ɢʀᴏᴜᴘ.
+⦿ /pinned ➠ ᴅɪsᴘʟᴀʏs ᴛʜᴇ ᴘɪɴɴᴇᴅ ᴍᴇssᴀɢᴇ ɪɴ ᴛʜᴇ ɢʀᴏᴜᴘ.
+⦿ /unpin ➠ ᴜɴᴘɪɴs ᴛʜᴇ ᴄᴜʀʀᴇɴᴛʟʏ ᴘɪɴɴᴇᴅ ᴍᴇssᴀɢᴇ.
+⦿ /staff ➠ ᴅɪsᴘʟᴀʏs ᴛʜᴇ ʟɪsᴛ ᴏғ sᴛᴀғғ ᴍᴇᴍʙᴇʀs.
+⦿ /bots ➠ ᴅɪsᴘʟᴀʏs ᴛʜᴇ ʟɪsᴛ ᴏғ ʙᴏᴛs ɪɴ ᴛʜᴇ ɢʀᴏᴜᴘ.
+⦿ /settitle ➠ sᴇᴛs ᴛʜᴇ ᴛɪᴛʟᴇ ᴏғ ᴛʜᴇ ɢʀᴏᴜᴘ.
+⦿ /setdiscription ➠ sᴇᴛs ᴛʜᴇ ᴅᴇsᴄʀɪᴘᴛɪᴏɴ ᴏғ ᴛʜᴇ ɢʀᴏᴜᴘ.
+⦿ /setphoto ➠ sᴇᴛs ᴛʜᴇ ɢʀᴏᴜᴘ ᴘʜᴏᴛᴏ.
+⦿ /removephoto ➠ ʀᴇᴍᴏᴠᴇs ᴛʜᴇ ɢʀᴏᴜᴘ ᴘʜᴏᴛᴏ.
+⦿ /zombies ➠ ʀᴇᴍᴏᴠᴇs ᴀᴄᴄ ᴅᴇʟᴇᴛᴇᴅ ᴍᴇᴍʙᴇʀs ғʀᴏᴍ ᴛʜᴇ ɢʀᴏᴜᴘ.
+⦿ /imposter ᴏɴ/ᴏғғ ➠ ᴛᴜʀɴs ᴏɴ ᴏʀ ᴏғғ ᴛʜᴇ ᴡᴀᴛᴄʜᴇʀ ғᴏʀ ʏᴏᴜʀ ɢʀᴏᴜᴘ, ᴡʜɪᴄʜ ɴᴏᴛɪғɪᴇs ᴀʙᴏᴜᴛ ᴜsᴇʀs ᴡʜᴏ ᴄʜᴀɴɢᴇ ᴛʜᴇɪʀ ɴᴀᴍᴇ ᴏʀ ᴜsᴇʀɴᴀᴍᴇ.
+'''
+
+HELP_Extra = '''Exᴛʀᴀ
+
+<b><u>Extra comm :</b></u>
+
+⦿ /math ➠ sᴏʟᴠᴇs ᴍᴀᴛʜᴇᴍᴀᴛɪᴄᴀʟ ᴘʀᴏʙʟᴇᴍs ᴀɴᴅ ᴇǫᴜᴀᴛɪᴏɴs.
+⦿ /blackpink ➠ ɢᴇɴᴇʀᴀᴛᴇs ᴀ ʙʟᴀᴄᴋᴘɪɴᴋ-sᴛʏʟᴇ ʟᴏɢᴏ.
+⦿ /carbon ➠ ɢᴇɴᴇʀᴀᴛᴇs ᴀ ᴄᴀʀʙᴏɴ ᴄᴏᴅᴇ ɪᴍᴀɢᴇ ғʀᴏᴍ ᴀ ᴄᴏᴅᴇ sɴɪᴘᴘᴇᴛ.
+⦿ /speedtest ➠ ᴍᴇᴀsᴜʀᴇs ᴛʜᴇ ɪɴᴛᴇʀɴᴇᴛ sᴘᴇᴇᴅ.
+⦿ /reverse ➠ ʀᴇᴠᴇʀsᴇs ᴀ ɢɪᴠᴇɴ ᴛᴇxᴛ.
+⦿ /webss ➠ ᴛᴀᴋᴇs ᴀ sᴄʀᴇᴇɴsʜᴏᴛ ᴏғ ᴀ ᴡᴇʙsɪᴛᴇ.
+⦿ /paste ➠ ᴜᴘʟᴏᴀᴅs ᴀ ᴛᴇxᴛ sɴɪᴘᴘᴇᴛ ᴛᴏ ᴛʜᴇ ᴄʟᴏᴜᴅ ᴀɴᴅ ɢɪᴠᴇs ᴀ ʟɪɴᴋ.
+⦿ /tgm ➠ ᴜᴘʟᴏᴀᴅs ᴀ ᴘʜᴏᴛᴏ (ᴜɴᴅᴇʀ 𝟻ᴍʙ) ᴛᴏ ᴛʜᴇ ᴄʟᴏᴜᴅ ᴀɴᴅ ɢɪᴠᴇs ᴀ ʟɪɴᴋ.
+⦿ /tr ➠ ᴛʀᴀɴsʟᴀᴛᴇs ᴛᴇxᴛ.
+⦿ /google ➠ sᴇᴀʀᴄʜᴇs ғᴏʀ ɪɴғᴏʀᴍᴀᴛɪᴏɴ ᴏɴ ɢᴏᴏɢʟᴇ.
+⦿ /stack ➠ sᴇᴀʀᴄʜᴇs ғᴏʀ ᴘʀᴏɢʀᴀᴍᴍɪɴɢ-ʀᴇʟᴀᴛᴇᴅ ɪɴғᴏʀᴍᴀᴛɪᴏɴ ᴏɴ sᴛᴀᴄᴋ ᴏᴠᴇʀғʟᴏᴡ.
+'''
+
+HELP_Image = '''Iᴍᴀɢᴇ
+
+<b><u>Iᴍᴀɢᴇ ᴄᴏᴍᴍᴀɴᴅꜱ :</b></u>
+
+⦿ /draw ➠ ɢᴇɴᴇʀᴀᴛᴇs ᴀ ᴅʀᴀᴡɪɴɢ ʙᴀsᴇᴅ ᴏɴ ᴀ ɢɪᴠᴇɴ ᴘᴏʀᴏᴍᴘᴛ.
+⦿ /image ➠ sᴇᴀʀᴄʜᴇs ғᴏʀ ᴀɴ ɪᴍᴀɢᴇ ʙᴀsᴇᴅ ᴏɴ ᴀ ɢɪᴠᴇɴ ᴋᴇʏᴡᴏʀᴅ.
+⦿ /upscale ➠ ʀᴇᴘʟʏ ᴛᴏ ᴀɴ ɪᴍᴀɢᴇ ᴛᴏ ᴜᴘsᴄᴀʟᴇ ɪᴛ ᴀɴᴅ ɪᴍᴘʀᴏᴠᴇ ɪᴛs ǫᴜᴀʟɪᴛʏ.
+'''
+HELP_Action = '''Aᴄᴛɪᴏɴ
+
+<b><u>Aᴄᴛɪᴏɴ ᴄᴏᴍᴍᴀɴᴅꜱ :</b></u>
+
+» ᴀᴠᴀɪʟᴀʙʟᴇ ᴄᴏᴍᴍᴀɴᴅs ꜰᴏʀ Bᴀɴs & Mᴜᴛᴇ :
+
+ ❍ /kickme: kicks the user who issued the command
+
+Admins only:
+ ❍ /ban <userhandle>: bans a user. (via handle, or reply)
+ ❍ /sban <userhandle>: Silently ban a user. Deletes command, Replied message and doesn't reply. (via handle, or reply)
+ ❍ /tban <userhandle> x(m/h/d): bans a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
+ ❍ /unban <userhandle>: unbans a user. (via handle, or reply)
+ ❍ /kick <userhandle>: kicks a user out of the group, (via handle, or reply)
+ ❍ /mute <userhandle>: silences a user. Can also be used as a reply, muting the replied to user.
+ ❍ /tmute <userhandle> x(m/h/d): mutes a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
+ ❍ /unmute <userhandle>: unmutes a user. Can also be used as a reply, muting the replied to user.
+__
+𝐒ᴘᴇᴄɪᴀʟ 𝐂ᴏᴍᴍᴀɴᴅs 𝐒ᴜᴘᴘᴏʀᴛ 𝐀ʟʟ 𝐄xᴀᴍᴘʟᴇ  - 𝚈𝚞𝚖𝚒 𝚋𝚊𝚗 𝚈𝚞𝚖𝚒 𝚖𝚞𝚝𝚎 𝚈𝚞𝚖𝚒 𝚙𝚛𝚘𝚖𝚘𝚝𝚎 ..... 𝚎𝚝𝚌
+'''
+HELP_Search = '''Sᴇᴀʀᴄʜ
+
+<b><u>Sᴇᴀʀᴄʜ ᴄᴏᴍᴍᴀɴᴅꜱ :</b></u>
+
+• /google <query> : Search the google for the given query.
+• /anime <query>  : Search myanimelist for the given query.
+• /stack <query>  : Search stackoverflow for the given query.
+• /image (/imgs) <query> : Get the images regarding to your query
+
+Example:
+/google pyrogram: return top 5 reuslts.
+'''
