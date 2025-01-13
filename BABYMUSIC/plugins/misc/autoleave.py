@@ -138,8 +138,3 @@ async def auto_end():
 # दोनों फंक्शन्स को असिंक्रोनस रूप से शुरू करें
 asyncio.create_task(auto_leave())
 asyncio.create_task(auto_end())
-
-
-# दोनों फंक्शन्स को असिंक्रोनस रूप से शुरू करें
-asyncio.create_task(auto_leave())
-asyncio.create_task(auto_end())
