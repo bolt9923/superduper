@@ -1,6 +1,7 @@
 from pykeyboard import InlineKeyboard
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, Message
+from pyrogram.enums import ParseMode  # Import ParseMode
 
 from BABYMUSIC import app
 from BABYMUSIC.utils.database import get_lang, set_lang
