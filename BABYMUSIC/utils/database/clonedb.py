@@ -23,6 +23,13 @@ async def update_user_points(user_id: int, new_points: int):
         {"$set": {"points": new_points}}
     )
 
+# Update user data (like referrer)
+async def update_user_data(user_id: int, update_data: Dict):
+    await users_collection.update_one(
+        {"user_id": user_id},
+        {"$set": update_data}
+    )
+    
 # Get user data
 async def get_user_data(user_id: int) -> Union[Dict, None]:
     return await users_collection.find_one({"user_id": user_id})
