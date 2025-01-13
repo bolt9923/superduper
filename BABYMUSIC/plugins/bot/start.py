@@ -377,11 +377,11 @@ async def start_pm(client, message: Message, _):
 
 @app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
 @LanguageStart
-async def start_gp(client, message: Message, _):
+async def start_gp(client, message: Message):
     # Create an InlineKeyboardButton with the correct URL
     help_button = InlineKeyboardButton(
         text="Click me for help!",
-        url=f"http://t.me/{client.me.username}?start=help_"
+        url=f"http://t.me/{client.me.username}?start=help"
     )
 
     # Create an InlineKeyboardMarkup with the button
