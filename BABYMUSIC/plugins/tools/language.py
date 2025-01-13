@@ -40,7 +40,7 @@ async def langs_command(client, message: Message, _):
     # Respond with the language selection message
     await message.reply_text(
         _["lang_1"],  # Placeholder text for the language selection message
-        reply_markup=InlineKeyboardMarkup(keyboard),  # InlineKeyboardMarkup for languages
+        reply_markup=InlineKeyboardButton(keyboard),  # InlineKeyboardMarkup for languages
         parse_mode="markdown",  # Optional: Format text as Markdown
     )
 
