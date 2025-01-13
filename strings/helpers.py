@@ -172,20 +172,20 @@ HELP_17 = """
 HELP_18 = """
 <b><u>Tag command: </b></u>
 
-๏ /gmtag ➛ Good morning 
+/gmtag ➛ Good morning 
 Tag stop ⇴ /gmstop
 
-๏ /gntag ➛ Good night tag stop ⇴ /gnstop
+/gntag ➛ Good night tag stop ⇴ /gnstop
 
-๏ /tagall ➛ Random message tag stop ⇴ /tagoff /tagstop
+/tagall ➛ Random message tag stop ⇴ /tagoff /tagstop
 
-๏ /hitag ➛ Random hindi message tag stop ⇴/histop
+/hitag ➛ Random hindi message tag stop ⇴/histop
 
-๏ /shayari ➛ Random shayari tag stop ⇴ /shstop
+/shayari ➛ Random shayari tag stop ⇴ /shstop
 
-๏ /utag ➛ Any written text tag stop ⇴ /cancel 
+/utag ➛ Any written text tag stop ⇴ /cancel 
 
-๏ /vctag ➛ Voice chat invite tag stop ⇴ /vcstop
+/vctag ➛ Voice chat invite tag stop ⇴ /vcstop
 """
 
 
