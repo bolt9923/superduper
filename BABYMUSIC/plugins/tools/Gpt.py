@@ -3,7 +3,8 @@ from BABYMUSIC import app
 from pyrogram.types import Message
 from pyrogram.enums import ChatAction, ParseMode
 from pyrogram import filters
-from config import API_KEY
+
+API_KEY = "abacf43bf0ef13f467283e5bc03c2e1f29dae4228e8c612d785ad428b32db6ce"
 
 BASE_URL = "https://api.together.xyz/v1/chat/completions"
 
@@ -21,7 +22,7 @@ async def chat_gpt(bot, message):
         if len(message.command) < 2:
             # If no question is asked, send an example message
             await message.reply_text(
-                "❍ ᴇxᴀᴍᴘʟᴇ:**\n\n/chatgpt Where is TajMahal? "
+                "❍ ᴇxᴀᴍᴘʟᴇ:**\n\n/chatgpt ᴡʜᴏ ɪs ᴛʜᴇ ᴏᴡɴᴇʀ ᴏғ ˹ ʙʙʏ-ᴍᴜsɪᴄ ™˼𓅂?"
             )
         else:
             # Extract the query from the user's message
@@ -54,9 +55,9 @@ async def chat_gpt(bot, message):
 
             # If the response is empty or not successful, handle the error
             if response.status_code != 200:
-                await message.reply_text(f"❍ ᴇʀʀᴏʀ: API request failed. Status code: {response.status_code}")
+                await message.reply_text(f"Error: API request failed. Status code: {response.status_code}")
             elif not response.text.strip():
-                await message.reply_text("❍ ᴇʀʀᴏʀ: API se koi valid data nahi mil raha hai. Response was empty.")
+                await message.reply_text("Error: API se koi valid data nahi mil raha hai. Response was empty.")
             else:
                 # Attempt to parse the JSON response
                 try:
@@ -67,13 +68,13 @@ async def chat_gpt(bot, message):
                     if "choices" in response_data and len(response_data["choices"]) > 0:
                         result = response_data["choices"][0]["message"]["content"]
                         await message.reply_text(
-                            f"{result}",
+                            f"{result} \n\nQuery by @{client.username}",
                             parse_mode=ParseMode.MARKDOWN
                         )
                     else:
-                        await message.reply_text("❍ ᴇʀʀᴏʀ: No response from API.")
+                        await message.reply_text("Error: No response from API.")
                 except ValueError:
-                    await message.reply_text("❍ ᴇʀʀᴏʀ: Invalid response format.")
+                    await message.reply_text("Error: Invalid response format.")
     except Exception as e:
         # Catch any other exceptions and send an error message
-        await message.reply_text(f"**❍ ᴇʀʀᴏʀ: {e} ")
+        await message.reply_text(f"**Error: {e} ")
