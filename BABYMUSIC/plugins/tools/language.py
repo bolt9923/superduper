@@ -2,9 +2,9 @@ from pykeyboard import InlineKeyboard
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, Message
 
-from SONALI import app
-from SONALI.utils.database import get_lang, set_lang
-from SONALI.utils.decorators import ActualAdminCB, language, languageCB
+from BABYMUSIC import app
+from BABYMUSIC.utils.database import get_lang, set_lang
+from BABYMUSIC.utils.decorators import ActualAdminCB, language, languageCB
 from config import BANNED_USERS
 from strings import get_string, languages_present
 
@@ -32,7 +32,10 @@ def lanuages_keyboard(_):
     return keyboard
 
 
-@app.on_message(filters.command(["lang", "setlang", "language"]) & ~BANNED_USERS)
+@app.on_message(
+    (filters.text & filters.regex("^(Language 🌐)$")) | 
+    (filters.command(["lang", "language"])) & ~BANNED_USERS
+)
 @language
 async def langs_command(client, message: Message, _):
     keyboard = lanuages_keyboard(_)
