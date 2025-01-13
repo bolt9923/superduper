@@ -95,7 +95,7 @@ async def auto_end():
                         current_participants = await userbot.get_call_members(chat_id)
 
                         if len(current_participants) <= 1:  # अगर कोई अन्य सदस्य नहीं है
-                            await RAUSHAN.stop_stream(chat_id)
+                            await BABY.stop_stream(chat_id)
                             await app.send_message(
                                 chat_id,
                                 "No one joined the voice chat, the song is ending due to inactivity.",
@@ -110,7 +110,7 @@ async def auto_end():
                     pass
 
                 try:
-                    await RAUSHAN.stop_stream(chat_id)
+                    await BABY.stop_stream(chat_id)
                 except:
                     pass
                 try:
