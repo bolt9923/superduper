@@ -15,24 +15,26 @@ from telethon.tl.functions.phone import (
     InviteToGroupCallRequest,
 )
 
+from pyrogram.raw.types import UpdateGroupCallParticipant
 from asyncio import sleep
 
+
 # Notify when a user joins the voice chat
-@app.on_message(filters.video_chat_participant_updated)
-async def notify_user_join(client: Client, message: Message):
-    if message.video_chat_participant_updated and message.video_chat_participant_updated.is_joined:
-        user = message.from_user
-        if user:
-            name = user.mention
-            user_id = user.id
-            msg = await message.reply(
-                f"**📢 User Joined Voice Chat:**\n\n"
-                f"**Name:** {name}\n"
-                f"**User ID:** `{user_id}`"
-            )
-            # Delete the message after 5 seconds
-            await sleep(5)
-            await msg.delete()
+@app.on_raw_update()
+async def notify_user_join(client: Client, update, users, chats):
+    if isinstance(update, UpdateGroupCallParticipant):
+        user_id = update.participant.user_id
+        if update.participant.muted_by == None:  # Check if the user has joined (not muted or left)
+            user = users.get(user_id)
+            if user:
+                name = user.first_name
+                msg = await client.send_message(
+                    chat_id=update.peer.channel_id,
+                    text=f"📢 **User Joined Voice Chat:**\n\n**Name:** {name}\n**User ID:** `{user_id}`"
+                )
+                # Delete the message after 5 seconds
+                await sleep(5)
+                await msg.delete()
 
 # vc on
 @app.on_message(filters.video_chat_started)
