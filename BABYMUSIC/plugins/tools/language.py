@@ -35,7 +35,7 @@ def lanuages_keyboard(_):
 @language
 async def langs_command(client, message: Message, _):
     # Get the language selection keyboard
-    keyboard = languages_keyboard(_)
+    keyboard = lanuages_keyboard(_)
     
     # Respond with the language selection message
     await message.reply_text(
