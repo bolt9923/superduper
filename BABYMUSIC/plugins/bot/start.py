@@ -248,8 +248,8 @@ async def start_pm(client, message: Message, _):
         # Handle the 'help' command
         if name.startswith("help"):
             keyboard = help_pannel(_)
-            return await message.send_message(
-                text=_["help_1"].format(config.SUPPORT_CHAT),
+            return await app.send_message(
+                text=_["help_1"],
                 reply_markup=keyboard,
             )
 
