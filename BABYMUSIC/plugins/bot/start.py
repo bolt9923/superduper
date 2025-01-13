@@ -377,7 +377,7 @@ async def start_pm(client, message: Message, _):
 
 @app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
 @LanguageStart
-async def start_gp(client, message: Message):
+async def start_gp(client, message: Message, *args):
     # Create an InlineKeyboardButton with the correct URL
     help_button = InlineKeyboardButton(
         text="Click me for help!",
