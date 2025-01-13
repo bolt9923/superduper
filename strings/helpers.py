@@ -170,36 +170,34 @@ HELP_17 = """
 '''
 
 HELP_18 = """
-<b><u>Tᴀɢ ᴄᴏᴍᴍᴀɴᴅꜱ:</b></u>
+<b><u>Tag command: </b></u>
+✿ Choose tag in your chat ✿
 
-✿ ᴄʜᴏᴏsᴇ ᴛᴀɢ ɪɴ ʏᴏᴜʀ ᴄʜᴀᴛ ✿
+๏ /gmtag ➛ Good morning 
+Tag stop ⇴ /gmstop
 
-๏ /gmtag ➛ ɢᴏᴏᴅ ᴍᴏʀɴɪɴɢ 
-ᴛᴀɢ sᴛᴏᴘ ⇴ /gmstop
+๏ /gntag ➛ Good night tag stop ⇴ /gnstop
 
-๏ /gntag ➛ ɢᴏᴏᴅ ɴɪɢʜᴛ ᴛᴀɢ sᴛᴏᴘ ⇴ /gnstop
+๏ /tagall ➛ Random message tag stop ⇴ /tagoff /tagstop
 
-๏ /tagall ➛ ʀᴀɴᴅᴏᴍ ᴍᴇssᴀɢᴇ ᴛᴀɢ sᴛᴏᴘ ⇴ /tagoff /tagstop
+๏ /hitag ➛ Random hindi message tag stop ⇴/histop
 
-๏ /hitag ➛ ʀᴀɴᴅᴏᴍ ʜɪɴᴅɪ ᴍᴇssᴀɢᴇ ᴛᴀɢ sᴛᴏᴘ ⇴/histop
+๏ /shayari ➛ Random shayari tag stop ⇴ /shstop
 
-๏ /shayari ➛ ʀᴀɴᴅᴏᴍ sʜᴀʏᴀʀɪ ᴛᴀɢ sᴛᴏᴘ ⇴ /shstop
+๏ /utag ➛ Any written text tag stop ⇴ /cancel 
 
-๏ /utag ➛ ᴀɴʏ ᴡʀɪᴛᴛᴇɴ ᴛᴇxᴛ ᴛᴀɢ sᴛᴏᴘ ⇴ /cancel 
-
-๏ /vctag ➛ ᴠᴏɪᴄᴇ ᴄʜᴀᴛ ɪɴᴠɪᴛᴇ ᴛᴀɢ sᴛᴏᴘ ⇴ /vcstop
+๏ /vctag ➛ Voice chat invite tag stop ⇴ /vcstop
 """
 
-HELP_Info = '''Iɴꜰᴏ
 
+HELP_19 = """
 <b><u>Iɴꜰᴏ ᴄᴏᴍᴍᴀɴᴅꜱ :</b></u>
 
 /id : ɢᴇᴛ ᴛʜᴇ ᴄᴜʀʀᴇɴᴛ ɢʀᴏᴜᴘ ɪᴅ. ɪғ ᴜsᴇᴅ ʙʏ ʀᴇᴘʟʏɪɴɢ ᴛᴏ ᴀ ᴍᴇssᴀɢᴇ, ɢᴇᴛs ᴛʜᴀᴛ ᴜsᴇʀ's ɪᴅ.
 /info : ɢᴇᴛ ɪɴғᴏʀᴍᴀᴛɪᴏɴ ᴀʙᴏᴜᴛ ᴀ ᴜsᴇʀ.
 /github <ᴜsᴇʀɴᴀᴍᴇ> : ɢᴇᴛ ɪɴғᴏʀᴍᴀᴛɪᴏɴ ᴀʙᴏᴜᴛ ᴀ ɢɪᴛʜᴜʙ ᴜsᴇʀ.
-'''
-HELP_Group = '''Gʀᴏᴜᴘ
-
+"""
+HELP_20 = """
 <b><u>Gʀᴏᴜᴘ ᴄᴏᴍᴍᴀɴᴅꜱ :</b></u>
 
 ᴛʜᴇsᴇ ᴀʀᴇ ᴛʜᴇ ᴀᴠᴀɪʟᴀʙʟᴇ ɢʀᴏᴜᴘ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ ᴄᴏᴍᴍᴀɴᴅs:
@@ -215,9 +213,9 @@ HELP_Group = '''Gʀᴏᴜᴘ
 ⦿ /removephoto ➠ ʀᴇᴍᴏᴠᴇs ᴛʜᴇ ɢʀᴏᴜᴘ ᴘʜᴏᴛᴏ.
 ⦿ /zombies ➠ ʀᴇᴍᴏᴠᴇs ᴀᴄᴄ ᴅᴇʟᴇᴛᴇᴅ ᴍᴇᴍʙᴇʀs ғʀᴏᴍ ᴛʜᴇ ɢʀᴏᴜᴘ.
 ⦿ /imposter ᴏɴ/ᴏғғ ➠ ᴛᴜʀɴs ᴏɴ ᴏʀ ᴏғғ ᴛʜᴇ ᴡᴀᴛᴄʜᴇʀ ғᴏʀ ʏᴏᴜʀ ɢʀᴏᴜᴘ, ᴡʜɪᴄʜ ɴᴏᴛɪғɪᴇs ᴀʙᴏᴜᴛ ᴜsᴇʀs ᴡʜᴏ ᴄʜᴀɴɢᴇ ᴛʜᴇɪʀ ɴᴀᴍᴇ ᴏʀ ᴜsᴇʀɴᴀᴍᴇ.
-'''
+"""
 
-HELP_Extra = '''Exᴛʀᴀ
+HELP_21 = """
 
 <b><u>Extra comm :</b></u>
 
@@ -232,18 +230,16 @@ HELP_Extra = '''Exᴛʀᴀ
 ⦿ /tr ➠ ᴛʀᴀɴsʟᴀᴛᴇs ᴛᴇxᴛ.
 ⦿ /google ➠ sᴇᴀʀᴄʜᴇs ғᴏʀ ɪɴғᴏʀᴍᴀᴛɪᴏɴ ᴏɴ ɢᴏᴏɢʟᴇ.
 ⦿ /stack ➠ sᴇᴀʀᴄʜᴇs ғᴏʀ ᴘʀᴏɢʀᴀᴍᴍɪɴɢ-ʀᴇʟᴀᴛᴇᴅ ɪɴғᴏʀᴍᴀᴛɪᴏɴ ᴏɴ sᴛᴀᴄᴋ ᴏᴠᴇʀғʟᴏᴡ.
-'''
+"""
 
-HELP_Image = '''Iᴍᴀɢᴇ
-
+HELP_22 = """
 <b><u>Iᴍᴀɢᴇ ᴄᴏᴍᴍᴀɴᴅꜱ :</b></u>
 
 ⦿ /draw ➠ ɢᴇɴᴇʀᴀᴛᴇs ᴀ ᴅʀᴀᴡɪɴɢ ʙᴀsᴇᴅ ᴏɴ ᴀ ɢɪᴠᴇɴ ᴘᴏʀᴏᴍᴘᴛ.
 ⦿ /image ➠ sᴇᴀʀᴄʜᴇs ғᴏʀ ᴀɴ ɪᴍᴀɢᴇ ʙᴀsᴇᴅ ᴏɴ ᴀ ɢɪᴠᴇɴ ᴋᴇʏᴡᴏʀᴅ.
 ⦿ /upscale ➠ ʀᴇᴘʟʏ ᴛᴏ ᴀɴ ɪᴍᴀɢᴇ ᴛᴏ ᴜᴘsᴄᴀʟᴇ ɪᴛ ᴀɴᴅ ɪᴍᴘʀᴏᴠᴇ ɪᴛs ǫᴜᴀʟɪᴛʏ.
-'''
-HELP_Action = '''Aᴄᴛɪᴏɴ
-
+"""
+HELP_23 = """
 <b><u>Aᴄᴛɪᴏɴ ᴄᴏᴍᴍᴀɴᴅꜱ :</b></u>
 
 » ᴀᴠᴀɪʟᴀʙʟᴇ ᴄᴏᴍᴍᴀɴᴅs ꜰᴏʀ Bᴀɴs & Mᴜᴛᴇ :
@@ -261,8 +257,8 @@ Admins only:
  ❍ /unmute <userhandle>: unmutes a user. Can also be used as a reply, muting the replied to user.
 __
 𝐒ᴘᴇᴄɪᴀʟ 𝐂ᴏᴍᴍᴀɴᴅs 𝐒ᴜᴘᴘᴏʀᴛ 𝐀ʟʟ 𝐄xᴀᴍᴘʟᴇ  - 𝚈𝚞𝚖𝚒 𝚋𝚊𝚗 𝚈𝚞𝚖𝚒 𝚖𝚞𝚝𝚎 𝚈𝚞𝚖𝚒 𝚙𝚛𝚘𝚖𝚘𝚝𝚎 ..... 𝚎𝚝𝚌
-'''
-HELP_Search = '''Sᴇᴀʀᴄʜ
+"""
+HELP_24 = """
 
 <b><u>Sᴇᴀʀᴄʜ ᴄᴏᴍᴍᴀɴᴅꜱ :</b></u>
 
@@ -273,4 +269,4 @@ HELP_Search = '''Sᴇᴀʀᴄʜ
 
 Example:
 /google pyrogram: return top 5 reuslts.
-'''
+"""
