@@ -43,11 +43,12 @@ async def auto_leave():
 
 
 
+
 # सभी चैट्स के लिए वॉयस चैट पार्टिसिपेंट्स को ट्रैक करने के लिए एक डिक्शनरी
 vc_participants = {}
 
 async def auto_end():
-    while True:  # Continuous loop
+    while not await asyncio.sleep(5):  # हर 5 सेकंड में चेक करता है
         for chat_id in autoend:
             timer = autoend.get(chat_id)
             if not timer:
@@ -61,22 +62,10 @@ async def auto_end():
                 try:
                     # वॉयस चैट के पार्टिसिपेंट्स चेक करें
                     userbot = await get_client(chat_id)
-                    if not userbot:
-                        print(f"Userbot not connected for chat {chat_id}")
-                        continue
-                    
-                    try:
-                        current_participants = await userbot.get_call_members(chat_id)
-                        print(f"Current participants for chat {chat_id}: {current_participants}")
-                    except Exception as e:
-                        print(f"Error fetching call members for chat {chat_id}: {e}")
-                        continue
+                    current_participants = await userbot.get_call_members(chat_id)
 
-                    # Purani list initialize karein
-                    if chat_id not in vc_participants:
-                        vc_participants[chat_id] = set()
-
-                    previous_participants = vc_participants[chat_id]
+                    # पुरानी लिस्ट से तुलना करें और नए यूजर्स को डिटेक्ट करें
+                    previous_participants = vc_participants.get(chat_id, set())
                     current_ids = {user.peer_id.user_id for user in current_participants}
 
                     new_users = current_ids - previous_participants
@@ -106,7 +95,7 @@ async def auto_end():
                         current_participants = await userbot.get_call_members(chat_id)
 
                         if len(current_participants) <= 1:  # अगर कोई अन्य सदस्य नहीं है
-                            await BABY.stop_stream(chat_id)
+                            await RAUSHAN.stop_stream(chat_id)
                             await app.send_message(
                                 chat_id,
                                 "No one joined the voice chat, the song is ending due to inactivity.",
@@ -121,7 +110,7 @@ async def auto_end():
                     pass
 
                 try:
-                    await BABY.stop_stream(chat_id)
+                    await RAUSHAN.stop_stream(chat_id)
                 except:
                     pass
                 try:
@@ -132,9 +121,3 @@ async def auto_end():
                 except:
                     pass
 
-        # Event loop ko overload hone se bachane ke liye
-        await asyncio.sleep(0)
-
-# दोनों फंक्शन्स को असिंक्रोनस रूप से शुरू करें
-asyncio.create_task(auto_leave())
-asyncio.create_task(auto_end())
