@@ -21,15 +21,15 @@ async def pin(_, message):
     name = message.from_user.mention
     
     if message.chat.type == enums.ChatType.PRIVATE:
-        await message.reply_text("**ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ ᴡᴏʀᴋs ᴏɴʟʏ ᴏɴ ɢʀᴏᴜᴘs !**")
+        await message.reply_text("**This command work only on groups !**")
     elif not replied:
-        await message.reply_text("**ʀᴇᴘʟʏ ᴛᴏ ᴀ ᴍᴇssᴀɢᴇ ᴛᴏ ᴘɪɴ ɪᴛ !**")
+        await message.reply_text("**Reply to a message to pin it !**")
     else:
         user_stats = await app.get_chat_member(chat_id, user_id)
         if user_stats.privileges.can_pin_messages and message.reply_to_message:
             try:
                 await message.reply_to_message.pin()
-                await message.reply_text(f"**sᴜᴄᴄᴇssғᴜʟʟʏ ᴘɪɴɴᴇᴅ ᴍᴇssᴀɢᴇ!**\n\n**ᴄʜᴀᴛ:** {chat_title}\n**ᴀᴅᴍɪɴ:** {name}", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(" 📝 ᴠɪᴇᴡs ᴍᴇssᴀɢᴇ ", url=replied.link)]]))
+                await message.reply_text(f"**Successfully pinned message!**\n\n**ᴄʜᴀᴛ:** {chat_title}\n**ᴀᴅᴍɪɴ:** {name}", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(" 📝 ᴠɪᴇᴡs ᴍᴇssᴀɢᴇ ", url=replied.link)]]))
             except Exception as e:
                 await message.reply_text(str(e))
 
@@ -38,10 +38,10 @@ async def pin(_, message):
 async def pinned(_, message):
     chat = await app.get_chat(message.chat.id)
     if not chat.pinned_message:
-        return await message.reply_text("**ɴᴏ ᴘɪɴɴᴇᴅ ᴍᴇssᴀɢᴇ ғᴏᴜɴᴅ**")
+        return await message.reply_text("**No pinned message found**")
     try:        
-        await message.reply_text("ʜᴇʀᴇ ɪs ᴛʜᴇ ʟᴀᴛᴇsᴛ ᴘɪɴɴᴇᴅ ᴍᴇssᴀɢᴇ",reply_markup=
-        InlineKeyboardMarkup([[InlineKeyboardButton(text="📝 ᴠɪᴇᴡ ᴍᴇssᴀɢᴇ",url=chat.pinned_message.link)]]))  
+        await message.reply_text("Here is the latest pinned message",reply_markup=
+        InlineKeyboardMarkup([[InlineKeyboardButton(text="📝 View message",url=chat.pinned_message.link)]]))  
     except Exception as er:
         await message.reply_text(er)
 
