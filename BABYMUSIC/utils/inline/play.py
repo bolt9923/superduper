@@ -87,12 +87,22 @@ def stream_markup_timer(_, vidid, chat_id, played, dur):
 
 def stream_markup(_, videoid, chat_id):
     buttons = [
+         [
+            InlineKeyboardButton(
+                text=f"{played} {bar} {dur}",
+                callback_data="GetTimer",
+            )
+        ],
         [
             InlineKeyboardButton(text="▷", callback_data=f"ADMIN Resume|{chat_id}"),
             InlineKeyboardButton(text="II", callback_data=f"ADMIN Pause|{chat_id}"),
             InlineKeyboardButton(text="↻", callback_data=f"ADMIN Replay|{chat_id}"),
             InlineKeyboardButton(text="‣‣I", callback_data=f"ADMIN Skip|{chat_id}"),
             InlineKeyboardButton(text="▢", callback_data=f"ADMIN Stop|{chat_id}"),
+        ],
+        [
+            InlineKeyboardButton(text="⪻  -𝟸𝟶s", callback_data=f"SEEKBACKWARD|{chat_id}|20"),
+            InlineKeyboardButton(text="+𝟸𝟶s  ⪼", callback_data=f"SEEKFORWARD|{chat_id}|20"),
         ],
         [
             InlineKeyboardButton(
@@ -235,11 +245,11 @@ def queue_markup(_, videoid, chat_id):
 
 def stream_markup2(_, chat_id):
     buttons = [
-        [
+         [
             InlineKeyboardButton(
-                text=_["S_B_3"],
-                url=f"https://t.me/{app.username}?startgroup=true",
-            ),
+                text=f"{played} {bar} {dur}",
+                callback_data="GetTimer",
+            )
         ],
         [
             InlineKeyboardButton(text="▷", callback_data=f"ADMIN Resume|{chat_id}"),
@@ -248,18 +258,19 @@ def stream_markup2(_, chat_id):
             InlineKeyboardButton(text="‣‣I", callback_data=f"ADMIN Skip|{chat_id}"),
             InlineKeyboardButton(text="▢", callback_data=f"ADMIN Stop|{chat_id}"),
         ],
-[
+        [
+            InlineKeyboardButton(text="⪻  -𝟸𝟶s", callback_data=f"SEEKBACKWARD|{chat_id}|20"),
+            InlineKeyboardButton(text="+𝟸𝟶s  ⪼", callback_data=f"SEEKFORWARD|{chat_id}|20"),
+        ],
+        [
             InlineKeyboardButton(
-                text="ᴏᴡɴᴇʀ", url=f"https://t.me/untold_coder"
+                text="ᴏᴡɴᴇʀ", url=f"https://t.me/untold_coder4"
             ),
             InlineKeyboardButton(
                 text="ᴄʜᴀᴛ", url=f"https://t.me/untold_coder"
             ),
         ],
-
-        [
-            InlineKeyboardButton(text=_["CLOSEMENU_BUTTON"], callback_data="close"),
-        ],
+        [InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close")],
     ]
     return buttons
 
@@ -287,7 +298,7 @@ def stream_markup_timer2(_, chat_id, played, dur):
         bar = "——————————◉"
 
     buttons = [
-        [
+         [
             InlineKeyboardButton(
                 text=f"{played} {bar} {dur}",
                 callback_data="GetTimer",
@@ -301,8 +312,18 @@ def stream_markup_timer2(_, chat_id, played, dur):
             InlineKeyboardButton(text="▢", callback_data=f"ADMIN Stop|{chat_id}"),
         ],
         [
-            InlineKeyboardButton(text=_["CLOSEMENU_BUTTON"], callback_data="close"),
+            InlineKeyboardButton(text="⪻  -𝟸𝟶s", callback_data=f"SEEKBACKWARD|{chat_id}|20"),
+            InlineKeyboardButton(text="+𝟸𝟶s  ⪼", callback_data=f"SEEKFORWARD|{chat_id}|20"),
         ],
+        [
+            InlineKeyboardButton(
+                text="ᴏᴡɴᴇʀ", url=f"https://t.me/untold_coder4"
+            ),
+            InlineKeyboardButton(
+                text="ᴄʜᴀᴛ", url=f"https://t.me/untold_coder"
+            ),
+        ],
+        [InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close")],
     ]
     return buttons
 
@@ -521,11 +542,11 @@ def panel_markup_4(_, vidid, chat_id, played, dur):
 
 def panel_markup_clone(_, vidid, chat_id):
     buttons = [
-        [
+         [
             InlineKeyboardButton(
-                text=_["S_B_5"],
-                url=f"https://t.me/{app.username}?startgroup=true",
-            ),
+                text=f"{played} {bar} {dur}",
+                callback_data="GetTimer",
+            )
         ],
         [
             InlineKeyboardButton(text="▷", callback_data=f"ADMIN Resume|{chat_id}"),
@@ -534,8 +555,19 @@ def panel_markup_clone(_, vidid, chat_id):
             InlineKeyboardButton(text="‣‣I", callback_data=f"ADMIN Skip|{chat_id}"),
             InlineKeyboardButton(text="▢", callback_data=f"ADMIN Stop|{chat_id}"),
         ],
+        [
+            InlineKeyboardButton(text="⪻  -𝟸𝟶s", callback_data=f"SEEKBACKWARD|{chat_id}|20"),
+            InlineKeyboardButton(text="+𝟸𝟶s  ⪼", callback_data=f"SEEKFORWARD|{chat_id}|20"),
+        ],
+        [
+            InlineKeyboardButton(
+                text="ᴏᴡɴᴇʀ", url=f"https://t.me/untold_coder4"
+            ),
+            InlineKeyboardButton(
+                text="ᴄʜᴀᴛ", url=f"https://t.me/untold_coder"
+            ),
+        ],
         [InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close")],
     ]
-
     return buttons
 
