@@ -31,7 +31,7 @@ async def user_info(client: Client, message: Message):
         user_id = user.id
         first_name = user.first_name or "N/A"
         username = f"@{user.username}" if user.username else "N/A"
-        user_link = f"[Link to Profile](tg://user?id={user_id})"
+        user_link = f"[link](tg://user?id={user_id})"
 
         # Check user status based on the database
         cloned_bots = clonebotdb.find({"user_id": user_id})  # Query the collection
@@ -49,9 +49,9 @@ async def user_info(client: Client, message: Message):
                 f"**User Information:**\n"
                 f"**ID:** `{user_id}`\n"
                 f"**First Name:** `{first_name}`\n"
-                f"**Username:** `{username}`\n"
+                f"**Username:** {username}\n"
                 f"**User Link:** {user_link}\n"
-                f"**Status:** `{user_status}`"
+                f"**Status:** {user_status}"
             ),
             parse_mode=ParseMode.MARKDOWN,
             reply_to_message_id=message.id,
