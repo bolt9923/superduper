@@ -1,13 +1,7 @@
 from pyrogram import Client
-from pyrogram.types import ChatMemberUpdated
-from BABYMUSIC import LOGGER
-from BABYMUSIC import app
-
-from pyrogram import Client, filters
 from pyrogram.handlers import ChatMemberUpdatedHandler
 from pyrogram.types import ChatMemberUpdated
-from BABYMUSIC import LOGGER
-
+from BABYMUSIC import LOGGER, app
 
 # Handler function to check if user joined voice chat
 async def user_joined_voice_chat(client: Client, chat_member_updated: ChatMemberUpdated):
@@ -25,7 +19,7 @@ async def user_joined_voice_chat(client: Client, chat_member_updated: ChatMember
             # Log when a user joins the voice chat
             LOGGER.info(f"User {user.id} joined voice chat in chat {chat_id}")
 
-            # Check if the bot has permission to send messages in this chat
+            # Send a message to the chat
             text = (
                 f"#JᴏɪɴVɪᴅᴇᴏCʜᴀᴛ\n"
                 f"Nᴀᴍᴇ: {user.mention}\n"
@@ -42,6 +36,8 @@ async def user_joined_voice_chat(client: Client, chat_member_updated: ChatMember
         # Log the error if it occurs
         LOGGER.error(f"Error in user_joined_voice_chat: {e}")
 
-# Manually register the handler for chat member updates
+# Register the handler before app.run()
 app.add_handler(ChatMemberUpdatedHandler(user_joined_voice_chat))
 
+# Run the app
+app.run()
