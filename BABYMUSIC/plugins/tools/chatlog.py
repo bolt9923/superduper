@@ -1,7 +1,7 @@
 import random
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
-from config import LOGGER_ID as LOG_GROUP_ID
+from config import LOGGER_ID
 from BABYMUSIC import app 
 from pyrogram.errors import RPCError
 from typing import Union, Optional
@@ -47,5 +47,5 @@ async def on_left_chat_member(_, message: Message):
         username = f"@{message.chat.username}" if message.chat.username else "𝐏ʀɪᴠᴀᴛᴇ 𝐂ʜᴀᴛ"
         chat_id = message.chat.id
         left = f"<b><u>#Music_bot_leave 🤖</u></b>\n\n💬 Chat title : {title}\n\n🆔 Chat ID : {chat_id}\n\n🙍🏻‍♂️ Removed by : {remove_by}\n\n𝐁ᴏᴛ : @{app.username}"
-        await app.send_photo(LOG_GROUP_ID, photo=random.choice(photo), caption=left)
+        await app.send_photo(LOGGER_ID, photo=random.choice(photo), caption=left)
         
