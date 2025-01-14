@@ -468,7 +468,7 @@ async def welcome(client, message: Message):
             buttons = [
                 [
                     InlineKeyboardButton("Start in PM", url="http://t.me/Hhfyuhbot?start=start"), 
-                    InlineKeyboardButton("Help Menu !", url="http://t.me/Hhfyuhbot?start=clone")
+                    InlineKeyboardButton("Help Menu !", url="http://t.me/Hhfyuhbot?start=help")
                 ],
                 [InlineKeyboardButton("Get your own bot", url="http://t.me/Hhfyuhbot?start=clone")]
             ]
