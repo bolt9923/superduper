@@ -1,6 +1,7 @@
 from pyrogram import Client
 from pyrogram.types import ChatMemberUpdated
 from BABYMUSIC import LOGGER
+from BABYMUSIC import app
 
 # Handler function
 @app.on_chat_member_updated()
