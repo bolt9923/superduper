@@ -6,6 +6,7 @@ from datetime import datetime
 from pyrogram import filters
 from pyrogram.enums import ChatType, ParseMode
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, Message
+from pyrogram.types import KeyboardButton
 from youtubesearchpython.__future__ import VideosSearch
 
 import config
