@@ -5,6 +5,7 @@ from pyrogram.types import Message
 from pyrogram.enums import ParseMode
 import os
 from config import BANNED_USERS
+from BABYMUSIC import LOGGER
 from BABYMUSIC import app
 
 @app.on_message(filters.command(["remini", "enhance"]) & filters.private & ~BANNED_USERS)
@@ -59,7 +60,7 @@ async def upscale_image(client: Client, message: Message):
             await message.reply_text("Please reply to an image to upscale it.")
 
     except Exception as e:
-        logger.error(f"Failed to upscale the image: {e}")
+        LOGGER.error(f"Failed to upscale the image: {e}")
         await message.reply_text(
             "Failed to upscale the image. Please try again later."
         )
