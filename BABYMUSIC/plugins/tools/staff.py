@@ -47,8 +47,3 @@ async def staff_list(client: Client, message: Message):
 
         # Send the result to the chat
         await message.reply_text(staff_message, parse_mode="markdown")
-
-    except Exception as e:
-        # Error handling if something goes wrong
-        error_message = f"Error: {str(e)}" 
-        await message.reply_text(error_message, quote=True)
