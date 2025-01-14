@@ -10,7 +10,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 @app.on_message(filters.command(["github", "git", "gitinfo"]))
 async def github(_, message):
     if len(message.command) != 2:
-        await message.reply_text("/git BABYMUSIC")
+        await message.reply_text("/git YOUTUBE")
         return
 
     username = message.text.split(None, 1)[1]
@@ -38,16 +38,16 @@ async def github(_, message):
 
                 caption = f"""ɢɪᴛʜᴜʙ ɪɴғᴏ ᴏғ {name}
                 
-ᴜsᴇʀɴᴀᴍᴇ: {username}
-ʙɪᴏ: {bio}
-ʟɪɴᴋ: [Here]({url})
-ᴄᴏᴍᴩᴀɴʏ: {company}
-ᴄʀᴇᴀᴛᴇᴅ ᴏɴ: {created_at}
-ʀᴇᴩᴏsɪᴛᴏʀɪᴇs: {repositories}
-ʙʟᴏɢ: {blog}
-ʟᴏᴄᴀᴛɪᴏɴ: {location}
-ғᴏʟʟᴏᴡᴇʀs: {followers}
-ғᴏʟʟᴏᴡɪɴɢ: {following}"""
+Username: {username}
+Bio: {bio}
+Link: [Here]({url})
+Company: {company}
+Created on: {created_at}
+Repositories: {repositories}
+Blog: {blog}
+Location: {location}
+Followers: {followers}
+Following: {following}"""
 
             except Exception as e:
                 print(str(e))
