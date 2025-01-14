@@ -303,6 +303,14 @@ async def start_pm(client, message: Message, _):
                 reply_markup=keyboard,
             )
 
+        if name.startswith("clone"):
+            keyboard = help_pannel(_)
+            return await app.send_message(
+                chat_id=user_id,
+                text=_["help_1"],
+                reply_markup=keyboard,
+            )
+
         # Handle the 'sud' command
         elif name.startswith("sud"):
             await sudoers_list(client=client, message=message, _=_)
