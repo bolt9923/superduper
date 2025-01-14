@@ -4,7 +4,7 @@ from pyrogram import Client, filters
 from pyrogram.handlers import ChatMemberUpdatedHandler
 from pyrogram.types import ChatMemberUpdated
 from pyrogram.enums import ChatType
-
+from BABYMUSIC import app
 
 
 # Auto Leave Function
