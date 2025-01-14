@@ -49,7 +49,7 @@ async def admins(client, message):
           text2 += f"└ {admin.mention}\n\n"
         else:
           text2 += f"└ @{admin.username}\n\n"
-      text2 += f"✅ | **Total number of admins**: {lenAdminList}"  
+      text2 += f"✅ | Total number of admins: {lenAdminList}"  
       await app.send_message(message.chat.id, text2)           
   except FloodWait as e:
     await asyncio.sleep(e.value)       
@@ -70,7 +70,7 @@ async def bots(client, message):
     else:    
       bot = botList.pop(0)
       text3 += f"└ @{bot.username}\n\n"
-      text3 += f"✅ | *Total number of bots**: {lenBotList}"  
+      text3 += f"✅ | Total number of bots: {lenBotList}"  
       await app.send_message(message.chat.id, text3)
   except FloodWait as e:
     await asyncio.sleep(e.value)
