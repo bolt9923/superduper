@@ -444,8 +444,8 @@ async def start_pm(client, message: Message, _):
 async def start_gp(client, message: Message, *args):
     # Create an InlineKeyboardButton with the correct URL
     help_button = InlineKeyboardButton(
-        text="Click me for help!",
-        url=f"http://t.me/{client.me.username}?start=help"
+        text="PM start me!",
+        url=f"http://t.me/{client.me.username}?start=start"
     )
 
     # Create an InlineKeyboardMarkup with the button
@@ -453,7 +453,7 @@ async def start_gp(client, message: Message, *args):
 
     # Send the message with the button
     await message.reply_text(
-        text="Contact me in PM for help!",
+        text="Contact me in PM for start!",
         reply_markup=reply_markup
     )
 
