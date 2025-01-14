@@ -50,4 +50,5 @@ async def staff_list(client: Client, message: Message):
         
     except Exception as e:
         # Error handling if something goes wrong
-        await message.reply_text(f"Error: {str(e)}\nUnable to fetch staff list.", quote=True)
+        error_message = f"Error: {str(e)}" 
+        await message.reply_text(error_message, quote=True)
