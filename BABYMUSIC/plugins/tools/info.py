@@ -47,18 +47,21 @@ async def user_info(client: Client, message: Message):
         user_link = escape_markdown(user_link)
 
         # User photo (using `client.get_profile_photos` to fetch the user's profile photo)
-        profile_photos = await client.get_profile_photos(user.id)
+        profile_photos = await app.get_profile_photos(user.id)
         if profile_photos.total_count > 0:
-            # If the user has a profile photo, use it
-            photo = profile_photos.photos[0].file_id
+    # Get the file_id of the user's first profile photo
+        photo_file_id = profile_photos.photos[0].file_id
+    # Download the profile photo
+        userss_photo = await app.download_media(photo_file_id)
         else:
-            # Use the default image if no profile photo exists
-            photo = DEFAULT_IMG
+    # Use default image if no profile photo exists
+        userss_photo = DEFAULT_IMG
+
 
         # Send the user's information
         await client.send_photo(
             chat_id=message.chat.id,
-            photo=photo,
+            photo=userss_photo,
             caption=(
                 f"**User Information:**\n"
                 f"**ID:** `{user_id}`\n"
