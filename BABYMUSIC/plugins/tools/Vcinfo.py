@@ -7,13 +7,6 @@ from pyrogram.enums import ChatType
 from BABYMUSIC import app
 
 
-# Auto Leave Function
-
-
-# Auto End Function
-
-
-
 # Handler for notifying when users join voice chats
 async def user_joined_voice_chat(client: Client, chat_member_updated: ChatMemberUpdated):
     try:
@@ -21,6 +14,7 @@ async def user_joined_voice_chat(client: Client, chat_member_updated: ChatMember
         user = chat_member_updated.new_chat_member.user
         chat_id = chat.id
 
+        # Check if user joined the voice chat
         if (
             not chat_member_updated.old_chat_member.is_participant
             and chat_member_updated.new_chat_member.is_participant
@@ -37,5 +31,5 @@ async def user_joined_voice_chat(client: Client, chat_member_updated: ChatMember
         print(f"Error in user_joined_voice_chat: {e}")
 
 
-# Register the ChatMemberUpdatedHandler in Pyrogram
-app.on_chat_member_updated(user_joined_voice_chat)
+# Register the ChatMemberUpdatedHandler
+app.add_handler(ChatMemberUpdatedHandler(user_joined_voice_chat))
