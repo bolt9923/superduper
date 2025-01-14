@@ -447,3 +447,24 @@ async def start_gp(client, message: Message, *args):
     return await add_served_chat(message.chat.id)
 
 
+@app.on_message(filters.new_chat_members, group=-1)
+async def welcome(client, message: Message):
+    for member in message.new_chat_members:
+        try:
+            buttons = [
+                [
+                    InlineKeyboardButton("Start in PM", url="http://t.me/Hhfyuhbot?start=start"), 
+                    InlineKeyboardButton("Help Menu !", url="http://t.me/Hhfyuhbot?start=clone")
+                ],
+                [InlineKeyboardButton("Get your own bot", url="http://t.me/Hhfyuhbot?start=clone")]
+            ]
+            reply_markup = InlineKeyboardMarkup(buttons)
+            
+            await message.reply_text(
+                text=f"👋 Hey {member.mention},\n\n"
+                     f"✨ Thank you for adding me! I am a **powerful music bot** 🎶 you won't believe. "
+                     f"Click the buttons below to explore my features. 🚀",
+                reply_markup=reply_markup
+            )
+        except Exception as ex:
+            print(f"Error: {ex}")
