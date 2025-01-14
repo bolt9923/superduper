@@ -303,11 +303,16 @@ async def start_pm(client, message: Message, _):
                 reply_markup=keyboard,
             )
 
-        if name.startswith("clone"):
-            keyboard = help_pannel(_)
-            return await app.send_message(
+        elif command == "clone":
+            # Create a ReplyKeyboardMarkup
+            keyboard = ReplyKeyboardMarkup(
+                [[KeyboardButton(text=label[0])] for label in CLONESS],
+                resize_keyboard=True,  # Adjust button size
+                one_time_keyboard=True  # Hide after one use
+            )
+            return await client.send_message(
                 chat_id=user_id,
-                text=_["help_1"],
+                text=CLONES,
                 reply_markup=keyboard,
             )
 
