@@ -9,10 +9,11 @@ async def staff_list(client: Client, message: Message):
         chat_id = message.chat.id
         chat_admins = []
 
+        # Get all the admins in the group
         async for member in client.get_chat_members(chat_id, filter="administrators"):
             chat_admins.append(member)
 
-        # Categorize admins into roles
+        # Categorize admins by roles
         owner = []
         co_founders = []
         admins = []
@@ -24,15 +25,16 @@ async def staff_list(client: Client, message: Message):
                 name += f" {user.last_name}"
             title = member.custom_title or "No Title"
 
-            # Categorize based on admin role
-            if member.status == "creator":  # Owner of the group
+            # Categorize based on member status
+            if member.status == "creator":  # Group Owner
                 owner.append(f"**Name:** {name}\n**Title:** {title}")
-            elif title.lower() == "co-founder":  # Co-Founder based on custom title
-                co_founders.append(f"**Name:** {name}\n**Title:** {title}")
-            else:  # Other admins
-                admins.append(f"**Name:** {name}\n**Title:** {title}")
+            elif member.status == "administrator":  # Admin role
+                if title.lower() == "co-founder":  # Check for custom title
+                    co_founders.append(f"**Name:** {name}\n**Title:** {title}")
+                else:
+                    admins.append(f"**Name:** {name}\n**Title:** {title}")
 
-        # Build the message
+        # Build the response message
         staff_message = "**👥 Group Staff List:**\n\n"
 
         if owner:
@@ -42,10 +44,12 @@ async def staff_list(client: Client, message: Message):
         if admins:
             staff_message += "**🔧 Admins:**\n" + "\n\n".join(admins) + "\n\n"
 
-        if not (owner or co_founders or admins):  # No staff found
+        if not (owner or co_founders or admins):  # No staff members
             staff_message = "No staff members found in this group."
 
-        # Send the message
+        # Send the result to the chat
         await message.reply_text(staff_message, parse_mode="markdown")
+        
     except Exception as e:
+        # Error handling if something goes wrong
         await message.reply_text(f"Error: {str(e)}\nUnable to fetch staff list.", quote=True)
