@@ -236,11 +236,9 @@ HELP_21 = """
 """
 
 HELP_22 = """
-<b><u>IMAGE COMMAND :</b></u>
+<b><u>REMINI PHOTO:</b></u>
 
-/draw : Generates a drawing based on a given prompt.
-/image : Searches for an image based on a given keyword.
-/upscale : Reply to an image to upscale it and improve its quality.
+/remini, /enhance : Reply to an image to Enhance your image.
 """
 
 HELP_23 = """
@@ -248,17 +246,17 @@ HELP_23 = """
 
 Available commands for Bans & Mute:
 
-❍ /kickme: Kicks the user who issued the command.
+/kickme: Kicks the user who issued the command.
 
 Admins only:
-❍ /ban <userhandle>: Bans a user. (via handle, or reply)
-❍ /sban <userhandle>: Silently bans a user. Deletes command, Replied message and doesn't reply. (via handle, or reply)
-❍ /tban <userhandle> x(m/h/d): Bans a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
-❍ /unban <userhandle>: Unbans a user. (via handle, or reply)
-❍ /kick <userhandle>: Kicks a user out of the group, (via handle, or reply)
-❍ /mute <userhandle>: Silences a user. Can also be used as a reply, muting the replied to user.
-❍ /tmute <userhandle> x(m/h/d): Mutes a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
-❍ /unmute <userhandle>: Unmutes a user. Can also be used as a reply, unmuting the replied to user.
+/ban <userhandle>: Bans a user. (via handle, or reply)
+/sban <userhandle>: Silently bans a user. Deletes command, Replied message and doesn't reply. (via handle, or reply)
+/tban <userhandle> x(m/h/d): Bans a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
+/unban <userhandle>: Unbans a user. (via handle, or reply)
+/kick <userhandle>: Kicks a user out of the group, (via handle, or reply)
+/mute <userhandle>: Silences a user. Can also be used as a reply, muting the replied to user.
+/tmute <userhandle> x(m/h/d): Mutes a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
+/unmute <userhandle>: Unmutes a user. Can also be used as a reply, unmuting the replied to user.
 __
 Special Commands Support All Example - Yumi ban Yumi mute Yumi promote ..... etc
 """
