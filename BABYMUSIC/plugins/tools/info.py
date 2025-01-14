@@ -11,11 +11,22 @@ def escape_markdown(text: str) -> str:
 
 @app.on_message(filters.command('info'))
 async def user_info(client: Client, message: Message):
-    if len(message.command) < 2:
-        await message.reply_text("Please provide a valid user ID or username.\nUsage: `/info <userid/username>`", quote=True)
-        return
-
     try:
+        # Check if user has provided an argument
+        if len(message.command) < 1:
+            # Send a guide if no argument is provided
+            await message.reply_text(
+                "**Usage Guide:**\n"
+                "`/info <userid/username>`\n\n"
+                "**Examples:**\n"
+                "`/info 123456789`\n"
+                "`/info @username`\n\n"
+                "Please provide a valid user ID or username to get their information.",
+                parse_mode=ParseMode.MARKDOWN,
+                reply_to_message_id=message.id,
+            )
+            return
+
         # Extract user information from the command
         input_data = message.command[1]
         user = await client.get_users(input_data)
