@@ -2,13 +2,12 @@ import random
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
 from config import LOGGER_ID
-from BABYMUSIC import app 
-from pyrogram.errors import RPCError
+from BABYMUSIC import app
+from pyrogram.enums import ParseMode
 from typing import Union, Optional
 from PIL import Image, ImageDraw, ImageFont
 import asyncio, os, aiohttp
 from pathlib import Path
-from pyrogram.enums import ParseMode
 
 photo = [
     "https://files.catbox.moe/xnmc4b.jpg",
@@ -26,26 +25,42 @@ async def join_watcher(_, message):
         if member.id == app.id:
             count = await app.get_chat_members_count(chat.id)
             msg = (
-                f"#Music_added_in_a_new_group 🎉n\n"
+                f"<b>#Music_added_in_a_new_group 🎉</b>\n\n"
                 f"____________________________________\n\n"
-                f"💬 Chat name: {chat.title}\n"
-                f"🆔 Chat ID: {chat.id}\n"
-                f"🦋 Chat username: @{chat.username}\n"
-                f"🔗 Chat link: [click]({link})\n"
-                f"👥 Group members: {count}\n"
-                f"🙋🏻‍♂️ Added By: {message.from_user.mention}"
+                f"💬 <b>Chat name:</b> {chat.title}\n"
+                f"🆔 <b>Chat ID:</b> {chat.id}\n"
+                f"🦋 <b>Chat username:</b> @{chat.username}\n"
+                f"🔗 <b>Chat link:</b> <a href='{link}'>click</a>\n"
+                f"👥 <b>Group members:</b> {count}\n"
+                f"🙋🏻‍♂️ <b>Added By:</b> {message.from_user.mention}"
             )
-            await app.send_photo(LOGGER_ID, photo=random.choice(photo), caption=msg, reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton(f"Group link 🔗", url=f"{link}")]
-            ]))
+            await app.send_photo(
+                LOGGER_ID,
+                photo=random.choice(photo),
+                caption=msg,
+                reply_markup=InlineKeyboardMarkup([
+                    [InlineKeyboardButton(f"Group link 🔗", url=f"{link}")]
+                ]),
+                parse_mode=ParseMode.HTML
+            )
 
 @app.on_message(filters.left_chat_member)
 async def on_left_chat_member(_, message: Message):
     if (await app.get_me()).id == message.left_chat_member.id:
-        remove_by = message.from_user.mention if message.from_user else "𝐔ɴᴋɴᴏᴡɴ 𝐔sᴇʀ"
+        remove_by = message.from_user.mention if message.from_user else "Unknown user"
         title = message.chat.title
-        username = f"@{message.chat.username}" if message.chat.username else "𝐏ʀɪᴠᴀᴛᴇ 𝐂ʜᴀᴛ"
+        username = f"@{message.chat.username}" if message.chat.username else "Private chat"
         chat_id = message.chat.id
-        left = f"<b><u>#Music_bot_leave 🤖</u></b>\n\n💬 Chat title : {title}\n\n🆔 Chat ID : {chat_id}\n\n🙍🏻‍♂️ Removed by : {remove_by}\n\n𝐁ᴏᴛ : @{app.username}"
-        await app.send_photo(LOGGER_ID, photo=random.choice(photo), caption=left)
-        
+        left = (
+            f"<b><u>#Music_bot_leave 🤖</u></b>\n\n"
+            f"💬 <b>Chat title:</b> {title}\n"
+            f"🆔 <b>Chat ID:</b> {chat_id}\n"
+            f"🙍🏻‍♂️ <b>Removed by:</b> {remove_by}\n\n"
+            f"𝐁ᴏᴛ: @{app.username}"
+        )
+        await app.send_photo(
+            LOGGER_ID,
+            photo=random.choice(photo),
+            caption=left,
+            parse_mode=ParseMode.HTML
+        )
