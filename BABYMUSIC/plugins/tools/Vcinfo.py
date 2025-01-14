@@ -5,6 +5,7 @@ from pyrogram.handlers import ChatMemberUpdatedHandler
 from pyrogram.types import ChatMemberUpdated
 from pyrogram.enums import ChatType
 from BABYMUSIC import app
+from BABYMUSIC import LOGGER
 
 
 # Handler for notifying when users join voice chats
@@ -14,6 +15,9 @@ async def user_joined_voice_chat(client: Client, chat_member_updated: ChatMember
         new_chat_member = chat_member_updated.new_chat_member
         user = new_chat_member.user if new_chat_member else None  # Ensure user is not None
         chat_id = chat.id
+
+        # Log the received chat_member_updated for debugging
+        LOGGER.info(f"Chat Member Updated: {chat_member_updated}")
 
         # Check if the user joined the voice chat and both members are not None
         if chat_member_updated.old_chat_member and new_chat_member and (
@@ -29,12 +33,10 @@ async def user_joined_voice_chat(client: Client, chat_member_updated: ChatMember
                 )
                 await client.send_message(chat_id, text)
             else:
-                print("User is None, skipping message.")
+                LOGGER.warning("User is None, skipping message.")
 
     except Exception as e:
-        print(f"Error in user_joined_voice_chat: {e}")
-
-
+        LOGGER.error(f"Error in user_joined_voice_chat: {e}")
 
 
 # Register the ChatMemberUpdatedHandler
