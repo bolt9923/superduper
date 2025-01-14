@@ -1,11 +1,11 @@
 name : 🇺🇸 English
 
 
-general_1 : "» Reply to a user's message or give username/user ID."
-general_2 : "» Something went wrong while processing your query.\n\nException : <code>{0}</code>"
+general_1 : "Reply to a user's message or give username/user ID."
+general_2 : "Something went wrong while processing your query.\n\nException : <code>{0}</code>"
 general_3 : "You're an anonymous admin in this chat, revert back to user account for using me."
-general_4 : "» You don't have permissions to manage video chats.\n\nReload admin cache via /reload"
-general_5 : "» Bot isn't streaming on video chat."
+general_4 : "You don't have permissions to manage video chats.\n\nReload admin cache via /reload"
+general_5 : "Bot isn't streaming on video chat."
 
 tg_1 : "<u><b>{0} Downloader</b></u>\n\n<b>File Size :</b> {1}\n<b>Completed :</b> {2}\n<b>Percentage :</b> {3}%\n\n<b>Speed :</b> {4}/s\n<b>ETA :</b> {5}"
 tg_2 : "Successfully downloaded, processing file...\n\n<b>Time Elapsed :</b> {0}"
@@ -215,7 +215,7 @@ H_B_18 : "Tag-all"
 H_B_19 : "Info"
 H_B_20 : "Group"
 H_B_21 : "Extra"
-H_B_22 : "Image"
+H_B_22 : "Remini"
 H_B_23 : "Action"
 H_B_24 : "Search"
 
