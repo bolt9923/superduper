@@ -463,6 +463,9 @@ async def start_gp(client, message: Message, *args):
 
 @app.on_message(filters.new_chat_members, group=-1)
 async def welcome(client, message: Message):
+    # Get the user who added the bot
+    added_by = message.from_user
+
     for member in message.new_chat_members:
         try:
             buttons = [
@@ -473,12 +476,21 @@ async def welcome(client, message: Message):
                 [InlineKeyboardButton("Get your own bot", url="http://t.me/Hhfyuhbot?start=clone")]
             ]
             reply_markup = InlineKeyboardMarkup(buttons)
-            
-            await message.reply_text(
-                text=f"👋 Hey {member.mention},\n\n"
-                     f"✨ Thank you for adding me! I am a **powerful music bot** 🎶 you won't believe. "
-                     f"Click the buttons below to explore my features. 🚀",
-                reply_markup=reply_markup
-            )
+
+            # Check if the new member is the bot itself
+            if member.is_self:
+                await message.reply_text(
+                    text=f"👋 Hey {added_by.mention},\n\n"
+                         f"✨ Thank you for adding me to **{message.chat.title}**! I am a **powerful music bot** 🎶 you won't believe. "
+                         f"Click the buttons below to explore my features. 🚀",
+                    reply_markup=reply_markup
+                )
+            else:
+                await message.reply_text(
+                    text=f"👋 Welcome {member.mention}!\n\n"
+                         f"✨ Glad to have you in **{message.chat.title}**. Enjoy the music! 🎶",
+                    reply_markup=None
+                )
         except Exception as ex:
             print(f"Error: {ex}")
+
