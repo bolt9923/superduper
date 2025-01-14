@@ -12,9 +12,6 @@ from BABYMUSIC.core.call import BABY, autoend
 from BABYMUSIC.utils.database import get_client, is_active_chat, is_autoend
 
 
-# Global variable to manage infovc state
-infovc_enabled = True  # Default to always true
-
 # Auto Leave Function
 async def auto_leave():
     if config.AUTO_LEAVING_ASSISTANT:
@@ -88,51 +85,6 @@ async def auto_end():
                     await BABY.stop_stream(chat_id)
                 except Exception:
                     pass
-
-# Command to toggle /infovc on/off
-@app.on_message(filters.command("infovc", ""))
-async def toggle_infovc(_, message: Message):
-    global infovc_enabled
-    if len(message.command) > 1:
-        state = message.command[1].lower()
-        if state == "on":
-            infovc_enabled = True
-            await message.reply("✅ Voice chat join notifications are now enabled.")
-        elif state == "off":
-            infovc_enabled = False
-            await message.reply("❌ Voice chat join notifications are now disabled.")
-        else:
-            await message.reply("⚠️ Usage: /infovc on or /infovc off")
-    else:
-        await message.reply("⚠️ Usage: /infovc on or /infovc off")
-
-# Handler for notifying when users join voice chats
-async def user_joined_voice_chat(client: Client, chat_member_updated: ChatMemberUpdated):
-    global infovc_enabled
-    try:
-        if not infovc_enabled:
-            return
-
-        chat = chat_member_updated.chat
-        user = chat_member_updated.new_chat_member.user
-        chat_id = chat.id
-
-        if (
-            not chat_member_updated.old_chat_member.is_participant
-            and chat_member_updated.new_chat_member.is_participant
-        ):
-            text = (
-                f"#JᴏɪɴVɪᴅᴇᴏCʜᴀᴛ\n"
-                f"Nᴀᴍᴇ: {user.mention}\n"
-                f"ɪᴅ: {user.id}\n"
-                f"Aᴄᴛɪᴏɴ: Iɢɴᴏʀᴇᴅ"
-            )
-            await client.send_message(chat_id, text)
-    except Exception as e:
-        print(f"Error in user_joined_voice_chat: {e}")
-
-# Register ChatMemberUpdatedHandler
-app.add_handler(ChatMemberUpdatedHandler(user_joined_voice_chat))
 
 # Schedule tasks
 loop = asyncio.get_event_loop()
