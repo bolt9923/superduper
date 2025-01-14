@@ -13,7 +13,7 @@ def escape_markdown(text: str) -> str:
 async def user_info(client: Client, message: Message):
     try:
         # Check if user has provided an argument
-        if len(message.command) < 1:
+        if len(message.command) < 2:
             # Send a guide if no argument is provided
             await message.reply_text(
                 "**Usage Guide:**\n"
