@@ -303,7 +303,7 @@ async def start_pm(client, message: Message, _):
                 reply_markup=keyboard,
             )
 
-        elif command == "clone":
+        elif name == "clone":
             # Create a ReplyKeyboardMarkup
             keyboard = ReplyKeyboardMarkup(
                 [[KeyboardButton(text=label[0])] for label in CLONESS],
