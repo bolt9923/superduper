@@ -24,6 +24,7 @@ from BABYMUSIC.utils.inline import (
     slider_markup,
     track_markup,
 )
+from BABYMUSIC.utils.thumbnails import get_thumb
 from BABYMUSIC.utils.database import (
     add_served_chat,
     add_served_user,
@@ -476,27 +477,3 @@ async def stream(
             db[chat_id][0]["markup"] = "tg"
             await mystic.delete()
 
-
-# Function to get thumbnail by video ID
-async def get_thumb(videoid):
-    try:
-        # Search for the video using video ID
-        query = f"https://www.youtube.com/watch?v={videoid}"
-        results = VideosSearch(query, limit=1)
-        for result in (await results.next())["result"]:
-            thumbnail = result["thumbnails"][0]["url"].split("?")[0]
-        return thumbnail
-    except Exception as e:
-        return config.YOUTUBE_IMG_URL
-
-
-async def get_thumb(vidid):
-    try:
-        # Search for the video using video ID
-        query = f"https://www.youtube.com/watch?v={vidid}"
-        results = VideosSearch(query, limit=1)
-        for result in (await results.next())["result"]:
-            thumbnail = result["thumbnails"][0]["url"].split("?")[0]
-        return thumbnail
-    except Exception as e:
-        return config.YOUTUBE_IMG_URL
