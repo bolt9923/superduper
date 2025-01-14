@@ -4,12 +4,10 @@ from pyrogram import Client, filters
 from pyrogram.enums import ParseMode
 from pyrogram.types import Message
 import asyncio
-from BABYMUSIC.utils.database import clonebotdb # Replace with the actual module for your database
+from BABYMUSIC.utils.database import clonebotdb  # Replace with the actual module for your database
 
 # Define a default image URL or file ID
 DEFAULT_IMG = 'https://files.catbox.moe/01i7ch.jpg'  # Replace with the actual URL or file ID
-
-
 
 def escape_markdown(text: str) -> str:
     return re.sub(r'([_\*`\[\]()~>#+-=|{}.!])', r'\\\1', text)
@@ -49,14 +47,13 @@ async def user_info(client: Client, message: Message):
         # User photo (using `client.get_profile_photos` to fetch the user's profile photo)
         profile_photos = await app.get_profile_photos(user.id)
         if profile_photos.total_count > 0:
-    # Get the file_id of the user's first profile photo
-        photo_file_id = profile_photos.photos[0].file_id
-    # Download the profile photo
-        userss_photo = await app.download_media(photo_file_id)
+            # Get the file_id of the user's first profile photo
+            photo_file_id = profile_photos.photos[0].file_id
+            # Download the profile photo
+            userss_photo = await app.download_media(photo_file_id)
         else:
-    # Use default image if no profile photo exists
-        userss_photo = DEFAULT_IMG
-
+            # Use default image if no profile photo exists
+            userss_photo = DEFAULT_IMG
 
         # Send the user's information
         await client.send_photo(
