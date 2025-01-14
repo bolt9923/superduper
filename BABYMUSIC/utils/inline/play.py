@@ -52,6 +52,7 @@ def stream_markup_timer(_, vidid, chat_id, played, dur):
         bar = "————————◉—"
     else:
         bar = "—————————◉"
+
     buttons = [
          [
             InlineKeyboardButton(
@@ -67,6 +68,10 @@ def stream_markup_timer(_, vidid, chat_id, played, dur):
             InlineKeyboardButton(text="▢", callback_data=f"ADMIN Stop|{chat_id}"),
         ],
         [
+            InlineKeyboardButton(text="⪻  -𝟸𝟶s", callback_data=f"SEEKBACKWARD|{chat_id}|20"),
+            InlineKeyboardButton(text="+𝟸𝟶s  ⪼", callback_data=f"SEEKFORWARD|{chat_id}|20"),
+        ],
+        [
             InlineKeyboardButton(
                 text="ᴏᴡɴᴇʀ", url=f"https://t.me/untold_coder4"
             ),
@@ -77,6 +82,7 @@ def stream_markup_timer(_, vidid, chat_id, played, dur):
         [InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close")],
     ]
     return buttons
+
 
 
 def stream_markup(_, videoid, chat_id):
