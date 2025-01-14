@@ -90,7 +90,7 @@ async def auto_end():
                     pass
 
 # Command to toggle /infovc on/off
-@app.on_message(filters.command("infovc", "") & filters.user(config.SUDO_USERS))
+@app.on_message(filters.command("infovc", ""))
 async def toggle_infovc(_, message: Message):
     global infovc_enabled
     if len(message.command) > 1:
