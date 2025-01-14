@@ -18,8 +18,8 @@ async def upscale_image(client: Client, message: Message):
             )
 
             # Download the photo
-            photo = message.reply_to_message.photo[-1]
-            image_path = await client.download_media(photo.file_id)
+            photo = message.reply_to_message.photo
+            image_path = await client.download_media(photo.file_id)  # Use file_id directly
 
             # Read and encode the image in base64
             with open(image_path, "rb") as image_file:
@@ -60,7 +60,8 @@ async def upscale_image(client: Client, message: Message):
             await message.reply_text("Please reply to an image to upscale it.")
 
     except Exception as e:
-        LOGGER.error(f"Failed to upscale the image: {e}")
+        if hasattr(LOGGER, 'error'):
+            LOGGER.error(f"Failed to upscale the image: {e}")
         await message.reply_text(
             "Failed to upscale the image. Please try again later."
         )
