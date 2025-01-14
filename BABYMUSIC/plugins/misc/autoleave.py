@@ -103,7 +103,6 @@ from pyrogram import Client, filters
 from pyrogram.handlers import ChatMemberUpdatedHandler
 from pyrogram.types import ChatMemberUpdated, Message
 from typing import Union, List
-import asyncio
 
 # Default state for /infovc
 infovc_enabled = True  # Default to always true
@@ -167,8 +166,8 @@ async def user_joined_voice_chat(client: Client, chat_member_updated: ChatMember
         # Log any errors
         print(f"Error in user_joined_voice_chat: {e}")
 
-
+# Register the ChatMemberUpdatedHandler
+app.add_handler(ChatMemberUpdatedHandler(user_joined_voice_chat))
 # दोनों फंक्शन्स को असिंक्रोनस रूप से शुरू करें
 asyncio.create_task(auto_leave())
 asyncio.create_task(auto_end())
-asyncio.create_task(user_joined_voice_chat())
