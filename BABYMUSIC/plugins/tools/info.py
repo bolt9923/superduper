@@ -1,13 +1,9 @@
-import re
 from BABYMUSIC import app
 from pyrogram import Client, filters
 from pyrogram.enums import ParseMode
 from pyrogram.types import Message
 import asyncio
 from BABYMUSIC.utils.database import clonebotdb  # Replace with the actual module for your database
-
-def escape_markdown(text: str) -> str:
-    return re.sub(r'([_\*`\[\]()~>#+-=|{}.!])', r'\\\1', text)
 
 @app.on_message(filters.command('info'))
 async def user_info(client: Client, message: Message):
@@ -33,8 +29,8 @@ async def user_info(client: Client, message: Message):
         
         # User details
         user_id = user.id
-        first_name = escape_markdown(user.first_name or "N/A")
-        username = escape_markdown(f"@{user.username}" if user.username else "N/A")
+        first_name = user.first_name or "N/A"
+        username = f"@{user.username}" if user.username else "N/A"
         user_link = f"[Link to Profile](tg://user?id={user_id})"
 
         # Check user status based on the database
@@ -45,8 +41,6 @@ async def user_info(client: Client, message: Message):
             user_status = "[VIP 💳]"
         else:
             user_status = "[Regular 👥]"
-
-        user_status = escape_markdown(user_status)
 
         # Send the user's information
         await client.send_message(
