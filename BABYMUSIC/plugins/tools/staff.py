@@ -7,8 +7,9 @@ async def staff_list(client: Client, message: Message):
     try:
         # Get the chat administrators
         chat_id = message.chat.id
+        chat_admins = []
+        
         async for member in client.get_chat_members(chat_id, filter="administrators"):
-            chat_admins = []
             chat_admins.append(member)
 
         # Categorize admins by roles
@@ -17,23 +18,21 @@ async def staff_list(client: Client, message: Message):
         admins = []
 
         for member in chat_admins:
-            # Fetch user details
             user = member.user
-            name = user.first_name
+            name = user.first_name or "Unknown"
             if user.last_name:
                 name += f" {user.last_name}"
             title = member.custom_title or "No Title"
-            user_info = f"**Name:** {name}\n**Title:** {title}"
 
             # Categorize roles
-            if member.status == "creator":
-                owner.append(user_info)
-            elif title.lower() == "co-founder":
-                co_founders.append(user_info)
-            else:
-                admins.append(user_info)
+            if member.status == "creator":  # Creator/Owner
+                owner.append(f"**Name:** {name}\n**Title:** {title}")
+            elif title.lower() == "co-founder":  # Co-Founder (custom title check)
+                co_founders.append(f"**Name:** {name}\n**Title:** {title}")
+            else:  # Regular Admins
+                admins.append(f"**Name:** {name}\n**Title:** {title}")
 
-        # Prepare the message
+        # Build the message
         staff_message = "**👥 Group Staff List:**\n\n"
 
         if owner:
@@ -44,6 +43,9 @@ async def staff_list(client: Client, message: Message):
 
         if admins:
             staff_message += "**🔧 Admins:**\n" + "\n\n".join(admins) + "\n\n"
+
+        if not (owner or co_founders or admins):
+            staff_message = "No staff members found in this group."
 
         # Send the message
         await message.reply_text(staff_message, parse_mode="markdown")
