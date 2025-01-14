@@ -8,6 +8,7 @@ from BABYMUSIC.utils.database import clonebotdb # Replace with the actual module
 # Define a default image URL or file ID
 DEFAULT_IMG = 'https://files.catbox.moe/01i7ch.jpg'  # Replace with the actual URL or file ID
 
+
 @app.on_message(filters.command('info'))
 async def user_info(client: Client, message: Message):
     if len(message.command) < 2:
@@ -23,7 +24,7 @@ async def user_info(client: Client, message: Message):
         user_id = user.id
         first_name = user.first_name or "N/A"
         username = f"@{user.username}" if user.username else "N/A"
-        user_link = f"[Link to Profile](tg://user?id={user_id})"
+        user_link = f"[Click](tg://user?id={user_id})"
 
         # Check user status based on the database
         cloned_bots = clonebotdb.find({"user_id": user_id})  # Query the collection
@@ -34,7 +35,7 @@ async def user_info(client: Client, message: Message):
         else:
             user_status = "[Regular 👥]"
 
-        # User photo
+        # User photo (using `client.get_profile_photos` to fetch the user's profile photo)
         profile_photos = await client.get_profile_photos(user.id)
         if profile_photos.total_count > 0:
             # If the user has a profile photo, use it
