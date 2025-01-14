@@ -1,13 +1,13 @@
 import asyncio
-from SONALI.misc import SUDOERS
+from BABYMUSIC.misc import SUDOERS
 from pyrogram import filters
-from SONALI import app
+from BABYMUSIC import app
 import asyncio
 from pyrogram import filters
 from pyrogram.enums import ChatMemberStatus
-from SONALI import app
-from SONALI.utils.RAUSHAN_ban import admin_filter
-from SONALI.utils.database import get_assistant
+from BABYMUSIC import app
+from BABYMUSIC.utils.UTTAM_ban import admin_filter
+from BABYMUSIC.utils.database import get_assistant
 
 links = {}
 
@@ -33,15 +33,15 @@ async def join_group(client, message):
     ):
         try:
             await userbot.join_chat(message.chat.username)
-            await done.edit_text("**✅ ᴀssɪsᴛᴀɴᴛ ᴊᴏɪɴᴇᴅ.**")
+            await done.edit_text("**✅ Assistant joined.**")
         except Exception as e:
-            await done.edit_text("**ɪ ɴᴇᴇᴅ ᴀᴅᴍɪɴ ᴘᴏᴡᴇʀ ᴛᴏ ᴜɴʙᴀɴ ɪɴᴠɪᴛᴇ ᴍʏ ᴀssɪsᴛᴀɴᴛ!**")
+            await done.edit_text("**I need admin power to unban invite my assistant!**")
 
     # Condition 2: Group username is present, bot is admin, and Userbot is not banned
     if message.chat.username and chat_member.status == ChatMemberStatus.ADMINISTRATOR:
         try:
             await userbot.join_chat(message.chat.username)
-            await done.edit_text("**✅ ᴀssɪsᴛᴀɴᴛ ᴊᴏɪɴᴇᴅ.**")
+            await done.edit_text("**✅ Assistant joined.**")
         except Exception as e:
             await done.edit_text(str(e))
 
@@ -54,14 +54,14 @@ async def join_group(client, message):
         ]:
             try:
                 await app.unban_chat_member(chat_id, userbot.id)
-                await done.edit_text("**ᴀssɪsᴛᴀɴᴛ ɪs ᴜɴʙᴀɴɴɪɴɢ...**")
+                await done.edit_text("**Assistant is unbanning...**")
                 await userbot.join_chat(message.chat.username)
                 await done.edit_text(
-                    "**ᴀssɪsᴛᴀɴᴛ ᴡᴀs ʙᴀɴɴᴇᴅ, ʙᴜᴛ ɴᴏᴡ ᴜɴʙᴀɴɴᴇᴅ, ᴀɴᴅ ᴊᴏɪɴᴇᴅ ᴄʜᴀᴛ ✅**"
+                    "**Assistant was banned, bot now unban, and joined chat ✅**"
                 )
             except Exception as e:
                 await done.edit_text(
-                    "**ғᴀɪʟᴇᴅ ᴛᴏ ᴊᴏɪɴ, ᴘʟᴇᴀsᴇ ɢɪᴠᴇ ʙᴀɴ ᴘᴏᴡᴇʀ ᴀɴᴅ ɪɴᴠɪᴛᴇ ᴜsᴇʀ ᴘᴏᴡᴇʀ ᴏʀ ᴜɴʙᴀɴ ᴀssɪsᴛᴀɴᴛ ᴍᴀɴᴜᴀʟʟʏ ᴛʜᴇɴ ᴛʀʏ ᴀɢᴀɪɴ ʙʏ /userbotjoin**"
+                    "**Failed to join, please ɢɪᴠᴇ ʙᴀɴ ᴘᴏᴡᴇʀ ᴀɴᴅ ɪɴᴠɪᴛᴇ ᴜsᴇʀ ᴘᴏᴡᴇʀ ᴏʀ ᴜɴʙᴀɴ ᴀssɪsᴛᴀɴᴛ ᴍᴀɴᴜᴀʟʟʏ ᴛʜᴇɴ ᴛʀʏ ᴀɢᴀɪɴ ʙʏ /userbotjoin**"
                 )
         return
 
