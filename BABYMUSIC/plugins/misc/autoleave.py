@@ -7,8 +7,10 @@ from pyrogram.enums import ChatType
 from typing import Union, List
 
 import config
+from BABYMUSIC import app
 from BABYMUSIC.core.call import BABY, autoend
 from BABYMUSIC.utils.database import get_client, is_active_chat, is_autoend
+
 
 # Global variable to manage infovc state
 infovc_enabled = True  # Default to always true
