@@ -13,6 +13,7 @@ blockeddb = mongodb.blockedusers
 chatsdb = mongodb.chats
 channeldb = mongodb.cplaymode
 countdb = mongodb.upcount
+connectdb = mongodb.connect
 gbansdb = mongodb.gban
 langdb = mongodb.language
 onoffdb = mongodb.onoffper
@@ -52,6 +53,19 @@ suggestion = {}
 mute = {}
 audio = {}
 video = {}
+
+async def connect_to_chat(user_id: int, chat_id: int):
+    existing = await connectdb.find_one({'user_id': user_id, 'chat_id': chat_id})
+    if existing:
+        return True
+
+    result = await connectdb.update_one(
+        {'user_id': user_id},
+        {'$set': {'chat_id': chat_id}},
+        upsert=True
+    )
+    
+    return result.modified_count > 0 or result.upserted_id is not None
 
 async def _get_playlists(chat_id: int) -> Dict[str, int]:
     _notes = await playlistdb.find_one({"chat_id": chat_id})
