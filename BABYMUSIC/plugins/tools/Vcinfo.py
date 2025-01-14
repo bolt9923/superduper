@@ -39,5 +39,5 @@ async def user_joined_voice_chat(client: Client, chat_member_updated: ChatMember
 # Register the handler before app.run()
 app.add_handler(ChatMemberUpdatedHandler(user_joined_voice_chat))
 
-# Run the app
+# Run the app without the 'use_qr' argument
 app.run()
