@@ -1,13 +1,15 @@
 from BABYMUSIC import app
 from pyrogram import Client, filters
-from pyrogram.types import Message, ChatMember
+from pyrogram.types import Message
 
 @app.on_message(filters.command("staff") & filters.group)
 async def staff_list(client: Client, message: Message):
     try:
         # Get the chat administrators
         chat_id = message.chat.id
-        chat_admins = await client.get_chat_members(chat_id, filter="administrators")
+        async for member in client.get_chat_members(chat_id, filter="administrators"):
+            chat_admins = []
+            chat_admins.append(member)
 
         # Categorize admins by roles
         owner = []
