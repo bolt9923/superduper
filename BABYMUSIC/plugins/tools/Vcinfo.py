@@ -11,11 +11,11 @@ from BABYMUSIC import app
 async def user_joined_voice_chat(client: Client, chat_member_updated: ChatMemberUpdated):
     try:
         chat = chat_member_updated.chat
-        user = chat_member_updated.new_chat_member.user
+        user = chat_member_updated.new_chat_member.user  # हो सकता है None हो
         chat_id = chat.id
 
-        # Check if user joined the voice chat
-        if (
+        # जांचें कि उपयोगकर्ता वॉइस चैट में शामिल हुआ है और दोनों सदस्य None नहीं हैं
+        if chat_member_updated.old_chat_member and chat_member_updated.new_chat_member and (
             not chat_member_updated.old_chat_member.is_participant
             and chat_member_updated.new_chat_member.is_participant
         ):
@@ -29,6 +29,7 @@ async def user_joined_voice_chat(client: Client, chat_member_updated: ChatMember
 
     except Exception as e:
         print(f"Error in user_joined_voice_chat: {e}")
+
 
 
 # Register the ChatMemberUpdatedHandler
