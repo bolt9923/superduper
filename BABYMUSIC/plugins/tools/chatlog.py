@@ -11,11 +11,11 @@ from pathlib import Path
 from pyrogram.enums import ParseMode
 
 photo = [
-    "https://telegra.ph/file/de3b1ab2d139d16656258.jpg",
-    "https://telegra.ph/file/bc288c1cfd7ca64d672f0.jpg",
-    "https://telegra.ph/file/3a0d9845f6ad4f4ccc11b.jpg",
-    "https://telegra.ph/file/f9a03656922e5e16b96d8.jpg",
-    "https://telegra.ph/file/f9a03656922e5e16b96d8.jpg",
+    "https://files.catbox.moe/xnmc4b.jpg",
+    "https://files.catbox.moe/o17hgj.jpg",
+    "https://files.catbox.moe/tolvrn.jpg",
+    "https://files.catbox.moe/wsuo4n.jpg",
+    "https://files.catbox.moe/o17hgj.jpg",
 ]
 
 @app.on_message(filters.new_chat_members, group=2)
@@ -26,17 +26,17 @@ async def join_watcher(_, message):
         if member.id == app.id:
             count = await app.get_chat_members_count(chat.id)
             msg = (
-                f"❍ ᴍᴜsɪᴄ ʙᴏᴛ ᴀᴅᴅᴇᴅ ɪɴ ᴀ ɴᴇᴡ ɢʀᴏᴜᴘ\n\n"
+                f"#Music_added_in_a_new_group 🎉n\n"
                 f"____________________________________\n\n"
-                f"❍ ᴄʜᴀᴛ ɴᴀᴍᴇ: {chat.title}\n"
-                f"❍ ᴄʜᴀᴛ ɪᴅ: {chat.id}\n"
-                f"❍ ᴄʜᴀᴛ ᴜsᴇʀɴᴀᴍᴇ: @{chat.username}\n"
-                f"❍ ᴄʜᴀᴛ ʟɪɴᴋ: [ᴄʟɪᴄᴋ]({link})\n"
-                f"❍ ɢʀᴏᴜᴘ ᴍᴇᴍʙᴇʀs: {count}\n"
-                f"❍ ᴀᴅᴅᴇᴅ ʙʏ: {message.from_user.mention}"
+                f"💬 Chat name: {chat.title}\n"
+                f"🆔 Chat ID: {chat.id}\n"
+                f"🦋 Chat username: @{chat.username}\n"
+                f"🔗 Chat link: [click]({link})\n"
+                f"👥 Group members: {count}\n"
+                f"🙋🏻‍♂️ Added By: {message.from_user.mention}"
             )
             await app.send_photo(LOG_GROUP_ID, photo=random.choice(photo), caption=msg, reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton(f"sᴇᴇ ɢʀᴏᴜᴘ👀", url=f"{link}")]
+                [InlineKeyboardButton(f"Group link 🔗", url=f"{link}")]
             ]))
 
 @app.on_message(filters.left_chat_member)
@@ -46,6 +46,6 @@ async def on_left_chat_member(_, message: Message):
         title = message.chat.title
         username = f"@{message.chat.username}" if message.chat.username else "𝐏ʀɪᴠᴀᴛᴇ 𝐂ʜᴀᴛ"
         chat_id = message.chat.id
-        left = f"✫ <b><u>#𝐋ᴇғᴛ_𝐆ʀᴏᴜᴘ</u></b> ✫\n\n𝐂ʜᴀᴛ 𝐓ɪᴛʟᴇ : {title}\n\n𝐂ʜᴀᴛ 𝐈ᴅ : {chat_id}\n\n𝐑ᴇᴍᴏᴠᴇᴅ 𝐁ʏ : {remove_by}\n\n𝐁ᴏᴛ : @{app.username}"
+        left = f"<b><u>#Music_bot_leave 🤖</u></b>\n\n💬 Chat title : {title}\n\n🆔 Chat ID : {chat_id}\n\n🙍🏻‍♂️ Removed by : {remove_by}\n\n𝐁ᴏᴛ : @{app.username}"
         await app.send_photo(LOG_GROUP_ID, photo=random.choice(photo), caption=left)
         
