@@ -31,6 +31,7 @@ from BABYMUSIC.utils.database import (
     is_banned_user,
     is_on_off,
 )
+from BABYMUSIC.utils.thumbnails import get_thumb
 from BABYMUSIC.utils.logger import play_logs
 from config import BANNED_USERS, lyrical
 from time import time
@@ -1201,14 +1202,3 @@ async def stream(
             db[chat_id][0]["mystic"] = run
             db[chat_id][0]["markup"] = "tg"
             await mystic.delete()
-
-
-async def get_thumb(videoid):
-    try:
-        query = f"https://www.youtube.com/watch?v={videoid}"
-        results = VideosSearch(query, limit=1)
-        for result in (await results.next())["result"]:
-            thumbnail = result["thumbnails"][0]["url"].split("?")[0]
-        return thumbnail
-    except Exception as e:
-        return config.YOUTUBE_IMG_URL
