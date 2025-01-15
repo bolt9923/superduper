@@ -19,6 +19,7 @@ from BABYMUSIC.utils.database import (
     get_lang,
     is_banned_user,
     is_on_off,
+    get_cloner_id,
 )
 from BABYMUSIC.utils.decorators.language import LanguageStart
 from BABYMUSIC.utils.formatters import get_readable_time
@@ -40,9 +41,13 @@ NEXI_VID = [
 ]
 
 YUMI_PICS = [
-"https://files.catbox.moe/xhpqtp.jpg",
-"https://files.catbox.moe/yeeu8p.jpg",
-
+"https://files.catbox.moe/y2mqbk.jpg",
+"https://files.catbox.moe/t83x3n.jpg",
+"https://files.catbox.moe/2u6sh6.jpg",
+"https://files.catbox.moe/bk7ilh.jpg",
+"https://files.catbox.moe/6wolc2.jpg",
+"https://files.catbox.moe/bn85wm.jpg",
+    
 ]
 
 
@@ -51,6 +56,7 @@ YUMI_PICS = [
 @LanguageStart
 async def start_pm(client, message: Message, _):
     a = await client.get_me()
+    cloner_id = await get_cloner_id(a.id)  # Fetch cloner ID for the bot
     await add_served_user_clone(message.from_user.id)
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
@@ -102,16 +108,22 @@ async def start_pm(client, message: Message, _):
         out = [
         [
             InlineKeyboardButton(
-                text=_["S_B_3"],
-                url=f"https://t.me/{a.username}?startgroup=true",
+                text="Invite to Group",
+                url=f"https://t.me/{ai.username}?startgroup=true",
             )
         ],
         [
-            InlineKeyboardButton(text=_["S_B_5"], user_id=OWNER_ID),
-            InlineKeyboardButton(text=_["S_B_6"], url=config.SUPPORT_CHANNEL),
+            InlineKeyboardButton(
+                text="Creator",
+                user_id=cloner_id if cloner_id else OWNER_ID  # Use cloner ID or fallback to OWNER_ID
+            ),
+            InlineKeyboardButton(
+                text="Helper",
+                callback_data="settings_back_helper"
+            ),
         ],
         [
-            InlineKeyboardButton(text=_["S_B_4"], callback_data="settings_back_helper"),
+            InlineKeyboardButton(text="Create your own bot", url="http://t.me/YOUTUBE_RROBOT?start=clone"),
         ],
     ]
         # out = private_panel(_)
