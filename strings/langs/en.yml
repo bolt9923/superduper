@@ -168,14 +168,14 @@ ping_2: "{1}\n\n❍ Ping... Pong: {0}ms...\n\n➻ System stats:\n\nUptime: {2}\n
 queue_1 : "» Fetching queue...\n\nPlease wait..."
 queue_2 : "» Queue empty."
 queue_3 : "<u>» Click here to check the list of the queued tracks :</u> <a href={0}>here</a>"
-queue_4 : "▣ <b>Added to Queue at #{0}\n\n‣ Title :</b> {1}\n<b>‣ Duration :</b> {2} minutes\n<b>‣ Requested by :</b> {3}"
+queue_4 : "🎧<b>Added to Queue at #{0}\n\n#Title :</b> {1}\n<b>#Duration :</b> {2} minutes\n<b>#Requested by :</b> {3}"
 queue_5 : "There's only one queued track in the playlist.\n\nAdd more tracks to check the list."
 queue_6 : "<b>🕚 Duration :</b> Unknown duration stream\n\nClick on the button below to get the whole queued list."
 queue_7 : "\nClick on the button below to get the whole queued list."
 queue_8 : "<b>{0} Player</b>\n\n❍ <b>Streaming :</b> {1}\n\n❍ <b>Stream type :</b> {2}\n❍ <b>Requested by :</b> {3}\n{4}"
 
-stream_1 : "▣ <b>Started Streaming </b>\n\n<b>๏ Title :</b> <a href={0}>{1}</a>\n<b>๏ Duration :</b> {2} minutes\n<b>๏ Requested by :</b> {3}"
-stream_2 : "▣ <b>Started Streaming </b>\n\n<b>๏ Stream type :</b> Live stream [URL]\n<b>๏ Requested by :</b> {0}"
+stream_1 : "🎧<b>Started Streaming </b>\n\n<b>#Title :</b> <a href={0}>{1}</a>\n<b>#Duration :</b> {2} minutes\n<b>#Requested by :</b> {3}"
+stream_2 : "🎧<b>Started Streaming </b>\n\n<b>#Stream type :</b> Live stream [URL]\n<b>#Requested by :</b> {0}"
 
 CLOSE_BUTTON  : "Close"
 BACK_BUTTON : "Back"
