@@ -4,7 +4,7 @@ from pyrogram import filters, types, Client
 from pyrogram.types import InlineKeyboardMarkup, Message
 
 from BABYMUSIC import app
-from BABYMUSIC.utils import first_page, second_page
+from BABYMUSIC.utils.chelp import first_page
 from BABYMUSIC.utils.database import get_lang
 from BABYMUSIC.utils.decorators.language import LanguageStart, languageCB
 from BABYMUSIC.utils.inline.help import help_back_markup, private_help_panel
@@ -148,13 +148,3 @@ async def helper_cb(client, CallbackQuery, _):
     elif cb == "hb22":
         await CallbackQuery.edit_message_text(helpers.HELP_22, reply_markup=keyboard)
 
-
-@Client.on_callback_query(filters.regex("dilXaditi") & ~BANNED_USERS)
-@languageCB
-async def first_pagexx(client, CallbackQuery, _):
-    menu_next = second_page(_)
-    try:
-        await CallbackQuery.message.edit_text(_["help_1"], reply_markup=menu_next)
-        return
-    except:
-        return
