@@ -14,10 +14,10 @@ BASE_URL = "https://api.together.xyz/v1/chat/completions"
         prefixes=["+", ".", "/", "-", "$", "#", "&"],
     )
 )
-async def chat_gpt(bot, message: Message):
+async def chat_gpt(client: Client, message: Message):
     try:
         # Indicate typing action
-        await bot.send_chat_action(message.chat.id, ChatAction.TYPING)
+        await client.send_chat_action(message.chat.id, ChatAction.TYPING)
 
         if len(message.command) < 2:
             # Send usage example if no query is provided
@@ -29,6 +29,10 @@ async def chat_gpt(bot, message: Message):
         # Extract the user's query
         query = message.text.split(' ', 1)[1]
         print("Input query:", query)  # Debugging input
+
+        # Fetch bot's username
+        bot_info = await client.get_me()
+        bot_username = bot_info.username
 
         # Set headers and payload for the API request
         headers = {
@@ -61,7 +65,7 @@ async def chat_gpt(bot, message: Message):
             result = response_data["choices"][0]["message"]["content"].strip()
             if result:
                 await message.reply_text(
-                    f"{result}\n\nQuery by @{bot.username}",
+                    f"{result}\n\nQuery by @{bot_username}",
                     parse_mode=ParseMode.MARKDOWN
                 )
             else:
