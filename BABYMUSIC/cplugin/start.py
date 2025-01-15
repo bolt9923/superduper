@@ -12,6 +12,7 @@ from BABYMUSIC.misc import _boot_
 from BABYMUSIC.plugins.sudo.sudoers import sudoers_list
 from BABYMUSIC.utils.database import get_served_chats, get_served_users, get_sudoers
 from BABYMUSIC.utils import bot_sys_stats
+from BABYMUSIC.utils.chelp import first_page
 from BABYMUSIC.utils.database import (
     add_served_chat_clone,
     add_served_user_clone,
