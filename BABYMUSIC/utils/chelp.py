@@ -69,5 +69,4 @@ def first_page(_):
               #  )
           #  ],
         ]
-    )
     return first_page_menu
