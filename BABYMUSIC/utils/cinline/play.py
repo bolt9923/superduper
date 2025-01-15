@@ -242,12 +242,12 @@ def stream_markup2(_, chat_id):
             InlineKeyboardButton(text="‣‣I", callback_data=f"ADMIN Skip|{chat_id}"),
             InlineKeyboardButton(text="▢", callback_data=f"ADMIN Stop|{chat_id}"),
         ],
-[
+        [
             InlineKeyboardButton(
-                text="ᴏᴡɴᴇʀ", url=f"https://t.me/untold_coder"
+                text="Support 📞", url=f"https://t.me/untold_coder"
             ),
             InlineKeyboardButton(
-                text="ᴄʜᴀᴛ", url=f"https://t.me/untold_coder"
+                text="Update 🔔", url=f"https://t.me/untold_coder"
             ),
         ],
 
@@ -293,6 +293,14 @@ def stream_markup_timer2(_, chat_id, played, dur):
             InlineKeyboardButton(text="↻", callback_data=f"ADMIN Replay|{chat_id}"),
             InlineKeyboardButton(text="‣‣I", callback_data=f"ADMIN Skip|{chat_id}"),
             InlineKeyboardButton(text="▢", callback_data=f"ADMIN Stop|{chat_id}"),
+        ],
+        [
+            InlineKeyboardButton(
+                text="Support 📞", url="https://t.me/+OL6jdTL7JAJjYzVl"
+            ),
+            InlineKeyboardButton(
+                text="Update 🔔", url="https://t.me/BABY09_WORLD"
+            ),
         ],
         [
             InlineKeyboardButton(text=_["CLOSEMENU_BUTTON"], callback_data="close"),
