@@ -7,7 +7,7 @@ from BABYMUSIC.core.call import BABY
 from BABYMUSIC.misc import db
 from BABYMUSIC.utils.database import get_loop
 from BABYMUSIC.utils.decorators import AdminRightsCheck
-from BABYMUSIC.utils.inline import close_markup, stream_markup, stream_markup2
+from BABYMUSIC.utils.cinline import close_markup, stream_markup, stream_markup2
 from BABYMUSIC.utils.stream.autoclear import auto_clean
 from BABYMUSIC.utils.thumbnails import get_thumb
 from config import BANNED_USERS
