@@ -60,6 +60,23 @@ async def start_pm(client, message: Message, _):
     await add_served_user_clone(message.from_user.id)
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
+        if len(message.text.split()) > 1:
+        param = message.text.split(None, 1)[1]
+        if param == "start":
+            # Handle the "start" parameter
+            start_text = "Welcome to the bot! Use the buttons below to explore."
+            start_keyboard = InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton(
+                            text="Click for Start",
+                            url=f"https://t.me/{a.username}?start=start"
+                        )
+                    ]
+                ]
+            )
+            await message.reply_text(start_text, reply_markup=start_keyboard)
+            return
         if name[0:4] == "help":
             keyboard = help_pannel(_)
             return await message.reply_photo(
