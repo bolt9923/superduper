@@ -51,46 +51,53 @@ YUMI_PICS = [
 ]
 
 
-
 @Client.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
 async def start_pm(client, message: Message, _):
     a = await client.get_me()
     cloner_id = await get_cloner_id(a.id)  # Fetch cloner ID for the bot
     await add_served_user_clone(message.from_user.id)
+
     if len(message.text.split()) > 1:
-        name = message.text.split(None, 1)[1]
-        if len(message.text.split()) > 1:
         param = message.text.split(None, 1)[1]
         if param == "start":
-            # Handle the "start" parameter
-            start_text = "Welcome to the bot! Use the buttons below to explore."
-            start_keyboard = InlineKeyboardMarkup(
+            start_keyboard = [
                 [
-                    [
-                        InlineKeyboardButton(
-                            text="Click for Start",
-                            url=f"https://t.me/{a.username}?start=start"
-                        )
-                    ]
-                ]
-            )
-            await message.reply_text(start_text, reply_markup=start_keyboard)
-            return
-        if name[0:4] == "help":
-            keyboard = help_pannel(_)
-            return await message.reply_photo(
+                    InlineKeyboardButton(
+                        text="Invite to Group",
+                        url=f"https://t.me/{a.username}?startgroup=true",
+                    )
+                ],
+                [
+                    InlineKeyboardButton(
+                        text="Creator",
+                        user_id=cloner_id if cloner_id else OWNER_ID  # Use cloner ID or fallback to OWNER_ID
+                    ),
+                    InlineKeyboardButton(
+                        text="Helper",
+                        callback_data="settings_back_helper"
+                    ),
+                ],
+                [
+                    InlineKeyboardButton(text="Create your own bot", url="http://t.me/YOUTUBE_RROBOT?start=clone"),
+                ],
+            ]
+            await message.reply_photo(
                 random.choice(YUMI_PICS),
-                caption=_["help_1"].format(config.SUPPORT_CHAT),
+                caption=_["c_start_2"].format(message.from_user.mention, a.mention),
+                reply_markup=InlineKeyboardMarkup(start_keyboard),
+            )
+        elif param.startswith("help"):
+            keyboard = first_page(_)
+            await message.reply_text(
+                text=_["help_1"].format(config.SUPPORT_CHAT),
                 reply_markup=keyboard,
             )
-        if name[0:3] == "sud":
+        elif param.startswith("sud"):
             await sudoers_list(client=client, message=message, _=_)
-
-            return
-        if name[0:3] == "inf":
+        elif param.startswith("inf"):
             m = await message.reply_text("🔎")
-            query = (str(name)).replace("info_", "", 1)
+            query = param.replace("info_", "", 1)
             query = f"https://www.youtube.com/watch?v={query}"
             results = VideosSearch(query, limit=1)
             for result in (await results.next())["result"]:
@@ -102,6 +109,7 @@ async def start_pm(client, message: Message, _):
                 channel = result["channel"]["name"]
                 link = result["link"]
                 published = result["publishedTime"]
+
             searched_text = _["start_6"].format(
                 title, duration, views, published, channellink, channel, a.mention
             )
@@ -120,35 +128,34 @@ async def start_pm(client, message: Message, _):
                 caption=searched_text,
                 reply_markup=key,
             )
-    
     else:
-        out = [
-        [
-            InlineKeyboardButton(
-                text="Invite to Group",
-                url=f"https://t.me/{a.username}?startgroup=true",
-            )
-        ],
-        [
-            InlineKeyboardButton(
-                text="Creator",
-                user_id=cloner_id if cloner_id else OWNER_ID  # Use cloner ID or fallback to OWNER_ID
-            ),
-            InlineKeyboardButton(
-                text="Helper",
-                callback_data="settings_back_helper"
-            ),
-        ],
-        [
-            InlineKeyboardButton(text="Create your own bot", url="http://t.me/YOUTUBE_RROBOT?start=clone"),
-        ],
-    ]
-        # out = private_panel(_)
+        default_keyboard = [
+            [
+                InlineKeyboardButton(
+                    text="Invite to Group",
+                    url=f"https://t.me/{a.username}?startgroup=true",
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    text="Creator",
+                    user_id=cloner_id if cloner_id else OWNER_ID
+                ),
+                InlineKeyboardButton(
+                    text="Helper",
+                    callback_data="settings_back_helper"
+                ),
+            ],
+            [
+                InlineKeyboardButton(text="Create your own bot", url="http://t.me/YOUTUBE_RROBOT?start=clone"),
+            ],
+        ]
         await message.reply_photo(
             random.choice(YUMI_PICS),
             caption=_["c_start_2"].format(message.from_user.mention, a.mention),
-            reply_markup=InlineKeyboardMarkup(out),
+            reply_markup=InlineKeyboardMarkup(default_keyboard),
         )
+
 
 
 @Client.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
