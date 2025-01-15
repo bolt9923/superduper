@@ -10,7 +10,7 @@ import config
 from BABYMUSIC import Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app
 from BABYMUSIC.core.call import BABY
 from BABYMUSIC.misc import SUDOERS
-from BABYMUSIC.utils.cinline import panel_markup_clone
+from BABYMUSIC.utils.cinline import stream_markup_timer2
 from BABYMUSIC.utils import seconds_to_min, time_to_seconds
 from BABYMUSIC.utils.channelplay import get_channeplayCB
 from BABYMUSIC.utils.decorators.language import languageCB
@@ -876,7 +876,7 @@ async def stream(
                 )
                 img = await get_thumb(vidid)
                 i = await client.get_me()
-                button = panel_markup_clone(_, vidid, chat_id)
+                button = stream_markup_timer2(_, vidid, chat_id)
                 run = await client.send_photo(
                     original_chat_id,
                     photo=img,
@@ -969,7 +969,7 @@ async def stream(
             )
             img = await get_thumb(vidid)
             i = await client.get_me()
-            button = panel_markup_clone(_, vidid, chat_id)
+            button = stream_markup_timer2(_, vidid, chat_id)
             run = await client.send_photo(
                 original_chat_id,
                 photo=img,
