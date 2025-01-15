@@ -7,6 +7,21 @@ clonebotnamedb = mongodb.clonebotnamedb
 users_collection = mongodb.users
 referrals_collection = mongodb.referrals  # New collection for storing referral data
 
+async def get_cloner_id(bot_id):
+    """
+    Fetch the ID of the user who cloned the bot.
+    
+    Args:
+        bot_id (int): The Telegram ID of the bot.
+    
+    Returns:
+        int or None: Returns the cloner's ID if found, otherwise None.
+    """
+    bot_data = clonebotdb.find_one({"bot_id": bot_id})
+    if bot_data and "cloned_by" in bot_data:
+        return bot_data["cloned_by"]
+    return None
+    
 # Save user data
 async def save_user(user_id: int):
     await users_collection.insert_one({
