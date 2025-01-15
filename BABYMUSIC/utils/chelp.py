@@ -1,3 +1,9 @@
+from typing import Union
+
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+
+from BABYMUSIC import app
+
 def first_page(_):
     first_page_menu = InlineKeyboardMarkup(
         [
