@@ -7,16 +7,14 @@ from BABYMUSIC.core.call import BABY
 from BABYMUSIC.misc import db
 from BABYMUSIC.utils.database import get_loop
 from BABYMUSIC.utils.decorators import AdminRightsCheck
-from BABYMUSIC.utils.inline import close_markup, stream_markup, stream_markup2
+from BABYMUSIC.utils.inline import close_markup, stream_markup, telegram_markup
 from BABYMUSIC.utils.stream.autoclear import auto_clean
 from BABYMUSIC.utils.thumbnails import get_thumb
 from config import BANNED_USERS
 
 
 @app.on_message(
-    filters.command(
-        ["skip", "cskip", "next", "cnext"], prefixes=["/", "!", "%", ",", ".", "@", "#"]
-    )
+    filters.command(["skip", "cskip", "next", "cnext"], prefixes=["/", "!", "."])
     & filters.group
     & ~BANNED_USERS
 )
@@ -118,7 +116,7 @@ async def skip(cli, message: Message, _, chat_id):
             await BABY.skip_stream(chat_id, link, video=status, image=image)
         except:
             return await message.reply_text(_["call_6"])
-        button = stream_markup2(_, chat_id)
+        button = telegram_markup(_, chat_id)
         img = await get_thumb(videoid)
         run = await message.reply_photo(
             photo=img,
@@ -141,14 +139,22 @@ async def skip(cli, message: Message, _, chat_id):
                 videoid=True,
                 video=status,
             )
-        except:
-            return await mystic.edit_text(_["call_6"])
+        except Exception:
+            try:
+                file_path, direct = await YTB.download(
+                    videoid,
+                    mystic,
+                    videoid=True,
+                    video=status,
+                )
+            except:
+                return await mystic.edit_text(_["call_6"])
         try:
             image = await YouTube.thumbnail(videoid, True)
         except:
             image = None
         try:
-            await BABY.skip_stream(chat_id, file_path, video=status, image=image)
+            await RAUSHAN.skip_stream(chat_id, file_path, video=status, image=image)
         except:
             return await mystic.edit_text(_["call_6"])
         button = stream_markup(_, videoid, chat_id)
@@ -171,7 +177,7 @@ async def skip(cli, message: Message, _, chat_id):
             await BABY.skip_stream(chat_id, videoid, video=status)
         except:
             return await message.reply_text(_["call_6"])
-        button = stream_markup2(_, chat_id)
+        button = telegram_markup(_, chat_id)
         run = await message.reply_photo(
             photo=config.STREAM_IMG_URL,
             caption=_["stream_2"].format(user),
@@ -194,7 +200,7 @@ async def skip(cli, message: Message, _, chat_id):
         except:
             return await message.reply_text(_["call_6"])
         if videoid == "telegram":
-            button = stream_markup2(_, chat_id)
+            button = telegram_markup(_, chat_id)
             run = await message.reply_photo(
                 photo=(
                     config.TELEGRAM_AUDIO_URL
@@ -209,7 +215,7 @@ async def skip(cli, message: Message, _, chat_id):
             db[chat_id][0]["mystic"] = run
             db[chat_id][0]["markup"] = "tg"
         elif videoid == "soundcloud":
-            button = stream_markup2(_, chat_id)
+            button = telegram_markup(_, chat_id)
             run = await message.reply_photo(
                 photo=(
                     config.SOUNCLOUD_IMG_URL
