@@ -66,7 +66,7 @@ async def help_com_group(client, message: Message):
                 [
                     InlineKeyboardButton(
                         text="Help in PM !",
-                        url=f"http://t.me/{bot_info.username}?start=start",
+                        url=f"http://t.me/{bot_info.username}?start=help",
                     )
                 ]
             ]
