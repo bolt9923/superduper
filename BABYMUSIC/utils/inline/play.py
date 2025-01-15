@@ -60,18 +60,19 @@ def track_markup(_, videoid, user_id, channel, fplay):
 def stream_markup(_, videoid, chat_id):
     buttons = [
         [
-            InlineKeyboardButton(text="˹ ᴘɾꪮɱꪮᴛιꪮɳ ᴀʋᴀιʅᴀʙʅҽ ˼", callback_data=f"promotext"),
+            InlineKeyboardButton(text="˹ Take me to a new group ˼", callback_data=f"promotext"),
         ],
         [
-            InlineKeyboardButton(text="˹ ⚘ ɪ ɯᴀɳᴛ sᴀᴠҽ ᴛʜιs sꪮɳɠ ⚘ ˼", callback_data=f"add_playlist {videoid}"),
+            InlineKeyboardButton(text="▷", callback_data=f"ADMIN Resume|{chat_id}"),
+            InlineKeyboardButton(text="II", callback_data=f"ADMIN Pause|{chat_id}"),
+            InlineKeyboardButton(text="↻", callback_data=f"ADMIN Replay|{chat_id}"),
+            InlineKeyboardButton(text="‣‣I", callback_data=f"ADMIN Skip|{chat_id}"),
+            InlineKeyboardButton(text="▢", callback_data=f"ADMIN Stop|{chat_id}"),
         ],
         [
-            InlineKeyboardButton(
-                text="˹ ᴜᴘᴅᴀᴛҽ ˼", url="https://t.me/BABY09_WORLD",
-            ),
-            InlineKeyboardButton(
-                text="• 𝛅ᴜᴘᴘᴏꝛᴛ •", url="https://t.me/+OL6jdTL7JAJjYzVl",
-            )
+            InlineKeyboardButton(text="⪻  -𝟸𝟶s", callback_data=f"SEEKBACKWARD|{chat_id}|20"),
+            InlineKeyboardButton(text="📥", callback_data=f"DOWNLOAD|{chat_id}"),
+            InlineKeyboardButton(text="+𝟸𝟶s  ⪼", callback_data=f"SEEKFORWARD|{chat_id}|20"),
         ],
         [
             InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close"),
