@@ -1,8 +1,8 @@
 import random
 import string
-
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardMarkup, InputMediaPhoto, Message
+from pyrogram.types import InlineKeyboardButton
 from pytgcalls.exceptions import NoActiveGroupCall
 
 import config
@@ -12,6 +12,7 @@ from BABYMUSIC.utils import seconds_to_min, time_to_seconds
 from BABYMUSIC.utils.channelplay import get_channeplayCB
 from BABYMUSIC.utils.decorators.language import languageCB
 from BABYMUSIC.utils.decorators.play import PlayWrapper
+from BABYMUSIC.utils.database import is_served_user
 from BABYMUSIC.utils.formatters import formats
 from BABYMUSIC.utils.inline import (
     botplaylist_markup,
@@ -24,6 +25,7 @@ from BABYMUSIC.utils.logger import play_logs
 from BABYMUSIC.utils.stream.stream import stream
 from config import BANNED_USERS, lyrical
 
+
 @app.on_message(
     filters.command(
         [
@@ -35,7 +37,8 @@ from config import BANNED_USERS, lyrical
             "vplayforce",
             "cplayforce",
             "cvplayforce",
-        ]
+        ],
+        prefixes=["/", "!", "."],
     )
     & filters.group
     & ~BANNED_USERS
@@ -52,6 +55,7 @@ async def play_commnd(
     url,
     fplay,
 ):
+    
     mystic = await message.reply_text(
         _["play_2"].format(channel) if channel else _["play_1"]
     )
@@ -61,6 +65,7 @@ async def play_commnd(
     spotify = None
     user_id = message.from_user.id
     user_name = message.from_user.first_name
+
     audio_telegram = (
         (message.reply_to_message.audio or message.reply_to_message.voice)
         if message.reply_to_message
@@ -287,7 +292,7 @@ async def play_commnd(
             return await mystic.delete()
         else:
             try:
-                await Moony.stream_call(url)
+                await BABY.stream_call(url)
             except NoActiveGroupCall:
                 await mystic.edit_text(_["black_9"])
                 return await app.send_message(
@@ -328,8 +333,7 @@ async def play_commnd(
             query = query.replace("-v", "")
         try:
             details, track_id = await YouTube.track(query)
-        except Exception as ex:
-            print(ex)
+        except:
             return await mystic.edit_text(_["play_3"])
         streamtype = "youtube"
     if str(playmode) == "Direct":
@@ -501,8 +505,8 @@ async def play_music(client, CallbackQuery, _):
     return await mystic.delete()
 
 
-@app.on_callback_query(filters.regex("AnonymousAdmin") & ~BANNED_USERS)
-async def anonymous_check(client, CallbackQuery):
+@app.on_callback_query(filters.regex("RAUSHANmousAdmin") & ~BANNED_USERS)
+async def RAUSHANmous_check(client, CallbackQuery):
     try:
         await CallbackQuery.answer(
             "» ʀᴇᴠᴇʀᴛ ʙᴀᴄᴋ ᴛᴏ ᴜsᴇʀ ᴀᴄᴄᴏᴜɴᴛ :\n\nᴏᴘᴇɴ ʏᴏᴜʀ ɢʀᴏᴜᴘ sᴇᴛᴛɪɴɢs.\n-> ᴀᴅᴍɪɴɪsᴛʀᴀᴛᴏʀs\n-> ᴄʟɪᴄᴋ ᴏɴ ʏᴏᴜʀ ɴᴀᴍᴇ\n-> ᴜɴᴄʜᴇᴄᴋ ᴀɴᴏɴʏᴍᴏᴜs ᴀᴅᴍɪɴ ᴘᴇʀᴍɪssɪᴏɴs.",
@@ -512,7 +516,7 @@ async def anonymous_check(client, CallbackQuery):
         pass
 
 
-@app.on_callback_query(filters.regex("AnonyPlaylists") & ~BANNED_USERS)
+@app.on_callback_query(filters.regex("RAUSHANPlaylists") & ~BANNED_USERS)
 @languageCB
 async def play_playlists_command(client, CallbackQuery, _):
     callback_data = CallbackQuery.data.strip()
@@ -660,4 +664,4 @@ async def slider_queries(client, CallbackQuery, _):
         )
         return await CallbackQuery.edit_message_media(
             media=med, reply_markup=InlineKeyboardMarkup(buttons)
-        )
+                )
