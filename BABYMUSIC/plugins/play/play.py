@@ -505,8 +505,8 @@ async def play_music(client, CallbackQuery, _):
     return await mystic.delete()
 
 
-@app.on_callback_query(filters.regex("RAUSHANmousAdmin") & ~BANNED_USERS)
-async def RAUSHANmous_check(client, CallbackQuery):
+@app.on_callback_query(filters.regex("BABYmousAdmin") & ~BANNED_USERS)
+async def BABYmous_check(client, CallbackQuery):
     try:
         await CallbackQuery.answer(
             "» ʀᴇᴠᴇʀᴛ ʙᴀᴄᴋ ᴛᴏ ᴜsᴇʀ ᴀᴄᴄᴏᴜɴᴛ :\n\nᴏᴘᴇɴ ʏᴏᴜʀ ɢʀᴏᴜᴘ sᴇᴛᴛɪɴɢs.\n-> ᴀᴅᴍɪɴɪsᴛʀᴀᴛᴏʀs\n-> ᴄʟɪᴄᴋ ᴏɴ ʏᴏᴜʀ ɴᴀᴍᴇ\n-> ᴜɴᴄʜᴇᴄᴋ ᴀɴᴏɴʏᴍᴏᴜs ᴀᴅᴍɪɴ ᴘᴇʀᴍɪssɪᴏɴs.",
@@ -516,7 +516,7 @@ async def RAUSHANmous_check(client, CallbackQuery):
         pass
 
 
-@app.on_callback_query(filters.regex("RAUSHANPlaylists") & ~BANNED_USERS)
+@app.on_callback_query(filters.regex("BABYPlaylists") & ~BANNED_USERS)
 @languageCB
 async def play_playlists_command(client, CallbackQuery, _):
     callback_data = CallbackQuery.data.strip()
