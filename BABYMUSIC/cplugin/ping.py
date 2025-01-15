@@ -13,8 +13,8 @@ from BABYMUSIC.utils import get_readable_time
 @Client.on_message(filters.command("ping"))
 async def ping_clone(client: Client, message: Message):
     i = await client.get_me()
-    hmm = await message.reply_photo(
-        photo=PING_IMG_URL, caption=f"{i.mention} ɪs ᴘɪɴɢɪɴɢ..."
+    hmm = await message.reply_text(
+    text=f"{i.mention} is pinging..."
     )
     upt = int(time.time() - StartTime)
     cpu = psutil.cpu_percent(interval=0.5)
@@ -25,20 +25,20 @@ async def ping_clone(client: Client, message: Message):
     uptime = get_readable_time((upt))
 
     await hmm.edit_text(
-        f"""➻ ᴩᴏɴɢ : `{resp}ᴍs`
+        f"""Pong : `{resp}ms`
 
-<b><u>{i.mention} sʏsᴛᴇᴍ sᴛᴀᴛs :</u></b>
+<b><u>{i.mention} System stats :</u></b>
 
-๏ **ᴜᴩᴛɪᴍᴇ :** {uptime}
-๏ **ʀᴀᴍ :** {mem}
-๏ **ᴄᴩᴜ :** {cpu}
-๏ **ᴅɪsᴋ :** {disk}""",
+🔋 **Uptime :** {uptime}
+🧇 **RAM :** {mem}
+🔲 **CPU :** {cpu}
+💿 **Disk :** {disk}""",
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton("❄ sᴜᴘᴘᴏʀᴛ ❄", url=SUPPORT_CHAT),
+                    InlineKeyboardButton("Support ", url=SUPPORT_CHAT),
                     InlineKeyboardButton(
-                        "✨ 𝙰𝙳𝙳 𝙼𝙴✨",
+                        "invite Me",
                         url=f"https://t.me/{i.username}?startgroup=true",
                     ),
                 ],
