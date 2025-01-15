@@ -60,7 +60,7 @@ def track_markup(_, videoid, user_id, channel, fplay):
 def stream_markup(_, videoid, chat_id):
     buttons = [
         [
-            InlineKeyboardButton(text="˹ Take me to a new group ˼", callback_data=f"promotext"),
+            InlineKeyboardButton(text="˹ Take me to a new group ˼", url=f"https://t.me/{client.username}?startgroup=true"),
         ],
         [
             InlineKeyboardButton(text="▷", callback_data=f"ADMIN Resume|{chat_id}"),
@@ -73,6 +73,14 @@ def stream_markup(_, videoid, chat_id):
             InlineKeyboardButton(text="⪻  -𝟸𝟶s", callback_data=f"SEEKBACKWARD|{chat_id}|20"),
             InlineKeyboardButton(text="📥", callback_data=f"DOWNLOAD|{chat_id}"),
             InlineKeyboardButton(text="+𝟸𝟶s  ⪼", callback_data=f"SEEKFORWARD|{chat_id}|20"),
+        ],
+        [
+            InlineKeyboardButton(
+                text="Update 🔔", url="https://t.me/BABY09_WORLD",
+            ),
+            InlineKeyboardButton(
+                text="Support 📞", url="https://t.me/+OL6jdTL7JAJjYzVl",
+            )
         ],
         [
             InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close"),
