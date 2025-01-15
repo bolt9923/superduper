@@ -694,7 +694,7 @@ async def markup_timer():
                             playing[0]["dur"],
                         )
                         if markup == "stream"
-                        else stream_markup_timer2(
+                        else stream_markup_timer(
                             _,
                             chat_id,
                             seconds_to_min(playing[0]["played"]),
