@@ -19,7 +19,7 @@ def track_markup(_, videoid, user_id, channel, fplay):
         ],
         [
             InlineKeyboardButton(
-                text=_["CLOSE_BUTTON"],
+                text="Close",
                 callback_data=f"forceclose {videoid}|{user_id}",
             )
         ],
@@ -76,7 +76,7 @@ def stream_markup_timer(_, vidid, chat_id, played, dur):
         ],
 
         [
-            InlineKeyboardButton(text=_["CLOSEMENU_BUTTON"], callback_data="close"),
+            InlineKeyboardButton(text="Close", callback_data="close"),
         ],
     ]
     return buttons
@@ -107,7 +107,7 @@ def stream_markup(_, videoid, chat_id):
         ],
 
         [
-            InlineKeyboardButton(text=_["CLOSEMENU_BUTTON"], callback_data="close"),
+            InlineKeyboardButton(text="Close", callback_data="close"),
         ],
     ]
     return buttons
@@ -126,7 +126,7 @@ def playlist_markup(_, videoid, user_id, ptype, channel, fplay):
         ],
         [
             InlineKeyboardButton(
-                text=_["CLOSE_BUTTON"],
+                text="Close",
                 callback_data=f"forceclose {videoid}|{user_id}",
             ),
         ],
@@ -144,7 +144,7 @@ def livestream_markup(_, videoid, user_id, mode, channel, fplay):
         ],
         [
             InlineKeyboardButton(
-                text=_["CLOSE_BUTTON"],
+                text="Close",
                 callback_data=f"forceclose {videoid}|{user_id}",
             ),
         ],
@@ -171,7 +171,7 @@ def slider_markup(_, videoid, user_id, query, query_type, channel, fplay):
                 callback_data=f"slider B|{query_type}|{query}|{user_id}|{channel}|{fplay}",
             ),
             InlineKeyboardButton(
-                text=_["CLOSE_BUTTON"],
+                text="Close",
                 callback_data=f"forceclose {query}|{user_id}",
             ),
             InlineKeyboardButton(
@@ -192,7 +192,7 @@ def telegram_markup(_, chat_id):
                 text="Next",
                 callback_data=f"PanelMarkup None|{chat_id}",
             ),
-            InlineKeyboardButton(text=_["CLOSEMENU_BUTTON"], callback_data="close"),
+            InlineKeyboardButton(text="Close", callback_data="close"),
         ],
     ]
     return buttons
@@ -264,7 +264,7 @@ def stream_markup2(_, chat_id):
         ],
 
         [
-            InlineKeyboardButton(text=_["CLOSEMENU_BUTTON"], callback_data="close"),
+            InlineKeyboardButton(text="Close", callback_data="close"),
         ],
     ]
     return buttons
@@ -315,7 +315,7 @@ def stream_markup_timer2(_, chat_id, played, dur):
             ),
         ],
         [
-            InlineKeyboardButton(text=_["CLOSEMENU_BUTTON"], callback_data="close"),
+            InlineKeyboardButton(text="Close", callback_data="close"),
         ],
     ]
     return buttons
@@ -519,7 +519,7 @@ def panel_markup_4(_, vidid, chat_id, played, dur):
         ],
 
         [
-            InlineKeyboardButton(text=_["CLOSEMENU_BUTTON"], callback_data="close"),
+            InlineKeyboardButton(text="Close", callback_data="close"),
         ],
     ]
     return buttons
@@ -549,7 +549,7 @@ def panel_markup_clone(_, vidid, chat_id):
         ],
 
         [
-            InlineKeyboardButton(text=_["CLOSEMENU_BUTTON"], callback_data="close"),
+            InlineKeyboardButton(text="Close", callback_data="close"),
         ],
     ]
     return buttons
