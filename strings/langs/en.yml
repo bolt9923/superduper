@@ -174,7 +174,7 @@ queue_6 : "<b>🕚 Duration :</b> Unknown duration stream\n\nClick on the button
 queue_7 : "\nClick on the button below to get the whole queued list."
 queue_8 : "<b>{0} Player</b>\n\n❍ <b>Streaming :</b> {1}\n\n❍ <b>Stream type :</b> {2}\n❍ <b>Requested by :</b> {3}\n{4}"
 
-stream_1 : "🎧<b>Started Streaming </b>\n\n<b>#Title :</b> <a href={0}>{1}</a>\n<b>#Duration :</b> {2} minutes\n<b>#Requested by :</b> {3}"
+stream_1 : "🎧<b>Started Streaming </b>\n\n<b>#Title :</b> <a href={0}>{1}</a>\n<b>#Duration :</b> {2} minutes\n<b>#Requested by :</b> {3}\n🎬 query on <a href='https://t.me/YOUTUBE_RROBOT'>𝐘ᴛ-𝐌ᴜsɪᴄ</a>"
 stream_2 : "🎧<b>Started Streaming </b>\n\n<b>#Stream type :</b> Live stream [URL]\n<b>#Requested by :</b> {0}"
 
 CLOSE_BUTTON  : "Close"
