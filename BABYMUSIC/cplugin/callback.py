@@ -30,7 +30,7 @@ from BABYMUSIC.utils.database import (
 )
 from BABYMUSIC.utils.decorators.language import languageCB
 from BABYMUSIC.utils.formatters import seconds_to_min
-from BABYMUSIC.utils.inline import (
+from BABYMUSIC.utils.cinline import (
     close_markup,
     stream_markup,
     stream_markup_timer,
