@@ -8,6 +8,40 @@ from BABYMUSIC.utils import AdminRightsCheck, seconds_to_min
 from BABYMUSIC.utils.inline import close_markup
 from config import BANNED_USERS
 
+@app.on_callback_query(filters.regex("DOWNLOAD"))
+async def download_callback(cli, query: CallbackQuery):
+    data = query.data.split("|")
+    chat_id = int(data[1])
+
+    # Fetch the currently playing song info
+    playing = db.get(chat_id)
+    if not playing:
+        return await query.answer("No music is playing in this chat!", show_alert=True)
+
+    file_path = playing[0]["file"]
+    title = playing[0].get("title", "Song")  # Default to "Song" if no title is available
+
+    # Notify user about the download process
+    await query.answer("Downloading the song...", show_alert=False)
+
+    try:
+        # Download the file if it's a URL or file path
+        if "vid_" in file_path:
+            n, file_path = await YouTube.video(playing[0]["vidid"], True)
+            if n == 0:
+                return await query.answer("Failed to fetch the video!", show_alert=True)
+
+        # Send the downloaded file to the group
+        await cli.send_document(
+            chat_id=chat_id,
+            document=file_path,
+            caption=f"Here is your song: **{title}**",
+        )
+        await query.answer("Song sent to the group!", show_alert=True)
+    except Exception as e:
+        # Handle errors gracefully
+        await query.answer(f"Failed to download or send the song: {str(e)}", show_alert=True)
+
 
 # Command handler for seeking
 @app.on_message(
