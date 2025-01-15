@@ -109,7 +109,7 @@ async def start_pm(client, message: Message, _):
         [
             InlineKeyboardButton(
                 text="Invite to Group",
-                url=f"https://t.me/{ai.username}?startgroup=true",
+                url=f"https://t.me/{a.username}?startgroup=true",
             )
         ],
         [
