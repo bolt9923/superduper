@@ -135,22 +135,18 @@ async def start_pm(client, message: Message, _):
 
 
 @Client.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
-@LanguageStart
-async def start_gp(client, message: Message, _):
-    a = await client.get_me()
-    # out = start_panel(_)
-    out = [
-                    [
-                        InlineKeyboardButton(
-                            text=_["S_B_1"], url=f"https://t.me/{a.username}?startgroup=true"
-                        ),
-                        InlineKeyboardButton(text=_["S_B_2"], url=config.SUPPORT_CHAT),
-                    ],
+async def start_gp(client, message: Message):
+    bot_info = await client.get_me()  # Get the bot's username
+    await message.reply_text(
+        text="Start me in PM ⚙️.",
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        text="Click to Start!",
+                        url=f"https://t.me/{bot_info.username}?start=start",
+                    )
                 ]
-    uptime = int(time.time() - _boot_)
-    await message.reply_photo(
-        random.choice(NEXI_VID),
-        caption=_["start_1"].format(a.mention, get_readable_time(uptime)),
-        reply_markup=InlineKeyboardMarkup(out),
+            ]
+        ),
     )
-    return await add_served_chat_clone(message.chat.id)
