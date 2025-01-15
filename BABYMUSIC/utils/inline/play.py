@@ -60,7 +60,7 @@ def track_markup(_, videoid, user_id, channel, fplay):
 def stream_markup(_, videoid, chat_id):
     buttons = [
         [
-            InlineKeyboardButton(text="˹ Take me to a new group ˼", url=f"https://t.me/{client.username}?startgroup=true"),
+            InlineKeyboardButton(text="Take me a new group 👥", url="https://t.me/YOUTUBE_RROBOT?startgroup=true"),
         ],
         [
             InlineKeyboardButton(text="▷", callback_data=f"ADMIN Resume|{chat_id}"),
