@@ -1,7 +1,7 @@
 from typing import Union
 
 from pyrogram import filters, types, Client
-from pyrogram.types import InlineKeyboardMarkup, Message
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
 from BABYMUSIC import app
 from BABYMUSIC.utils.chelp import first_page
