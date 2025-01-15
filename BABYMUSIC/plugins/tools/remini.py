@@ -34,7 +34,7 @@ async def upscale_image(client: Client, message: Message):
                 ) as response:
                     if response.status == 200:
                         upscaled_image = await response.read()
-                        upscaled_file_path = "upscaled_image.png"
+                        upscaled_file_path = "Remini_image.png"
 
                         # Save the upscaled image
                         with open(upscaled_file_path, "wb") as output_file:
