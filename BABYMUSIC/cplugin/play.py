@@ -16,7 +16,7 @@ from BABYMUSIC.utils.channelplay import get_channeplayCB
 from BABYMUSIC.utils.decorators.language import languageCB
 from BABYMUSIC.utils.decorators.play import CPlayWrapper
 from BABYMUSIC.utils.formatters import formats
-from BABYMUSIC.utils.inline import (
+from BABYMUSIC.utils.cinline import (
     botplaylist_markup,
     livestream_markup,
     playlist_markup,
