@@ -686,7 +686,7 @@ async def markup_timer():
                     _ = get_string("en")
                 try:
                     buttons = (
-                        stream_markup_timer(
+                        stream_markup_timer2(
                             _,
                             playing[0]["vidid"],
                             chat_id,
@@ -694,7 +694,7 @@ async def markup_timer():
                             playing[0]["dur"],
                         )
                         if markup == "stream"
-                        else stream_markup_timer(
+                        else stream_markup_timer2(
                             _,
                             chat_id,
                             seconds_to_min(playing[0]["played"]),
