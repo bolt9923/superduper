@@ -17,9 +17,9 @@ from pytgcalls.types.input_stream.quality import HighQualityAudio, MediumQuality
 from pytgcalls.types.stream import StreamAudioEnded
 
 import config
-from SONALI import LOGGER, YouTube, app
-from SONALI.misc import db
-from SONALI.utils.database import (
+from BABYMUSI import LOGGER, YouTube, app
+from BABYMUSI.misc import db
+from BABYMUSI.utils.database import (
     add_active_chat,
     add_active_video_chat,
     get_lang,
@@ -31,11 +31,11 @@ from SONALI.utils.database import (
     remove_active_video_chat,
     set_loop,
 )
-from SONALI.utils.exceptions import AssistantErr
-from SONALI.utils.formatters import check_duration, seconds_to_min, speed_converter
-from SONALI.utils.inline.play import stream_markup, telegram_markup
-from SONALI.utils.stream.autoclear import auto_clean
-from SONALI.utils.thumbnails import get_thumb
+from BABYMUSI.utils.exceptions import AssistantErr
+from BABYMUSI.utils.formatters import check_duration, seconds_to_min, speed_converter
+from BABYMUSI.utils.inline.play import stream_markup, telegram_markup
+from BABYMUSI.utils.stream.autoclear import auto_clean
+from BABYMUSI.utils.thumbnails import get_thumb
 from strings import get_string
 
 autoend = {}
@@ -51,7 +51,7 @@ async def _clear_(chat_id):
 class Call(PyTgCalls):
     def __init__(self):
         self.userbot1 = Client(
-            name="RAUSHANAss1",
+            name="BABYAss1",
             api_id=config.API_ID,
             api_hash=config.API_HASH,
             session_string=str(config.STRING1),
@@ -61,7 +61,7 @@ class Call(PyTgCalls):
             cache_duration=150,
         )
         self.userbot2 = Client(
-            name="RAUSHANAss2",
+            name="BABYAss2",
             api_id=config.API_ID,
             api_hash=config.API_HASH,
             session_string=str(config.STRING2),
@@ -71,34 +71,34 @@ class Call(PyTgCalls):
             cache_duration=150,
         )
         self.userbot3 = Client(
-            name="RAUSHANXAss3",
+            name="BABYXAss3",
             api_id=config.API_ID,
             api_hash=config.API_HASH,
             session_string=str(config.STRING3),
         )
         self.three = PyTgCalls(
             self.userbot3,
-            cache_duration=150,
+            cache_duration=100,
         )
         self.userbot4 = Client(
-            name="RAUSHANXAss4",
+            name="BABYXAss4",
             api_id=config.API_ID,
             api_hash=config.API_HASH,
             session_string=str(config.STRING4),
         )
         self.four = PyTgCalls(
             self.userbot4,
-            cache_duration=150,
+            cache_duration=100,
         )
         self.userbot5 = Client(
-            name="RAUSHANAss5",
+            name="BABYAss5",
             api_id=config.API_ID,
             api_hash=config.API_HASH,
             session_string=str(config.STRING5),
         )
         self.five = PyTgCalls(
             self.userbot5,
-            cache_duration=150,
+            cache_duration=100,
         )
 
     async def pause_stream(self, chat_id: int):
@@ -608,4 +608,4 @@ class Call(PyTgCalls):
             await self.change_stream(client, update.chat_id)
 
 
-RAUSHAN = Call()
+BABY = Call()
