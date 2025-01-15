@@ -40,27 +40,53 @@ from strings import get_string
 
 autoend = {}
 counter = {}
-
+client = Client("my_bot")
+cbot = await client.get_me()
 
 async def _clear_(chat_id):
     db[chat_id] = []
     await remove_active_video_chat(chat_id)
     await remove_active_chat(chat_id)
 
-cbot = await client.get_me()
+
+from SONALI.utils.database import clonebotdb  # Assuming clonebotdb is imported here
+
+# Global variable to store SESSION
+GLOBAL_SESSION = None
+
+def fetch_session():
+    """
+    Fetch SESSION from the database and store it in a global variable.
+    """
+    global GLOBAL_SESSION
+    session_details = clonebotdb.find_one({"bot_id": cbot.id})  # Assuming `cbot.id` is the bot ID
+    if not session_details or "session" not in session_details:
+        raise ValueError("Session not found for this bot in the database.")
+    
+    GLOBAL_SESSION = session_details["session"]
+
+# Call fetch_session at the start of the program
+fetch_session()
 
 class Call(PyTgCalls):
     def __init__(self):
+        if not GLOBAL_SESSION:
+            raise ValueError("Global SESSION is not set.")
+        
+        # Initialize userbot1 with the global SESSION
         self.userbot1 = Client(
             name="CBABYAss1",
             api_id=config.API_ID,
             api_hash=config.API_HASH,
-            session_string=str(config.STRING1),
+            session_string=str(GLOBAL_SESSION),  # Use the global session
         )
+
+        # Initialize PyTgCalls with the userbot1 client
         self.one = PyTgCalls(
             self.userbot1,
             cache_duration=150,
         )
+
 
 
     async def pause_stream(self, chat_id: int):
@@ -80,15 +106,16 @@ class Call(PyTgCalls):
             pass
 
     async def stop_stream_force(self, chat_id: int):
-        try:
-            if config.STRING1:
-                await self.one.leave_group_call(chat_id)
-        except:
-            pass
-        try:
-            await _clear_(chat_id)
-        except:
-            pass
+    try:
+        if GLOBAL_SESSION:  # Check if GLOBAL_SESSION is available
+            await self.one.leave_group_call(chat_id)  # Leave group call
+    except Exception as e:
+        LOGGER.error(f"Error while leaving group call in chat {chat_id}: {e}")
+    
+    try:
+        await _clear_(chat_id)  # Clear active chat
+    except Exception as e:
+        LOGGER.error(f"Error while clearing data for chat {chat_id}: {e}")
 
     async def speedup_stream(self, chat_id: int, file_path, speed, playing):
         assistant = await group_assistant(self, chat_id)
@@ -493,15 +520,16 @@ class Call(PyTgCalls):
                     db[chat_id][0]["mystic"] = run
                     db[chat_id][0]["markup"] = "stream"
 
+
     async def ping(self):
         pings = []
-        if config.STRING1:
+        if GLOBAL_SESSION:
             pings.append(await self.one.ping)
         return str(round(sum(pings) / len(pings), 3))
 
     async def start(self):
         LOGGER(__name__).info("Starting PyTgCalls Client...\n")
-        if config.STRING1:
+        if GLOBAL_SESSION:
             await self.one.start()
 
     async def decorators(self):
