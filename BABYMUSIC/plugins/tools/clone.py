@@ -92,6 +92,12 @@ async def my_bots_handler(client, message):
 
 
 
+from datetime import datetime, timedelta
+import asyncio
+from pyrogram import Client, filters
+from pyrogram.errors import AccessTokenInvalid, AccessTokenExpired
+
+
 @app.on_message(filters.command("clone") & ~BANNED_USERS)
 async def clone_txt(client, message):
     user_id = message.from_user.id
@@ -105,7 +111,6 @@ async def clone_txt(client, message):
     print(f"User Data: {user_data}")
 
     points = user_data['points']
-    
     if isinstance(points, dict):
         points = points.get("points", 0)
 
@@ -118,8 +123,10 @@ async def clone_txt(client, message):
 
     if len(message.command) > 1:
         bot_token = message.text.split("/clone", 1)[1].strip()
-        mi = await message.reply_text("Processing..")
+        mi = await message.reply_text("Processing your bot token...")
+
         try:
+            # Validate the bot token
             ai = Client(
                 bot_token,
                 API_ID,
@@ -129,9 +136,6 @@ async def clone_txt(client, message):
             )
             await ai.start()
             bot = await ai.get_me()
-            bot_users = await ai.get_users(bot.username)
-            bot_id = bot_users.id
-
         except (AccessTokenExpired, AccessTokenInvalid):
             await mi.edit_text(
                 "You have provided an invalid bot token. Please provide a valid bot token."
@@ -141,22 +145,33 @@ async def clone_txt(client, message):
             await mi.edit_text(f"An error occurred: {str(e)}")
             return
 
+        # Token is valid, now ask for SESSION
         await mi.edit_text(
-            "Processing..."
+            "Bot token is valid ✅. Please send your SESSION within 30 seconds."
         )
+
+        try:
+            # Wait for SESSION input from the user
+            response = await client.listen(message.chat.id, timeout=30)
+            session = response.text.strip()
+        except asyncio.TimeoutError:
+            await mi.edit_text("You did not provide a SESSION in time. Process canceled.")
+            return
+
+        # Save bot_token, SESSION, and details in the database
         try:
             expiration_date = datetime.now() + timedelta(days=30)
-
             details = {
                 "bot_id": bot.id,
                 "is_bot": True,
                 "user_id": user_id,
                 "name": bot.first_name,
                 "token": bot_token,
+                "session": session,
                 "username": bot.username,
-                "cloned_by": message.from_user.id,
-                "clone_date": datetime.now(),  
-                "expiration_date": expiration_date,  
+                "cloned_by": user_id,
+                "clone_date": datetime.now(),
+                "expiration_date": expiration_date,
             }
             clonebotdb.insert_one(details)
 
@@ -170,7 +185,7 @@ async def clone_txt(client, message):
             )
 
         except Exception as e:
-            logging.exception("Error while cloning bot.")
+            logging.exception("Error while saving bot details.")
             await mi.edit_text(
                 f"⚠️ <b>Error:</b>\n\n<code>{e}</code>\n\n**Now forward this message to support chat**"
             )
@@ -179,6 +194,7 @@ async def clone_txt(client, message):
         await message.reply_text(
             "**Give Bot Token After /clone Command From @Botfather.**"
         )
+
 
 
 
