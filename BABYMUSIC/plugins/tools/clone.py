@@ -91,13 +91,6 @@ async def my_bots_handler(client, message):
         await message.reply_text(response_text)
 
 
-
-from datetime import datetime, timedelta
-import asyncio
-from pyrogram import Client, filters
-from pyrogram.errors import AccessTokenInvalid, AccessTokenExpired
-
-
 @app.on_message(filters.command("clone") & ~BANNED_USERS)
 async def clone_txt(client, message):
     user_id = message.from_user.id
@@ -125,7 +118,20 @@ async def clone_txt(client, message):
         bot_token = message.text.split("/clone", 1)[1].strip()
         mi = await message.reply_text("Processing your bot token...")
 
+        # Token is valid, now ask for SESSION
+        await mi.edit_text(
+            "✅. Please send your SESSION File within 30 seconds."
+        )
+
         try:
+            # Wait for SESSION input from the user (handling timeout properly)
+            response = await client.listen(message.chat.id, timeout=30)
+            session = response.text.strip()
+
+            if not session:
+                await mi.edit_text("No SESSION File received, process canceled.")
+                return
+
             # Validate the bot token
             ai = Client(
                 bot_token,
@@ -136,29 +142,14 @@ async def clone_txt(client, message):
             )
             await ai.start()
             bot = await ai.get_me()
+
         except (AccessTokenExpired, AccessTokenInvalid):
             await mi.edit_text(
                 "You have provided an invalid bot token. Please provide a valid bot token."
             )
             return
-        except Exception as e:
-            await mi.edit_text(f"An error occurred: {str(e)}")
-            return
 
-        # Token is valid, now ask for SESSION
-        await mi.edit_text(
-            "Bot token is valid ✅. Please send your SESSION within 30 seconds."
-        )
-
-        try:
-            # Wait for SESSION input from the user
-            response = await client.listen(message.chat.id, timeout=30)
-            session = response.text.strip()
-        except asyncio.TimeoutError:
-            await mi.edit_text("You did not provide a SESSION in time. Process canceled.")
-            return
-
-        # Save bot_token, SESSION, and details in the database
+        # Save bot_token, SESSION, and details in the database first
         try:
             expiration_date = datetime.now() + timedelta(days=30)
             details = {
@@ -194,7 +185,6 @@ async def clone_txt(client, message):
         await message.reply_text(
             "**Give Bot Token After /clone Command From @Botfather.**"
         )
-
 
 
 
