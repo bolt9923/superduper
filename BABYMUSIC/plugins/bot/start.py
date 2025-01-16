@@ -235,8 +235,8 @@ async def refer_handler(client, message):
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton("Support 📞", url="https://t.me/+OL6jdTL7JAJjYzVl"),
-                    InlineKeyboardButton("Update 🔔", url="https://t.me/BABY09_WORLD")
+                    InlineKeyboardButton("Support 📞", url="https://t.me/+7jH9qwaLWPsxNWNl"),
+                    InlineKeyboardButton("Update 🔔", url="https://t.me/YOUTUBE_RROBOT_UPDATES")
                 ]
             ]
         )
