@@ -69,10 +69,10 @@ GIT_TOKEN = getenv(
 
 # ------------------------------------------------------------------------
 # -------------------------------------------------------------------------
-SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/BABY09_WORLD")
-SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/+OL6jdTL7JAJjYzVl")
+SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/YOUTUBE_RROBOT_UPDATES")
+SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/+7jH9qwaLWPsxNWNl")
 SOURCE = getenv("SOURCE", "https://github.com/BABY-MUSIC/SPOTIFY_MUSIC")
-CHAT = getenv("CHAT", "https://t.me/+P4Hk1btsSsJjYjQ1")
+CHAT = getenv("CHAT", "https://t.me/+7jH9qwaLWPsxNWNl")
 # ------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------
 
