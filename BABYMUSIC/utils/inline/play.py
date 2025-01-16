@@ -43,10 +43,10 @@ def track_markup(_, videoid, user_id, channel, fplay):
         ],
         [
             InlineKeyboardButton(
-                text="˹ ᴜᴘᴅᴀᴛҽ ˼", url="https://t.me/BABY09_WORLD",
+                text="˹ ᴜᴘᴅᴀᴛҽ ˼", url="https://t.me/YOUTUBE_RROBOT_UPDATES",
             ),
             InlineKeyboardButton(
-                text="˹ 𝛅ᴜᴘᴘᴏꝛᴛ ˼", url="https://t.me/+OL6jdTL7JAJjYzVl",
+                text="˹ 𝛅ᴜᴘᴘᴏꝛᴛ ˼", url="https://t.me/+7jH9qwaLWPsxNWNl",
             )
         ],
         [
@@ -76,10 +76,10 @@ def stream_markup(_, videoid, chat_id):
         ],
         [
             InlineKeyboardButton(
-                text="Update 🔔", url="https://t.me/BABY09_WORLD",
+                text="Update 🔔", url="https://t.me/YOUTUBE_RROBOT_UPDATES",
             ),
             InlineKeyboardButton(
-                text="Support 📞", url="https://t.me/+OL6jdTL7JAJjYzVl",
+                text="Support 📞", url="https://t.me/+7jH9qwaLWPsxNWNl",
             )
         ],
         [
