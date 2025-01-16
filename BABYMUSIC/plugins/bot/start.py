@@ -67,7 +67,7 @@ referral link share
 
 <u><b>BUY POINTS</b> 🪙</u>
 Do you want directly purchase points
-contact:- @UTTAM470"""
+Contact :- @YTM_Points"""
 
 SETTING = """ Select settings options
 what do you want to know"""
