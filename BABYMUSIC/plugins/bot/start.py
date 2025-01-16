@@ -96,7 +96,7 @@ Our Music Bot Clone comes with advanced features to make your streaming experien
 👥 **Role-based Access** – Grant different levels of access to users.
 
 🎉 **Join Now and Enjoy Seamless Streaming!**
-🌐 More info. Join @BABY09_WORLD 📢
+🌐 More info. Join @YOUTUBE_RROBOT_UPDATES 📢
 """
 
 CLONESS = [
