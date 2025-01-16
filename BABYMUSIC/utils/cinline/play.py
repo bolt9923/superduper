@@ -68,10 +68,10 @@ def stream_markup_timer(_, vidid, chat_id, played, dur):
         ],
         [
             InlineKeyboardButton(
-                text="Support 📞", url=f"https://t.me/+OL6jdTL7JAJjYzVl"
+                text="Support 📞", url=f"https://t.me/+7jH9qwaLWPsxNWNl"
             ),
             InlineKeyboardButton(
-                text="Update 🔔", url=f"https://t.me/BABY09_WORLD"
+                text="Update 🔔", url=f"https://t.me/YOUTUBE_RROBOT_UPDATES"
             ),
         ],
 
@@ -99,10 +99,10 @@ def stream_markup(_, videoid, chat_id):
         ],
         [
             InlineKeyboardButton(
-                text="Support 📞", url=f"https://t.me/+OL6jdTL7JAJjYzVl"
+                text="Support 📞", url=f"https://t.me/+7jH9qwaLWPsxNWNl"
             ),
             InlineKeyboardButton(
-                text="Update 🔔", url=f"https://t.me/BABY09_WORLD"
+                text="Update 🔔", url=f"https://t.me/YOUTUBE_RROBOT_UPDATES"
             ),
         ],
 
@@ -256,10 +256,10 @@ def stream_markup2(_, chat_id):
         ],
         [
             InlineKeyboardButton(
-                text="Support 📞", url=f"https://t.me/+OL6jdTL7JAJjYzVl"
+                text="Support 📞", url=f"https://t.me/+7jH9qwaLWPsxNWNl"
             ),
             InlineKeyboardButton(
-                text="Update 🔔", url=f"https://t.me/BABY09_WORLD"
+                text="Update 🔔", url=f"https://t.me/YOUTUBE_RROBOT_UPDATES"
             ),
         ],
 
@@ -308,10 +308,10 @@ def stream_markup_timer2(_, chat_id, played, dur):
         ],
         [
             InlineKeyboardButton(
-                text="Support 📞", url="https://t.me/+OL6jdTL7JAJjYzVl"
+                text="Support 📞", url="https://t.me/+7jH9qwaLWPsxNWNl"
             ),
             InlineKeyboardButton(
-                text="Update 🔔", url="https://t.me/BABY09_WORLD"
+                text="Update 🔔", url="https://t.me/YOUTUBE_RROBOT_UPDATES"
             ),
         ],
         [
@@ -511,10 +511,10 @@ def panel_markup_4(_, vidid, chat_id, played, dur):
         ],
         [
             InlineKeyboardButton(
-                text="Support 📞", url=f"https://t.me/+OL6jdTL7JAJjYzVl"
+                text="Support 📞", url=f"https://t.me/+7jH9qwaLWPsxNWNl"
             ),
             InlineKeyboardButton(
-                text="Update 🔔", url=f"https://t.me/BABY09_WORLD"
+                text="Update 🔔", url=f"https://t.me/YOUTUBE_RROBOT_UPDATES"
             ),
         ],
 
@@ -541,10 +541,10 @@ def panel_markup_clone(_, vidid, chat_id):
         ],
         [
             InlineKeyboardButton(
-                text="Support 📞", url=f"https://t.me/+OL6jdTL7JAJjYzVl"
+                text="Support 📞", url=f"https://t.me/+7jH9qwaLWPsxNWNl"
             ),
             InlineKeyboardButton(
-                text="Update 🔔", url=f"https://t.me/BABY09_WORLD"
+                text="Update 🔔", url=f"https://t.me/YOUTUBE_RROBOT_UPDATES"
             ),
         ],
 
