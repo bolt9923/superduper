@@ -385,7 +385,7 @@ async def is_autoend() -> bool:
     chat_id = 1234
     user = await autoenddb.find_one({"chat_id": chat_id})
     if not user:
-        return False
+        return True
     return True
 
 
