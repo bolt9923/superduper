@@ -174,7 +174,7 @@ async def clone_txt(client, message):
             await userbot.send_message(bot_username, "/start")
 
             await mi.edit_text(
-                f"Bot @{bot_username.username} has been successfully started ✅.\n\n**For 30 days.**\nRemove any time with /delclone\n\n#SPECIAL_LAUNCH 13 FEBRUARY\nYou can set yourself\n- START_IMG\n- SESSION [assistant]\n- SUPPORT [group]\n- UPDATE [channel]\nNo need to spend more money 🤑\nVisit updates at @YOUTUBE_RROBOT_UPDATES"
+                f"Bot @{bot_username} has been successfully started ✅.\n\n**For 30 days.**\nRemove any time with /delclone\n\n#SPECIAL_LAUNCH 13 FEBRUARY\nYou can set yourself\n- START_IMG\n- SESSION [assistant]\n- SUPPORT [group]\n- UPDATE [channel]\nNo need to spend more money 🤑\nVisit updates at @YOUTUBE_RROBOT_UPDATES"
             )
 
         except Exception as e:
