@@ -111,9 +111,6 @@ async def clone_txt(client, message):
         await message.reply_text("You don't have enough balance 💵")
         return
 
-    new_points = points - 400
-    await update_user_points(user_id, new_points)
-
     if len(message.command) > 1:
         bot_token = message.text.split("/clone", 1)[1].strip()
         mi = await message.reply_text("Processing your bot token...")
@@ -128,6 +125,7 @@ async def clone_txt(client, message):
             )
             await bot.start()
             bot_details = await bot.get_me()
+            bot_username = bot_details.username
 
         except Exception as e:
             await mi.edit_text(
@@ -135,7 +133,18 @@ async def clone_txt(client, message):
             )
             return
 
-        # Save bot details in the database
+        # Check if the bot is already running for the user
+        existing_bot = clonebotdb.find_one({"user_id": user_id, "bot_id": bot_details.id})
+        if existing_bot:
+            await mi.edit_text(
+                f"⚠️ Bot @{bot_username} is already running for you.\n\nYou cannot clone the same bot again. If you want to remove it, use /delclone."
+            )
+            return
+
+        # Deduct points and proceed to clone the bot
+        new_points = points - 400
+        await update_user_points(user_id, new_points)
+
         try:
             expiration_date = datetime.now() + timedelta(days=30)
             details = {
@@ -144,17 +153,19 @@ async def clone_txt(client, message):
                 "user_id": user_id,
                 "name": bot_details.first_name,
                 "token": bot_token,
-                "username": bot_details.username,
+                "username": bot_username,
                 "cloned_by": user_id,
                 "clone_date": datetime.now(),
                 "expiration_date": expiration_date,
             }
+
+            # Insert details into the database
             clonebotdb.insert_one(details)
 
             await app.send_message(
-                LOGGER_ID, f"**#New_Clone**\n\n**Bot:- @{bot_details.username}**"
+                LOGGER_ID, f"**#New_Clone**\n\n**Bot:- @{bot_username}**"
             )
-            await userbot.send_message(bot_details.username, "/start")
+            await userbot.send_message(bot_username, "/start")
 
             await mi.edit_text(
                 f"Bot @{bot_details.username} has been successfully started ✅.\n\n**For 30 days.**\nRemove any time with /delclone\n\n#SPECIAL_LAUNCH 13 FEBRUARY\nYou can set yourself\n- START_IMG\n- SESSION [assistant]\n- SUPPORT [group]\n- UPDATE [channel]\nNo need more spend money 🤑\nVisit updates at @YOUTUBE_RROBOT_UPDATES"
@@ -170,6 +181,7 @@ async def clone_txt(client, message):
         await message.reply_text(
             "**Provide the bot token after the /clone command from @Botfather.**"
         )
+
 
 
 
