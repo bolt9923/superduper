@@ -91,97 +91,104 @@ async def my_bots_handler(client, message):
         await message.reply_text(response_text)
 
 
-@app.on_message(filters.command("clone") & ~BANNED_USERS)
+@app.on_message(filters.command("clone"))
 async def clone_txt(client, message):
     user_id = message.from_user.id
-    user_data = await get_user_data(user_id)
     userbot = await get_assistant(message.chat.id)
 
-    if not user_data or 'points' not in user_data:
-        await message.reply_text("User data not found or invalid.")
-        return
-
-    print(f"User Data: {user_data}")
-
-    points = user_data['points']
-    if isinstance(points, dict):
-        points = points.get("points", 0)
-
-    if points < 400:
-        await message.reply_text("You don't have enough balance 💵")
-        return
-
+    # Ensure the user provides a bot token
     if len(message.command) > 1:
         bot_token = message.text.split("/clone", 1)[1].strip()
-        mi = await message.reply_text("Processing your bot token...")
+        mi = await message.reply_text("Processing the bot token, please wait...")
+
+        # Check user data and points
+        user_data = await get_user_data(user_id)
+        if not user_data or 'points' not in user_data:
+            await mi.edit_text("User data not found or invalid.")
+            return
+
+        points = user_data['points']
+        if isinstance(points, dict):
+            points = points.get("points", 0)
+
+        if points < 400:
+            await mi.edit_text("You don't have enough points to clone a bot 💵")
+            return
 
         try:
-            # Initialize bot with bot token
-            bot = Client(
-                "bot",
-                api_id=API_ID,
-                api_hash=API_HASH,
-                bot_token=bot_token
+            # Initialize bot with the provided token
+            ai = Client(
+                bot_token,
+                API_ID,
+                API_HASH,
+                bot_token=bot_token,
+                plugins=dict(root="BABYMUSIC.cplugin"),
             )
-            await bot.start()
-            bot_details = await bot.get_me()
-            bot_username = bot_details.username
+            await ai.start()
+            bot = await ai.get_me()
+            bot_username = bot.username
+            bot_id = bot.id
 
+        except (AccessTokenExpired, AccessTokenInvalid):
+            await mi.edit_text(
+                "You have provided an invalid bot token. Please provide a valid bot token."
+            )
+            return
         except Exception as e:
+            await mi.edit_text(f"An error occurred: {str(e)}")
+            return
+
+        # Check if the bot is already in the in-memory set
+        if bot_id in CLONES:
             await mi.edit_text(
-                f"⚠️ Invalid bot token provided. Please provide a valid token.\n\n**Error:** `{e}`"
+                f"⚠️ Bot @{bot_username} is already running globally.\n\n"
+                "If this is your bot, use /delclone to remove it first."
             )
             return
 
-        # Check if the bot is already running for the user
-        existing_bot = clonebotdb.find_one({"user_id": user_id, "bot_id": bot_details.id})
-        if existing_bot:
-            await mi.edit_text(
-                f"⚠️ Bot @{bot_username} is already running for you.\n\nYou cannot clone the same bot again. If you want to remove it, use /delclone."
-            )
-            return
-
-        # Deduct points and proceed to clone the bot
+        # Deduct points and proceed with cloning
         new_points = points - 400
         await update_user_points(user_id, new_points)
 
         try:
+            # Save bot details with expiration date
             expiration_date = datetime.now() + timedelta(days=30)
             details = {
-                "bot_id": bot_details.id,
+                "bot_id": bot_id,
                 "is_bot": True,
                 "user_id": user_id,
-                "name": bot_details.first_name,
+                "name": bot.first_name,
                 "token": bot_token,
                 "username": bot_username,
                 "cloned_by": user_id,
                 "clone_date": datetime.now(),
                 "expiration_date": expiration_date,
             }
-
-            # Insert details into the database
             clonebotdb.insert_one(details)
+            CLONES.add(bot_id)  # Add bot ID to the in-memory set for tracking
 
+            # Log and notify
             await app.send_message(
                 LOGGER_ID, f"**#New_Clone**\n\n**Bot:- @{bot_username}**"
             )
             await userbot.send_message(bot_username, "/start")
 
             await mi.edit_text(
-                f"Bot @{bot_details.username} has been successfully started ✅.\n\n**For 30 days.**\nRemove any time with /delclone\n\n#SPECIAL_LAUNCH 13 FEBRUARY\nYou can set yourself\n- START_IMG\n- SESSION [assistant]\n- SUPPORT [group]\n- UPDATE [channel]\nNo need more spend money 🤑\nVisit updates at @YOUTUBE_RROBOT_UPDATES"
+                f"Bot @{bot_username} has been successfully cloned and started ✅.\n\n"
+                f"**For 30 days.**\nRemove any time using /delclone."
             )
 
         except Exception as e:
-            logging.exception("Error while saving bot details.")
+            logging.exception("Error while cloning bot.")
+            CLONES.discard(bot_id)  # Remove from in-memory set if cloning fails
             await mi.edit_text(
-                f"⚠️ <b>Error:</b>\n\n<code>{e}</code>\n\n**Now forward this message to support chat**"
+                f"⚠️ <b>Error:</b>\n\n<code>{e}</code>\n\n"
+                "**Kindly forward this message to @vk_zone for assistance.**"
             )
-
     else:
         await message.reply_text(
             "**Provide the bot token after the /clone command from @Botfather.**"
         )
-
 
 
 
