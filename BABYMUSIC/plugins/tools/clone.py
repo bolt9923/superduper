@@ -91,50 +91,46 @@ async def my_bots_handler(client, message):
         await message.reply_text(response_text)
 
 
+from pyrogram import Client, filters
+from datetime import datetime, timedelta
+import logging
+
 @app.on_message(filters.command("clone") & ~BANNED_USERS)
 async def clone_txt(client, message):
     user_id = message.from_user.id
     user_data = await get_user_data(user_id)
     userbot = await get_assistant(message.chat.id)
 
+    # Check if user data exists
     if not user_data or 'points' not in user_data:
         await message.reply_text("User data not found or invalid.")
         return
 
     print(f"User Data: {user_data}")
 
-    points = user_data['points']
-    if isinstance(points, dict):
+    # Extract points
+    points = user_data.get('points', 0)
+    if isinstance(points, dict):  # Handle nested point structure
         points = points.get("points", 0)
 
+    # Check if user has enough points
     if points < 400:
         await message.reply_text("You don't have enough balance 💵")
         return
 
+    # Deduct points
     new_points = points - 400
     await update_user_points(user_id, new_points)
 
+    # Check if bot token is provided
     if len(message.command) > 1:
         bot_token = message.text.split("/clone", 1)[1].strip()
         mi = await message.reply_text("Processing your bot token...")
 
-        # Token is valid, now ask for SESSION
-        await mi.edit_text(
-            "✅. Please send your SESSION File within 30 seconds."
-        )
-
         try:
-            # Wait for SESSION input from the user (handling timeout properly)
-            response = await client.listen(message.chat.id, timeout=30)
-            session = response.text.strip()
-
-            if not session:
-                await mi.edit_text("No SESSION File received, process canceled.")
-                return
-
-            # Validate the bot token
+            # Initialize and validate bot token
             ai = Client(
-                bot_token,
+                "bot_session",
                 API_ID,
                 API_HASH,
                 bot_token=bot_token,
@@ -142,15 +138,15 @@ async def clone_txt(client, message):
             )
             await ai.start()
             bot = await ai.get_me()
-
-        except (AccessTokenExpired, AccessTokenInvalid):
+        except Exception as e:
+            # Handle invalid or expired bot token
             await mi.edit_text(
-                "You have provided an invalid bot token. Please provide a valid bot token."
+                f"You have provided an invalid bot token.\n\n⚠️ <b>Error:</b>\n<code>{e}</code>"
             )
             return
 
-        # Save bot_token, SESSION, and details in the database first
         try:
+            # Save bot details in the database
             expiration_date = datetime.now() + timedelta(days=30)
             details = {
                 "bot_id": bot.id,
@@ -158,7 +154,6 @@ async def clone_txt(client, message):
                 "user_id": user_id,
                 "name": bot.first_name,
                 "token": bot_token,
-                "session": session,
                 "username": bot.username,
                 "cloned_by": user_id,
                 "clone_date": datetime.now(),
@@ -166,25 +161,30 @@ async def clone_txt(client, message):
             }
             clonebotdb.insert_one(details)
 
+            # Log and notify about the new clone
             await app.send_message(
                 LOGGER_ID, f"**#New_Clone**\n\n**Bot:- @{bot.username}**"
             )
             await userbot.send_message(bot.username, "/start")
 
+            # Confirm success to the user
             await mi.edit_text(
-                f"Bot @{bot.username} has been successfully hosted and started ✅.\n\n**For 30 days.**\nRemove any time /delclone\nVisit new update @Baby09_World"
+                f"Bot @{bot.username} has been successfully started ✅.\n\n**For 30 days.**\nRemove any time with /delclone\n\n#SPECIAL_LAUNCH 13 FEBRUARY\nYou can set yourself\n- START_IMG\n- SESSION [assistant]\n- SUPPORT [group]\n- UPDATE [channel]\nNo need more spend money 🤑\nVisit updates at @YOUTUBE_RROBOT_UPDATES"
             )
 
         except Exception as e:
+            # Handle database save errors
             logging.exception("Error while saving bot details.")
             await mi.edit_text(
-                f"⚠️ <b>Error:</b>\n\n<code>{e}</code>\n\n**Now forward this message to support chat**"
+                f"⚠️ <b>Error:</b>\n\n<code>{e}</code>\n\n**Now forward this message to support chat.**"
             )
 
     else:
+        # If no bot token is provided
         await message.reply_text(
-            "**Give Bot Token After /clone Command From @Botfather.**"
+            "**Provide the bot token after the /clone command from @BotFather.**"
         )
+
 
 
 
