@@ -104,7 +104,7 @@ async def clone_txt(client, message):
         # Check user data and points
         user_data = await get_user_data(user_id)
         if not user_data or 'points' not in user_data:
-            await mi.edit_text("User data not found or invalid.")
+            await mi.edit_text("First start the bot in PM.")
             return
 
         points = user_data['points']
@@ -112,7 +112,7 @@ async def clone_txt(client, message):
             points = points.get("points", 0)
 
         if points < 400:
-            await mi.edit_text("You don't have enough points to clone a bot 💵")
+            await mi.edit_text("You don't have enough points to clone a bot first earn points 💵")
             return
 
         try:
@@ -174,8 +174,7 @@ async def clone_txt(client, message):
             await userbot.send_message(bot_username, "/start")
 
             await mi.edit_text(
-                f"Bot @{bot_username} has been successfully cloned and started ✅.\n\n"
-                f"**For 30 days.**\nRemove any time using /delclone."
+                f"Bot @{bot_username.username} has been successfully started ✅.\n\n**For 30 days.**\nRemove any time with /delclone\n\n#SPECIAL_LAUNCH 13 FEBRUARY\nYou can set yourself\n- START_IMG\n- SESSION [assistant]\n- SUPPORT [group]\n- UPDATE [channel]\nNo need to spend more money 🤑\nVisit updates at @YOUTUBE_RROBOT_UPDATES"
             )
 
         except Exception as e:
@@ -183,7 +182,7 @@ async def clone_txt(client, message):
             CLONES.discard(bot_id)  # Remove from in-memory set if cloning fails
             await mi.edit_text(
                 f"⚠️ <b>Error:</b>\n\n<code>{e}</code>\n\n"
-                "**Kindly forward this message to @vk_zone for assistance.**"
+                "**Kindly forward this message to @YTM_Points for assistance.**"
             )
     else:
         await message.reply_text(
