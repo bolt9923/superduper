@@ -58,6 +58,7 @@ SpeechRecognition
 spotipy
 telegraph
 tgcrypto
+telethon
 unidecode
 wget
 yt-dlp
