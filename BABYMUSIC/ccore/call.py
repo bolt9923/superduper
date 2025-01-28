@@ -369,7 +369,7 @@ class Call(PyTgCalls):
             if "live_" in queued:
                 n, link = await YouTube.video(videoid, True)
                 if n == 0:
-                    return await app.send_message(
+                    return await client.send_message(
                         original_chat_id,
                         text=_["call_6"],
                     )
@@ -387,17 +387,17 @@ class Call(PyTgCalls):
                 try:
                     await client.change_stream(chat_id, stream)
                 except Exception:
-                    return await app.send_message(
+                    return await client.send_message(
                         original_chat_id,
                         text=_["call_6"],
                     )
                 img = await get_thumb(videoid)
                 button = telegram_markup(_, chat_id)
-                run = await app.send_photo(
+                run = await client.send_photo(
                     chat_id=original_chat_id,
                     photo=img,
                     caption=_["stream_1"].format(
-                        f"https://t.me/{app.username}?start=info_{videoid}",
+                        f"https://t.me/{client.username}?start=info_{videoid}",
                         title[:23],
                         check[0]["dur"],
                         user,
@@ -407,7 +407,7 @@ class Call(PyTgCalls):
                 db[chat_id][0]["mystic"] = run
                 db[chat_id][0]["markup"] = "tg"
             elif "vid_" in queued:
-                mystic = await app.send_message(original_chat_id, _["call_7"])
+                mystic = await client.send_message(original_chat_id, _["call_7"])
                 try:
                     file_path, direct = await YouTube.download(
                         videoid,
@@ -441,18 +441,18 @@ class Call(PyTgCalls):
                 try:
                     await client.change_stream(chat_id, stream)
                 except:
-                    return await app.send_message(
+                    return await client.send_message(
                         original_chat_id,
                         text=_["call_6"],
                     )
                 img = await get_thumb(videoid)
                 button = stream_markup(_, videoid, chat_id)
                 await mystic.delete()
-                run = await app.send_photo(
+                run = await client.send_photo(
                     chat_id=original_chat_id,
                     photo=img,
                     caption=_["stream_1"].format(
-                        f"https://t.me/{app.username}?start=info_{videoid}",
+                        f"https://t.me/{client.username}?start=info_{videoid}",
                         title[:23],
                         check[0]["dur"],
                         user,
@@ -474,12 +474,12 @@ class Call(PyTgCalls):
                 try:
                     await client.change_stream(chat_id, stream)
                 except:
-                    return await app.send_message(
+                    return await client.send_message(
                         original_chat_id,
                         text=_["call_6"],
                     )
                 button = telegram_markup(_, chat_id)
-                run = await app.send_photo(
+                run = await client.send_photo(
                     chat_id=original_chat_id,
                     photo=config.STREAM_IMG_URL,
                     caption=_["stream_2"].format(user),
@@ -502,13 +502,13 @@ class Call(PyTgCalls):
                 try:
                     await client.change_stream(chat_id, stream)
                 except:
-                    return await app.send_message(
+                    return await client.send_message(
                         original_chat_id,
                         text=_["call_6"],
                     )
                 if videoid == "telegram":
                     button = telegram_markup(_, chat_id)
-                    run = await app.send_photo(
+                    run = await client.send_photo(
                         chat_id=original_chat_id,
                         photo=(
                             config.TELEGRAM_AUDIO_URL
@@ -524,7 +524,7 @@ class Call(PyTgCalls):
                     db[chat_id][0]["markup"] = "tg"
                 elif videoid == "soundcloud":
                     button = telegram_markup(_, chat_id)
-                    run = await app.send_photo(
+                    run = await client.send_photo(
                         chat_id=original_chat_id,
                         photo=config.SOUNCLOUD_IMG_URL,
                         caption=_["stream_1"].format(
@@ -537,11 +537,11 @@ class Call(PyTgCalls):
                 else:
                     img = await get_thumb(videoid)
                     button = stream_markup(_, videoid, chat_id)
-                    run = await app.send_photo(
+                    run = await client.send_photo(
                         chat_id=original_chat_id,
                         photo=img,
                         caption=_["stream_1"].format(
-                            f"https://t.me/{app.username}?start=info_{videoid}",
+                            f"https://t.me/{client.username}?start=info_{videoid}",
                             title[:23],
                             check[0]["dur"],
                             user,
