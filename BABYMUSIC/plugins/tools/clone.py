@@ -93,18 +93,6 @@ async def my_bots_handler(client, message):
 
 
 
-from datetime import datetime, timedelta
-import asyncio
-
-                )
-        except Exception as e:
-            await mi.edit_text(f"An error occurred: {str(e)}")
-    else:
-        await message.reply_text(
-            "**Provide the bot token after the /clone command from @Botfather.**"
-        )
-
-
 import re
 import base64
 
