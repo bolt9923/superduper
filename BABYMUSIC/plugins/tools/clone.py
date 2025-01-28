@@ -13,6 +13,7 @@ from pyrogram.errors.exceptions.bad_request_400 import (
     AccessTokenExpired,
     AccessTokenInvalid,
 )
+from pyrogram.types import Message
 from BABYMUSIC.utils.database import get_assistant, save_user
 from config import API_ID, API_HASH
 from BABYMUSIC import app
