@@ -17,7 +17,7 @@ from BABYMUSIC.utils.database import get_assistant, save_user
 from config import API_ID, API_HASH
 from BABYMUSIC import app
 from BABYMUSIC.misc import SUDOERS
-from BABYMUSIC.utils.database import get_assistant, clonebotdb, get_user_data, update_user_points
+from BABYMUSIC.utils.database import get_assistant, clonebotdb, get_user_data, update_user_points, get_selected_bot_id, set_selected_bot_id
 from config import LOGGER_ID, OWNER_ID
 
 CLONES = set()
