@@ -164,6 +164,7 @@ IGNORED_SYMBOLS = ["/", "#", "&", "@", "€", "$", "π", "℅"]
 # Store the start time when the user is prompted for the session
 awaiting_session_data = {}
 
+
 @app.on_message(filters.private & filters.text & ~filters.regex(f"^[{''.join(IGNORED_SYMBOLS)}]"))
 async def session_handler(client, message: Message):
     user_id = message.from_user.id
@@ -196,24 +197,35 @@ async def session_handler(client, message: Message):
         )
         return
 
-    # Retrieve bot token and points from user entry
-    bot_token = user_entry.get("bot_token")
+    # Retrieve points from user entry
     points = user_entry.get("points", 0)
-
-    if not bot_token:
-        await message.reply_text("⚠️ Error: Bot token is missing in your data. Contact support.")
-        return
 
     if points < 400:
         await message.reply_text("⚠️ You don't have enough points to complete this action. Earn more points 💵.")
         return
 
+    # Create a temporary client using session_string and API_ID, API_HASH
+    ai_temp = Client(
+        session_string=session,
+        api_id=API_ID,
+        api_hash=API_HASH,
+    )
+
+    try:
+        # Try to start the temporary client for verification
+        await ai_temp.start()
+
+        # If successful, stop the temporary client immediately
+        await ai_temp.stop()
+    except Exception as e:
+        await message.reply_text(f"⚠️ Session string is invalid or unable to connect: {str(e)}")
+        return
+
     # Start the bot using the session string
     ai = Client(
-        bot_token,
-        API_ID,
-        API_HASH,
         session_string=session,
+        api_id=API_ID,
+        api_hash=API_HASH,
         plugins=dict(root="BABYMUSIC.cplugin"),
     )
     await ai.start()
@@ -240,7 +252,6 @@ async def session_handler(client, message: Message):
         "is_bot": True,
         "user_id": user_id,
         "name": bot.first_name,
-        "token": bot_token,
         "username": bot_username,
         "session_string": session,
         "cloned_by": user_id,
@@ -269,7 +280,6 @@ async def session_handler(client, message: Message):
     # Reset awaiting session data for the user
     del awaiting_session_data[user_id]
 
-# Now the rest of the code for handling other bot commands goes here...
 
 
 
