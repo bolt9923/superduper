@@ -224,6 +224,8 @@ async def check_clone_expiration():
 
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+
 @app.on_message(filters.command("setass"))
 async def set_assistant_session(client, message):
     user_id = message.from_user.id
@@ -240,6 +242,11 @@ async def set_assistant_session(client, message):
         [InlineKeyboardButton(bot["username"], callback_data=f"select_bot_{bot['bot_id']}")]
         for bot in cloned_bots
     ]
+
+    # Check if the keyboard is not empty
+    if not keyboard:
+        await message.reply_text("No bots available to select.")
+        return
 
     # Send message with Inline buttons
     await message.reply_text(
@@ -299,6 +306,7 @@ async def set_session_name(client, message):
 
     # Optionally, clear the stored selected bot_id after setting the session name
     await set_selected_bot_id(user_id, None)  # Clear the selected bot ID after setting the session
+
 
 
 
