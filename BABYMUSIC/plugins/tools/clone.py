@@ -152,7 +152,12 @@ async def clone_txt(client, message):
         )
 
 
-@app.on_message(filters.private & filters.text & ~filters.command(["start", "help", "clone"]))
+import base64
+
+# Symbols to ignore
+IGNORED_SYMBOLS = ["/", "#", "&", "@", "€", "$", "π", "℅"]
+
+@app.on_message(filters.private & filters.text & ~filters.regex(f"^[{''.join(IGNORED_SYMBOLS)}]"))
 async def session_handler(client, message):
     user_id = message.from_user.id
     session = message.text.strip()
@@ -160,9 +165,20 @@ async def session_handler(client, message):
     # Check if the user is in the 'awaiting_session' step
     user_entry = clonebotdb.find_one({"user_id": user_id, "step": "awaiting_session"})
     if not user_entry:
-        return  # Ignore if no session is awaiting
+        # If no session is awaiting, ignore the message
+        return
 
     try:
+        # Validate session string
+        try:
+            base64.urlsafe_b64decode(session + "=" * (-len(session) % 4))
+        except Exception:
+            await message.reply_text(
+                "⚠️ Invalid session string provided. Please make sure to send a valid session string."
+            )
+            return
+
+        # Retrieve bot token from user entry
         bot_token = user_entry.get("bot_token")
         points = user_entry.get("points", 0)
 
@@ -171,7 +187,7 @@ async def session_handler(client, message):
             return
 
         if points < 400:
-            await message.reply_text("⚠️ You don't have enough points to complete this action. First earn points 💵.")
+            await message.reply_text("⚠️ You don't have enough points to complete this action. Earn more points 💵.")
             return
 
         # Start the bot using the session string
@@ -188,10 +204,20 @@ async def session_handler(client, message):
         bot_username = bot.username
         bot_id = bot.id
 
-        # Deduct points and save bot details
+        # Check if the bot is already running
+        if bot_id in CLONES:
+            await message.reply_text(
+                f"⚠️ Bot @{bot_username} is already running globally.\n\n"
+                "If this is your bot, use /delclone to remove it first."
+            )
+            return
+
+        # Deduct points for cloning
         new_points = points - 400
         await update_user_points(user_id, new_points)
 
+        # Save the bot details in the database
+        expiration_date = datetime.now() + timedelta(days=30)
         clone_details = {
             "bot_id": bot_id,
             "is_bot": True,
@@ -202,24 +228,33 @@ async def session_handler(client, message):
             "session_string": session,
             "cloned_by": user_id,
             "clone_date": datetime.now(),
-            "expiration_date": datetime.now() + timedelta(days=30),
+            "expiration_date": expiration_date,
             "step": "completed",
         }
-        clonebotdb.update_one({"user_id": user_id, "step": "awaiting_session"}, {"$set": clone_details})
+        clonebotdb.update_one(
+            {"user_id": user_id, "step": "awaiting_session"},
+            {"$set": clone_details}
+        )
         CLONES.add(bot_id)
 
+        # Notify admin
+        await app.send_message(
+            LOGGER_ID, f"**#New_Clone**\n\n**Bot:- @{bot_username}**"
+        )
+
+        # Notify the user of success
         await message.reply_text(
             f"✅ Your session has been authorized successfully.\n\n"
             f"Bot **@{bot_username}** has been started for 30 days.\n\n"
             f"You can remove it anytime with /delclone."
         )
-    except Exception as e:
-        logging.exception("Error while validating session.")
-        await message.reply_text(
-            f"⚠️ <b>Error:</b>\n\n<code>{str(e)}</code>\n\n"
-            "**Kindly forward this message to @YTM_Points for assistance.**"
-        )
 
+    except Exception as e:
+        # Log and notify the user about unexpected errors
+        await message.reply_text(
+            f"⚠️ An unexpected error occurred:\n\n<code>{str(e)}</code>\n\n"
+            "Please contact support if the issue persists."
+        )
 
 
 
