@@ -282,8 +282,8 @@ async def select_bot_for_session(client, callback_query):
 
 BIND = ['/', '#', '%', '₹', '@']
 
-@app.on_message(filters.text & ~filters.regex(f"[{''.join(BIND)}]"))
-async def set_session_name(client, message):
+#@app.on_message(filters.text & ~filters.regex(f"[{''.join(BIND)}]"))
+#async def set_session_name(client, message):
     user_id = message.from_user.id
     session_name = message.text.strip()
 
