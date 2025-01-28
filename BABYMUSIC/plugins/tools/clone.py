@@ -268,14 +268,16 @@ async def select_bot_for_session(client, callback_query):
     # Save the selected bot_id in user data to be used later
     await client.set_data(user_id, "selected_bot_id", bot_id)
 
-@app.on_message(filters.text)
+BIND = ['/', '#', '%', '₹', '@']
+
+@app.on_message(filters.text & ~filters.regex(f"[{''.join(BIND)}]"))
 async def set_session_name(client, message):
     user_id = message.from_user.id
     session_name = message.text.strip()
 
     # Check if user has selected a bot
-    selected_bot_id = await client.get_data(user_id, "selected_bot_id")
-    
+    selected_bot_id = await get_selected_bot_id(user_id)  # Get from the database
+
     if not selected_bot_id:
         return  # No bot selected, do nothing
 
@@ -296,7 +298,8 @@ async def set_session_name(client, message):
     await message.reply_text(f"Session name for bot @{cloned_bot['username']} has been set to '{session_name}'.")
 
     # Optionally, clear the stored selected bot_id after setting the session name
-    await client.delete_data(user_id, "selected_bot_id")
+    await set_selected_bot_id(user_id, None)  # Clear the selected bot ID after setting the session
+
 
 
 @app.on_message(
