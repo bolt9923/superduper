@@ -4,7 +4,7 @@ from BABYMUSIC.utils.database import clonebotdb
 assistants = []
 assistantids = []
 
-class Userbot(Client):
+class CUserbot(Client):
     def __init__(self, session_string, assistant_name):
         # Initialize with a specific session string and assistant name
         self.one = Client(
