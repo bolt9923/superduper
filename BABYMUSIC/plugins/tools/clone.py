@@ -284,37 +284,37 @@ BIND = ['/', '#', '%', '₹', '@']
 
 #@app.on_message(filters.text & ~filters.regex(f"[{''.join(BIND)}]"))
 #async def set_session_name(client, message):
-    user_id = message.from_user.id
-    session_name = message.text.strip()
+   # user_id = message.from_user.id
+   # session_name = message.text.strip()
 
     # Get the selected bot_id from the database
-    user_data = clonebotdb.find_one({"user_id": user_id})
-    selected_bot_id = user_data.get("selected_bot_id") if user_data else None
+  #  user_data = clonebotdb.find_one({"user_id": user_id})
+  #  selected_bot_id = user_data.get("selected_bot_id") if user_data else None
 
-    if not selected_bot_id:
-        return  # No bot selected, do nothing
+   # if not selected_bot_id:
+    #    return  # No bot selected, do nothing
 
     # Find the selected bot
-    cloned_bot = clonebotdb.find_one({"bot_id": selected_bot_id, "user_id": user_id})
+  #  cloned_bot = clonebotdb.find_one({"bot_id": selected_bot_id, "user_id": user_id})
 
-    if not cloned_bot:
-        await message.reply_text("No bot found for setting the session.")
-        return
+  #  if not cloned_bot:
+   #     await message.reply_text("No bot found for setting the session.")
+   #     return
 
     # Update the session_name for the selected bot
-    clonebotdb.update_one(
-        {"bot_id": cloned_bot['bot_id']},
-        {"$set": {"session_name": session_name}}
-    )
+  #  clonebotdb.update_one(
+   #     {"bot_id": cloned_bot['bot_id']},
+     #   {"$set": {"session_name": session_name}}
+ #   )
 
     # Confirm the update
-    await message.reply_text(f"Session name for bot @{cloned_bot['username']} has been set to '{session_name}'.")
+  #  await message.reply_text(f"Session name for bot @{cloned_bot['username']} has been set to '{session_name}'.")
 
     # Optionally, clear the stored selected bot_id after setting the session name
-    clonebotdb.update_one(
-        {"user_id": user_id},
-        {"$set": {"selected_bot_id": None}}  # Clear the selected bot ID
-    )
+ #   clonebotdb.update_one(
+     #   {"user_id": user_id},
+      #  {"$set": {"selected_bot_id": None}}  # Clear the selected bot ID
+  #  )
 
 
 
