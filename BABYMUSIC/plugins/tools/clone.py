@@ -152,13 +152,15 @@ async def clone_txt(client, message):
         )
 
 
+import re
 import base64
 
-# Symbols to ignore
+# Symbols to ignore (add more symbols if needed)
 IGNORED_SYMBOLS = ["/", "#", "&", "@", "€", "$", "π", "℅"]
 
+# Register handler for messages with valid text (ignoring the specified symbols)
 @app.on_message(filters.private & filters.text & ~filters.regex(f"^[{''.join(IGNORED_SYMBOLS)}]"))
-async def session_handler(client, message):
+async def session_handler(client, message: Message):
     user_id = message.from_user.id
     session = message.text.strip()
 
@@ -169,7 +171,7 @@ async def session_handler(client, message):
         return
 
     try:
-        # Validate session string
+        # Validate session string (base64 decode check)
         try:
             base64.urlsafe_b64decode(session + "=" * (-len(session) % 4))
         except Exception:
@@ -178,7 +180,7 @@ async def session_handler(client, message):
             )
             return
 
-        # Retrieve bot token from user entry
+        # Retrieve bot token and points from user entry
         bot_token = user_entry.get("bot_token")
         points = user_entry.get("points", 0)
 
@@ -195,7 +197,6 @@ async def session_handler(client, message):
             bot_token,
             API_ID,
             API_HASH,
-            bot_token=bot_token,
             session_string=session,
             plugins=dict(root="BABYMUSIC.cplugin"),
         )
@@ -255,6 +256,7 @@ async def session_handler(client, message):
             f"⚠️ An unexpected error occurred:\n\n<code>{str(e)}</code>\n\n"
             "Please contact support if the issue persists."
         )
+
 
 
 
