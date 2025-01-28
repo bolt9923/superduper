@@ -1,4 +1,3 @@
-
 import asyncio
 import importlib
 
@@ -7,13 +6,13 @@ from pytgcalls.exceptions import NoActiveGroupCall
 
 import config
 from BABYMUSIC import LOGGER, app, userbot
+from BABYMUSIC.ccore.Cuserbot import start_all_assistants
 from BABYMUSIC.core.call import BABY
 from BABYMUSIC.misc import sudo
 from BABYMUSIC.plugins import ALL_MODULES
 from BABYMUSIC.utils.database import get_banned_users, get_gbanned
-from BABYMUSIC.plugins.tools.clone import restart_bots
+from BABYMUSIC.plugins.tools.clone import restart_bots  # Import start_all_assistants
 from config import BANNED_USERS
-
 
 async def init():
     if not config.STRING1:
@@ -29,12 +28,19 @@ async def init():
             BANNED_USERS.add(user_id)
     except:
         pass
+
     await app.start()
+
+    # Import all modules dynamically
     for all_module in ALL_MODULES:
         importlib.import_module("BABYMUSIC.plugins" + all_module)
+
     LOGGER("BABYMUSIC.plugins").info("𝐀𝐥𝐥 𝐅𝐞𝐚𝐭𝐮𝐫𝐞𝐬 𝐋𝐨𝐚𝐝𝐞𝐝 𝐁𝐚𝐛𝐲🥳...")
+
     await userbot.start()
     await BABY.start()
+
+    # Start the voice chat if available
     try:
         await BABY.stream_call("https://te.legra.ph/file/29f784eb49d230ab62e9e.mp4")
     except NoActiveGroupCall:
@@ -44,14 +50,22 @@ async def init():
         exit()
     except:
         pass
+
+    # Call the function to start all assistants
+    await start_all_assistants()  # Start all the assistants
+
     await BABY.decorators()
     await restart_bots()
     LOGGER("BABYMUSIC").info(
         "CONTACT ︎MADE BY UNTOLDCODER"
     )
+
+    # Idle to keep the app running
     await idle()
+
     await app.stop()
     await userbot.stop()
+
     LOGGER("BABYMUSIC").info("𝗦𝗧𝗢𝗣 𝗣𝗿𝗼𝗕𝗼𝘁 𝗠𝗨𝗦𝗜𝗖🎻 𝗕𝗢𝗧..")
 
 
