@@ -154,8 +154,18 @@ async def handle_session(client, message):
 
     try:
         # Validate session and proceed
-        bot_token = user_entry["bot_token"]
-        points = user_entry["points"]  # Fetch the points saved earlier
+        bot_token = user_entry.get("bot_token")  # Safely fetch the bot token
+        points = user_entry.get("points", 0)  # Default to 0 if 'points' is missing
+        
+        if not bot_token:
+            await message.reply_text("Error: Bot token is missing in your data. Contact support.")
+            return
+
+        if points < 400:
+            await message.reply_text("You don't have enough points to complete this action.")
+            return
+
+        # Start the bot using the provided token and session string
         ai = Client(
             bot_token,
             API_ID,
@@ -218,7 +228,7 @@ async def handle_session(client, message):
     except Exception as e:
         logging.exception("Error while validating session.")
         await message.reply_text(
-            f"⚠️ <b>Error:</b>\n\n<code>{e}</code>\n\n"
+            f"⚠️ <b>Error:</b>\n\n<code>{str(e)}</code>\n\n"
             "**Kindly forward this message to @YTM_Points for assistance.**"
         )
 
