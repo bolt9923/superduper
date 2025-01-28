@@ -7,6 +7,21 @@ clonebotnamedb = mongodb.clonebotnamedb
 users_collection = mongodb.users
 referrals_collection = mongodb.referrals  # New collection for storing referral data
 
+# Add a new function to set selected bot_id for a user
+async def set_selected_bot_id(user_id: int, bot_id: int):
+    await users_collection.update_one(
+        {"user_id": user_id},
+        {"$set": {"selected_bot_id": bot_id}},
+        upsert=True  # Insert the selected bot if user doesn't exist
+    )
+
+# Add a new function to get selected bot_id for a user
+async def get_selected_bot_id(user_id: int) -> Union[int, None]:
+    user_data = await users_collection.find_one({"user_id": user_id})
+    if user_data and "selected_bot_id" in user_data:
+        return user_data["selected_bot_id"]
+    return None  # If no bot selected, return None
+
 async def get_cloner_id(bot_id):
     """
     Fetch the ID of the user who cloned the bot.
