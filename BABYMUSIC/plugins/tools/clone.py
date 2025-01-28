@@ -91,6 +91,7 @@ async def my_bots_handler(client, message):
         await message.reply_text(response_text)
 
 
+
 @app.on_message(filters.command("clone"))
 async def clone_txt(client, message):
     user_id = message.from_user.id
@@ -114,20 +115,20 @@ async def clone_txt(client, message):
             await mi.edit_text("You don't have enough points to clone a bot. First earn points 💵")
             return
 
+        # Save bot token and prompt for session
         try:
-            # Save bot token and points in the database, and request session
+            # Save bot token and mark the user as awaiting session
             details = {
                 "user_id": user_id,
                 "bot_token": bot_token,
-                "points": points,  # Save the points here
+                "points": points,
                 "step": "awaiting_session",
                 "cloned_at": datetime.now()
             }
-            clonebotdb.insert_one(details)
+            clonebotdb.update_one({"user_id": user_id}, {"$set": details}, upsert=True)
             await mi.edit_text(
-                "Bot token has been received. Now send your session for the assistant."
+                "Bot token has been received. Now send your session string for the assistant."
             )
-            return
 
         except Exception as e:
             await mi.edit_text(f"An error occurred: {str(e)}")
@@ -139,42 +140,31 @@ async def clone_txt(client, message):
         )
 
 
-
 @app.on_message(filters.private & filters.text)
 async def handle_session(client, message):
     user_id = message.from_user.id
     session = message.text.strip()
 
-    # Check if the user is in the 'awaiting_session' step
+    # Retrieve user entry that is awaiting session
     user_entry = clonebotdb.find_one({"user_id": user_id, "step": "awaiting_session"})
     
     if not user_entry:
-        # If user is not in the 'awaiting_session' step, return and allow other handlers
-        return
+        return  # If no session is awaiting, ignore
 
     try:
-        # Retrieve necessary data from the database
-        bot_token = user_entry.get("bot_token")  # Fetch the bot token safely
-        points = user_entry.get("points", 0)  # Default to 0 if points is missing
-        
-        # Debugging log for user data
-        print(f"[DEBUG] User {user_id} Entry: {user_entry}")  
+        # Retrieve bot token and points
+        bot_token = user_entry.get("bot_token")
+        points = user_entry.get("points", 0)
 
         if not bot_token:
             await message.reply_text("⚠️ Error: Bot token is missing in your data. Contact support.")
             return
 
-        # Ensure points is an integer
-        try:
-            points = int(points)
-        except ValueError:
-            points = 0
-
         if points < 400:
             await message.reply_text("⚠️ You don't have enough points to complete this action. First earn points 💵.")
             return
 
-        # Start the bot using the provided session string
+        # Start the bot using the session string
         ai = Client(
             bot_token,
             API_ID,
@@ -198,7 +188,7 @@ async def handle_session(client, message):
 
         # Deduct points and proceed with cloning
         new_points = points - 400
-        await update_user_points(user_id, new_points)  # Update user points in the database
+        await update_user_points(user_id, new_points)
 
         # Save the bot details in the database
         expiration_date = datetime.now() + timedelta(days=30)
