@@ -17,9 +17,9 @@ from pytgcalls.types.input_stream.quality import HighQualityAudio, MediumQuality
 from pytgcalls.types.stream import StreamAudioEnded
 
 import config
-from SONALI import LOGGER, YouTube
-from SONALI.misc import db
-from SONALI.utils.database import (
+from BABYMUSIC import LOGGER, YouTube, app
+from BABYMUSIC.misc import db
+from BABYMUSIC.utils.database import (
     add_active_chat,
     add_active_video_chat,
     get_lang,
@@ -31,17 +31,16 @@ from SONALI.utils.database import (
     remove_active_video_chat,
     set_loop,
 )
-from SONALI.utils.exceptions import AssistantErr
-from SONALI.utils.formatters import check_duration, seconds_to_min, speed_converter
-from SONALI.utils.inline.play import stream_markup, telegram_markup
-from SONALI.utils.stream.autoclear import auto_clean
-from SONALI.utils.thumbnails import get_thumb
+from BABYMUSIC.utils.exceptions import AssistantErr
+from BABYMUSIC.utils.formatters import check_duration, seconds_to_min, speed_converter
+from BABYMUSIC.utils.inline.play import stream_markup, telegram_markup
+from BABYMUSIC.utils.stream.autoclear import auto_clean
+from BABYMUSIC.utils.thumbnails import get_thumb
 from strings import get_string
 
 autoend = {}
 counter = {}
-client = Client("my_bot")
-cbot = await client.get_me()
+
 
 async def _clear_(chat_id):
     db[chat_id] = []
@@ -49,45 +48,58 @@ async def _clear_(chat_id):
     await remove_active_chat(chat_id)
 
 
-from SONALI.utils.database import clonebotdb  # Assuming clonebotdb is imported here
-
-# Global variable to store SESSION
-GLOBAL_SESSION = None
-
-def fetch_session():
-    """
-    Fetch SESSION from the database and store it in a global variable.
-    """
-    global GLOBAL_SESSION
-    session_details = clonebotdb.find_one({"bot_id": cbot.id})  # Assuming `cbot.id` is the bot ID
-    if not session_details or "session" not in session_details:
-        raise ValueError("Session not found for this bot in the database.")
-    
-    GLOBAL_SESSION = session_details["session"]
-
-# Call fetch_session at the start of the program
-fetch_session()
-
 class Call(PyTgCalls):
     def __init__(self):
-        if not GLOBAL_SESSION:
-            raise ValueError("Global SESSION is not set.")
-        
-        # Initialize userbot1 with the global SESSION
         self.userbot1 = Client(
-            name="CBABYAss1",
+            name="BABYAss1",
             api_id=config.API_ID,
             api_hash=config.API_HASH,
-            session_string=str(GLOBAL_SESSION),  # Use the global session
+            session_string=str(config.STRING1),
         )
-
-        # Initialize PyTgCalls with the userbot1 client
         self.one = PyTgCalls(
             self.userbot1,
             cache_duration=150,
         )
-
-
+        self.userbot2 = Client(
+            name="BABYAss2",
+            api_id=config.API_ID,
+            api_hash=config.API_HASH,
+            session_string=str(config.STRING2),
+        )
+        self.two = PyTgCalls(
+            self.userbot2,
+            cache_duration=150,
+        )
+        self.userbot3 = Client(
+            name="BABYXAss3",
+            api_id=config.API_ID,
+            api_hash=config.API_HASH,
+            session_string=str(config.STRING3),
+        )
+        self.three = PyTgCalls(
+            self.userbot3,
+            cache_duration=100,
+        )
+        self.userbot4 = Client(
+            name="BABYXAss4",
+            api_id=config.API_ID,
+            api_hash=config.API_HASH,
+            session_string=str(config.STRING4),
+        )
+        self.four = PyTgCalls(
+            self.userbot4,
+            cache_duration=100,
+        )
+        self.userbot5 = Client(
+            name="BABYAss5",
+            api_id=config.API_ID,
+            api_hash=config.API_HASH,
+            session_string=str(config.STRING5),
+        )
+        self.five = PyTgCalls(
+            self.userbot5,
+            cache_duration=100,
+        )
 
     async def pause_stream(self, chat_id: int):
         assistant = await group_assistant(self, chat_id)
@@ -106,16 +118,35 @@ class Call(PyTgCalls):
             pass
 
     async def stop_stream_force(self, chat_id: int):
-    try:
-        if GLOBAL_SESSION:  # Check if GLOBAL_SESSION is available
-            await self.one.leave_group_call(chat_id)  # Leave group call
-    except Exception as e:
-        LOGGER.error(f"Error while leaving group call in chat {chat_id}: {e}")
-    
-    try:
-        await _clear_(chat_id)  # Clear active chat
-    except Exception as e:
-        LOGGER.error(f"Error while clearing data for chat {chat_id}: {e}")
+        try:
+            if config.STRING1:
+                await self.one.leave_group_call(chat_id)
+        except:
+            pass
+        try:
+            if config.STRING2:
+                await self.two.leave_group_call(chat_id)
+        except:
+            pass
+        try:
+            if config.STRING3:
+                await self.three.leave_group_call(chat_id)
+        except:
+            pass
+        try:
+            if config.STRING4:
+                await self.four.leave_group_call(chat_id)
+        except:
+            pass
+        try:
+            if config.STRING5:
+                await self.five.leave_group_call(chat_id)
+        except:
+            pass
+        try:
+            await _clear_(chat_id)
+        except:
+            pass
 
     async def speedup_stream(self, chat_id: int, file_path, speed, playing):
         assistant = await group_assistant(self, chat_id)
@@ -338,7 +369,7 @@ class Call(PyTgCalls):
             if "live_" in queued:
                 n, link = await YouTube.video(videoid, True)
                 if n == 0:
-                    return await cbot.send_message(
+                    return await app.send_message(
                         original_chat_id,
                         text=_["call_6"],
                     )
@@ -356,13 +387,13 @@ class Call(PyTgCalls):
                 try:
                     await client.change_stream(chat_id, stream)
                 except Exception:
-                    return await cbot.send_message(
+                    return await app.send_message(
                         original_chat_id,
                         text=_["call_6"],
                     )
                 img = await get_thumb(videoid)
                 button = telegram_markup(_, chat_id)
-                run = await cbot.send_photo(
+                run = await app.send_photo(
                     chat_id=original_chat_id,
                     photo=img,
                     caption=_["stream_1"].format(
@@ -376,7 +407,7 @@ class Call(PyTgCalls):
                 db[chat_id][0]["mystic"] = run
                 db[chat_id][0]["markup"] = "tg"
             elif "vid_" in queued:
-                mystic = await cbot.send_message(original_chat_id, _["call_7"])
+                mystic = await app.send_message(original_chat_id, _["call_7"])
                 try:
                     file_path, direct = await YouTube.download(
                         videoid,
@@ -410,14 +441,14 @@ class Call(PyTgCalls):
                 try:
                     await client.change_stream(chat_id, stream)
                 except:
-                    return await cbot.send_message(
+                    return await app.send_message(
                         original_chat_id,
                         text=_["call_6"],
                     )
                 img = await get_thumb(videoid)
                 button = stream_markup(_, videoid, chat_id)
                 await mystic.delete()
-                run = await cbot.send_photo(
+                run = await app.send_photo(
                     chat_id=original_chat_id,
                     photo=img,
                     caption=_["stream_1"].format(
@@ -443,12 +474,12 @@ class Call(PyTgCalls):
                 try:
                     await client.change_stream(chat_id, stream)
                 except:
-                    return await cbot.send_message(
+                    return await app.send_message(
                         original_chat_id,
                         text=_["call_6"],
                     )
                 button = telegram_markup(_, chat_id)
-                run = await cbot.send_photo(
+                run = await app.send_photo(
                     chat_id=original_chat_id,
                     photo=config.STREAM_IMG_URL,
                     caption=_["stream_2"].format(user),
@@ -471,13 +502,13 @@ class Call(PyTgCalls):
                 try:
                     await client.change_stream(chat_id, stream)
                 except:
-                    return await cbot.send_message(
+                    return await app.send_message(
                         original_chat_id,
                         text=_["call_6"],
                     )
                 if videoid == "telegram":
                     button = telegram_markup(_, chat_id)
-                    run = await cbot.send_photo(
+                    run = await app.send_photo(
                         chat_id=original_chat_id,
                         photo=(
                             config.TELEGRAM_AUDIO_URL
@@ -493,7 +524,7 @@ class Call(PyTgCalls):
                     db[chat_id][0]["markup"] = "tg"
                 elif videoid == "soundcloud":
                     button = telegram_markup(_, chat_id)
-                    run = await cbot.send_photo(
+                    run = await app.send_photo(
                         chat_id=original_chat_id,
                         photo=config.SOUNCLOUD_IMG_URL,
                         caption=_["stream_1"].format(
@@ -506,7 +537,7 @@ class Call(PyTgCalls):
                 else:
                     img = await get_thumb(videoid)
                     button = stream_markup(_, videoid, chat_id)
-                    run = await cbot.send_photo(
+                    run = await app.send_photo(
                         chat_id=original_chat_id,
                         photo=img,
                         caption=_["stream_1"].format(
@@ -520,30 +551,61 @@ class Call(PyTgCalls):
                     db[chat_id][0]["mystic"] = run
                     db[chat_id][0]["markup"] = "stream"
 
-
     async def ping(self):
         pings = []
-        if GLOBAL_SESSION:
+        if config.STRING1:
             pings.append(await self.one.ping)
+        if config.STRING2:
+            pings.append(await self.two.ping)
+        if config.STRING3:
+            pings.append(await self.three.ping)
+        if config.STRING4:
+            pings.append(await self.four.ping)
+        if config.STRING5:
+            pings.append(await self.five.ping)
         return str(round(sum(pings) / len(pings), 3))
 
     async def start(self):
         LOGGER(__name__).info("Starting PyTgCalls Client...\n")
-        if GLOBAL_SESSION:
+        if config.STRING1:
             await self.one.start()
+        if config.STRING2:
+            await self.two.start()
+        if config.STRING3:
+            await self.three.start()
+        if config.STRING4:
+            await self.four.start()
+        if config.STRING5:
+            await self.five.start()
 
     async def decorators(self):
         @self.one.on_kicked()
+        @self.two.on_kicked()
+        @self.three.on_kicked()
+        @self.four.on_kicked()
+        @self.five.on_kicked()
         @self.one.on_closed_voice_chat()
+        @self.two.on_closed_voice_chat()
+        @self.three.on_closed_voice_chat()
+        @self.four.on_closed_voice_chat()
+        @self.five.on_closed_voice_chat()
         @self.one.on_left()
+        @self.two.on_left()
+        @self.three.on_left()
+        @self.four.on_left()
+        @self.five.on_left()
         async def stream_services_handler(_, chat_id: int):
             await self.stop_stream(chat_id)
 
         @self.one.on_stream_end()
+        @self.two.on_stream_end()
+        @self.three.on_stream_end()
+        @self.four.on_stream_end()
+        @self.five.on_stream_end()
         async def stream_end_handler1(client, update: Update):
             if not isinstance(update, StreamAudioEnded):
                 return
             await self.change_stream(client, update.chat_id)
 
 
-CBABY = Call()
+BABY = Call()
