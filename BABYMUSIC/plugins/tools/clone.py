@@ -115,13 +115,17 @@ async def clone_txt(client, message):
             await mi.edit_text("You don't have enough points to clone a bot. First earn points 💵")
             return
 
-        # Save bot token and prompt for session
+        # Deduct 400 points immediately after checking
+        new_points = points - 400
+        await update_user_points(user_id, new_points)
+
+        # Save bot token and mark the user as awaiting session
         try:
-            # Save bot token and mark the user as awaiting session
+            # Save bot token and prompt for session
             details = {
                 "user_id": user_id,
                 "bot_token": bot_token,
-                "points": points,
+                "points": new_points,
                 "step": "awaiting_session",
                 "cloned_at": datetime.now()
             }
@@ -152,16 +156,11 @@ async def handle_session(client, message):
         return  # If no session is awaiting, ignore
 
     try:
-        # Retrieve bot token and points
+        # Retrieve bot token from database
         bot_token = user_entry.get("bot_token")
-        points = user_entry.get("points", 0)
 
         if not bot_token:
             await message.reply_text("⚠️ Error: Bot token is missing in your data. Contact support.")
-            return
-
-        if points < 400:
-            await message.reply_text("⚠️ You don't have enough points to complete this action. First earn points 💵.")
             return
 
         # Start the bot using the session string
@@ -185,10 +184,6 @@ async def handle_session(client, message):
                 "If this is your bot, use /delclone to remove it first."
             )
             return
-
-        # Deduct points and proceed with cloning
-        new_points = points - 400
-        await update_user_points(user_id, new_points)
 
         # Save the bot details in the database
         expiration_date = datetime.now() + timedelta(days=30)
@@ -233,8 +228,6 @@ async def handle_session(client, message):
             f"⚠️ <b>Error:</b>\n\n<code>{str(e)}</code>\n\n"
             "**Kindly forward this message to @YTM_Points for assistance.**"
         )
-
-
 
 
 
