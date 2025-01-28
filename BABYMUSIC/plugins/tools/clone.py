@@ -163,6 +163,7 @@ async def clone_txt(client, message):
                 "cloned_by": user_id,
                 "clone_date": datetime.now(),
                 "expiration_date": expiration_date,
+                "session_name": None,
             }
             clonebotdb.insert_one(details)
             CLONES.add(bot_id)  # Add bot ID to the in-memory set for tracking
@@ -220,6 +221,82 @@ async def check_clone_expiration():
     except Exception as e:
         logging.exception("Error while checking for expired clones.")
 
+
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+
+@app.on_message(filters.command("setass"))
+async def set_assistant_session(client, message):
+    user_id = message.from_user.id
+
+    # Find all the cloned bots for the user
+    cloned_bots = clonebotdb.find({"user_id": user_id})
+    
+    if not cloned_bots:
+        await message.reply_text("You haven't cloned any bots yet.")
+        return
+
+    # Create Inline buttons for each bot the user has cloned
+    keyboard = [
+        [InlineKeyboardButton(bot["username"], callback_data=f"select_bot_{bot['bot_id']}")]
+        for bot in cloned_bots
+    ]
+
+    # Send message with Inline buttons
+    await message.reply_text(
+        "Please select the bot for which you want to set the session:",
+        reply_markup=InlineKeyboardMarkup(keyboard)
+    )
+
+@app.on_callback_query(filters.regex("^select_bot_"))
+async def select_bot_for_session(client, callback_query):
+    bot_id = int(callback_query.data.split("_")[2])
+    user_id = callback_query.from_user.id
+
+    # Find the bot by bot_id for the user
+    cloned_bot = clonebotdb.find_one({"bot_id": bot_id, "user_id": user_id})
+
+    if not cloned_bot:
+        await callback_query.answer("You don't have permission to set session for this bot.", show_alert=True)
+        return
+
+    # Ask the user to send the session name for the selected bot
+    await callback_query.answer()
+    await callback_query.message.reply_text(
+        f"Please send your session name for the bot @{cloned_bot['username']}."
+    )
+
+    # Save the selected bot_id in user data to be used later
+    await client.set_data(user_id, "selected_bot_id", bot_id)
+
+@app.on_message(filters.text)
+async def set_session_name(client, message):
+    user_id = message.from_user.id
+    session_name = message.text.strip()
+
+    # Check if user has selected a bot
+    selected_bot_id = await client.get_data(user_id, "selected_bot_id")
+    
+    if not selected_bot_id:
+        return  # No bot selected, do nothing
+
+    # Find the selected bot
+    cloned_bot = clonebotdb.find_one({"bot_id": selected_bot_id, "user_id": user_id})
+
+    if not cloned_bot:
+        await message.reply_text("No bot found for setting the session.")
+        return
+
+    # Update the session_name for the selected bot
+    clonebotdb.update_one(
+        {"bot_id": cloned_bot['bot_id']},
+        {"$set": {"session_name": session_name}}
+    )
+
+    # Confirm the update
+    await message.reply_text(f"Session name for bot @{cloned_bot['username']} has been set to '{session_name}'.")
+
+    # Optionally, clear the stored selected bot_id after setting the session name
+    await client.delete_data(user_id, "selected_bot_id")
 
 
 @app.on_message(
