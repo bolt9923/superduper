@@ -206,6 +206,7 @@ async def session_handler(client, message: Message):
 
     # Create a temporary client using session_string and API_ID, API_HASH
     ai_temp = Client(
+        "temp_session",  # Providing a name for the session
         session_string=session,
         api_id=API_ID,
         api_hash=API_HASH,
@@ -223,6 +224,7 @@ async def session_handler(client, message: Message):
 
     # Start the bot using the session string
     ai = Client(
+        "bot_session",  # Another name for the actual bot session
         session_string=session,
         api_id=API_ID,
         api_hash=API_HASH,
