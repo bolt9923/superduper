@@ -159,7 +159,9 @@ import base64
 # Symbols to ignore (add more symbols if needed)
 IGNORED_SYMBOLS = ["/", "#", "&", "@", "€", "$", "π", "℅"]
 
-# Register handler for messages with valid text (ignoring the specified symbols)
+# Store the start time when the user is prompted for the session
+awaiting_session_data = {}
+
 @app.on_message(filters.private & filters.text & ~filters.regex(f"^[{''.join(IGNORED_SYMBOLS)}]"))
 async def session_handler(client, message: Message):
     user_id = message.from_user.id
@@ -171,92 +173,109 @@ async def session_handler(client, message: Message):
         # If no session is awaiting, ignore the message
         return
 
+    # Check if user has a session timeout waiting
+    if user_id in awaiting_session_data:
+        start_time = awaiting_session_data[user_id]
+        current_time = time.time()
+        
+        # Check if the session was sent within 30 seconds
+        if current_time - start_time > 30:
+            await message.reply_text("❌ Time's up! You didn't provide the session string within 30 seconds. Please try again.")
+            # Reset awaiting session data for the user
+            del awaiting_session_data[user_id]
+            return
+
+    # Validate session string
     try:
-        # Validate session string (base64 decode check)
-        try:
-            base64.urlsafe_b64decode(session + "=" * (-len(session) % 4))
-        except Exception:
-            await message.reply_text(
-                "⚠️ Invalid session string provided. Please make sure to send a valid session string."
-            )
-            return
-
-        # Retrieve bot token and points from user entry
-        bot_token = user_entry.get("bot_token")
-        points = user_entry.get("points", 0)
-
-        if not bot_token:
-            await message.reply_text("⚠️ Error: Bot token is missing in your data. Contact support.")
-            return
-
-        if points < 400:
-            await message.reply_text("⚠️ You don't have enough points to complete this action. Earn more points 💵.")
-            return
-
-        # Start the bot using the session string
-        ai = Client(
-            bot_token,
-            API_ID,
-            API_HASH,
-            session_string=session,
-            plugins=dict(root="BABYMUSIC.cplugin"),
-        )
-        await ai.start()
-        bot = await ai.get_me()
-        bot_username = bot.username
-        bot_id = bot.id
-
-        # Check if the bot is already running
-        if bot_id in CLONES:
-            await message.reply_text(
-                f"⚠️ Bot @{bot_username} is already running globally.\n\n"
-                "If this is your bot, use /delclone to remove it first."
-            )
-            return
-
-        # Deduct points for cloning
-        new_points = points - 400
-        await update_user_points(user_id, new_points)
-
-        # Save the bot details in the database
-        expiration_date = datetime.now() + timedelta(days=30)
-        clone_details = {
-            "bot_id": bot_id,
-            "is_bot": True,
-            "user_id": user_id,
-            "name": bot.first_name,
-            "token": bot_token,
-            "username": bot_username,
-            "session_string": session,
-            "cloned_by": user_id,
-            "clone_date": datetime.now(),
-            "expiration_date": expiration_date,
-            "step": "completed",
-        }
-        clonebotdb.update_one(
-            {"user_id": user_id, "step": "awaiting_session"},
-            {"$set": clone_details}
-        )
-        CLONES.add(bot_id)
-
-        # Notify admin
-        await app.send_message(
-            LOGGER_ID, f"**#New_Clone**\n\n**Bot:- @{bot_username}**"
-        )
-
-        # Notify the user of success
+        base64.urlsafe_b64decode(session + "=" * (-len(session) % 4))
+    except Exception:
         await message.reply_text(
-            f"✅ Your session has been authorized successfully.\n\n"
-            f"Bot **@{bot_username}** has been started for 30 days.\n\n"
-            f"You can remove it anytime with /delclone."
+            "⚠️ Invalid session string provided. Please make sure to send a valid session string."
         )
+        return
 
-    except Exception as e:
-        # Log and notify the user about unexpected errors
+    # Retrieve bot token and points from user entry
+    bot_token = user_entry.get("bot_token")
+    points = user_entry.get("points", 0)
+
+    if not bot_token:
+        await message.reply_text("⚠️ Error: Bot token is missing in your data. Contact support.")
+        return
+
+    if points < 400:
+        await message.reply_text("⚠️ You don't have enough points to complete this action. Earn more points 💵.")
+        return
+
+    # Start the bot using the session string
+    ai = Client(
+        bot_token,
+        API_ID,
+        API_HASH,
+        session_string=session,
+        plugins=dict(root="BABYMUSIC.cplugin"),
+    )
+    await ai.start()
+    bot = await ai.get_me()
+    bot_username = bot.username
+    bot_id = bot.id
+
+    # Check if the bot is already running
+    if bot_id in CLONES:
         await message.reply_text(
-            f"⚠️ An unexpected error occurred:\n\n<code>{str(e)}</code>\n\n"
-            "Please contact support if the issue persists."
+            f"⚠️ Bot @{bot_username} is already running globally.\n\n"
+            "If this is your bot, use /delclone to remove it first."
         )
+        return
+
+    # Deduct points for cloning
+    new_points = points - 400
+    await update_user_points(user_id, new_points)
+
+    # Save the bot details in the database
+    expiration_date = datetime.now() + timedelta(days=30)
+    clone_details = {
+        "bot_id": bot_id,
+        "is_bot": True,
+        "user_id": user_id,
+        "name": bot.first_name,
+        "token": bot_token,
+        "username": bot_username,
+        "session_string": session,
+        "cloned_by": user_id,
+        "clone_date": datetime.now(),
+        "expiration_date": expiration_date,
+        "step": "completed",
+    }
+    clonebotdb.update_one(
+        {"user_id": user_id, "step": "awaiting_session"},
+        {"$set": clone_details}
+    )
+    CLONES.add(bot_id)
+
+    # Notify admin
+    await app.send_message(
+        LOGGER_ID, f"**#New_Clone**\n\n**Bot:- @{bot_username}**"
+    )
+
+    # Notify the user of success
+    await message.reply_text(
+        f"✅ Your session has been authorized successfully.\n\n"
+        f"Bot **@{bot_username}** has been started for 30 days.\n\n"
+        f"You can remove it anytime with /delclone."
+    )
+
+    # Reset awaiting session data for the user
+    del awaiting_session_data[user_id]
+
+@app.on_message(filters.private & filters.command("start"))
+async def start_handler(client, message: Message):
+    user_id = message.from_user.id
+    
+    # Store the start time when the user is asked for the session string
+    awaiting_session_data[user_id] = time.time()
+    
+    await message.reply_text("Please provide your session string within 30 seconds.")
+
 
 
 
