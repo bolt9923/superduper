@@ -153,19 +153,28 @@ async def handle_session(client, message):
         return
 
     try:
-        # Validate session and proceed
-        bot_token = user_entry.get("bot_token")  # Safely fetch the bot token
-        points = user_entry.get("points", 0)  # Default to 0 if 'points' is missing
+        # Retrieve necessary data from the database
+        bot_token = user_entry.get("bot_token")  # Fetch the bot token safely
+        points = user_entry.get("points", 0)  # Default to 0 if points is missing
         
+        # Debugging log for user data
+        print(f"[DEBUG] User {user_id} Entry: {user_entry}")  
+
         if not bot_token:
-            await message.reply_text("Error: Bot token is missing in your data. Contact support.")
+            await message.reply_text("⚠️ Error: Bot token is missing in your data. Contact support.")
             return
+
+        # Ensure points is an integer
+        try:
+            points = int(points)
+        except ValueError:
+            points = 0
 
         if points < 400:
-            await message.reply_text("You don't have enough points to complete this action.")
+            await message.reply_text("⚠️ You don't have enough points to complete this action. First earn points 💵.")
             return
 
-        # Start the bot using the provided token and session string
+        # Start the bot using the provided session string
         ai = Client(
             bot_token,
             API_ID,
@@ -179,7 +188,7 @@ async def handle_session(client, message):
         bot_username = bot.username
         bot_id = bot.id
 
-        # Check if bot is already running
+        # Check if the bot is already running
         if bot_id in CLONES:
             await message.reply_text(
                 f"⚠️ Bot @{bot_username} is already running globally.\n\n"
@@ -189,9 +198,9 @@ async def handle_session(client, message):
 
         # Deduct points and proceed with cloning
         new_points = points - 400
-        await update_user_points(user_id, new_points)
+        await update_user_points(user_id, new_points)  # Update user points in the database
 
-        # Save all bot details in the database
+        # Save the bot details in the database
         expiration_date = datetime.now() + timedelta(days=30)
         clone_details = {
             "bot_id": bot_id,
@@ -204,7 +213,7 @@ async def handle_session(client, message):
             "cloned_by": user_id,
             "clone_date": datetime.now(),
             "expiration_date": expiration_date,
-            "step": "completed"
+            "step": "completed",
         }
         clonebotdb.update_one(
             {"user_id": user_id, "step": "awaiting_session"},
@@ -212,18 +221,21 @@ async def handle_session(client, message):
         )
         CLONES.add(bot_id)
 
-        # Log and notify
+        # Log and notify the admin
         await app.send_message(
             LOGGER_ID, f"**#New_Clone**\n\n**Bot:- @{bot_username}**"
         )
 
+        # Notify the user of success
         await message.reply_text(
-            f"Your session has been authorized successfully. Bot @{bot_username} has been started ✅ for 30 days.\nRemove any time with /delclone."
+            f"✅ Your session has been authorized successfully.\n\n"
+            f"Bot **@{bot_username}** has been started for 30 days.\n\n"
+            f"You can remove it anytime with /delclone."
         )
 
     except (AccessTokenExpired, AccessTokenInvalid):
         await message.reply_text(
-            "Invalid session or bot token. Please check and try again."
+            "⚠️ Invalid session or bot token. Please check and try again."
         )
     except Exception as e:
         logging.exception("Error while validating session.")
