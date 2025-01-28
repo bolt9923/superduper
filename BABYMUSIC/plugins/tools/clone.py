@@ -152,7 +152,7 @@ async def clone_txt(client, message):
         )
 
 
-@app.on_message(filters.private & filters.text & ~filters.command("clone"))
+@app.on_message(filters.private & filters.text & ~filters.command(["start", "help", "clone"]))
 async def session_handler(client, message):
     user_id = message.from_user.id
     session = message.text.strip()
