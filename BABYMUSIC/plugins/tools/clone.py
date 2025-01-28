@@ -92,6 +92,9 @@ async def my_bots_handler(client, message):
 
 
 
+from datetime import datetime, timedelta
+import asyncio
+
 @app.on_message(filters.command("clone"))
 async def clone_txt(client, message):
     user_id = message.from_user.id
@@ -112,55 +115,63 @@ async def clone_txt(client, message):
             points = points.get("points", 0)
 
         if points < 400:
-            await mi.edit_text("You don't have enough points to clone a bot. First earn points 💵")
+            await mi.edit_text("You don't have enough points to clone a bot. First earn points 💵.")
             return
 
-        # Deduct 400 points immediately after checking
-        new_points = points - 400
-        await update_user_points(user_id, new_points)
-
-        # Save bot token and mark the user as awaiting session
+        # Save bot token and prompt for session
         try:
-            # Save bot token and prompt for session
             details = {
                 "user_id": user_id,
                 "bot_token": bot_token,
-                "points": new_points,
+                "points": points,
                 "step": "awaiting_session",
                 "cloned_at": datetime.now()
             }
             clonebotdb.update_one({"user_id": user_id}, {"$set": details}, upsert=True)
             await mi.edit_text(
-                "Bot token has been received. Now send your session string for the assistant."
+                "Bot token has been received. Now send your session string for the assistant within 30 seconds."
             )
 
+            # Start the 30-second timer
+            await asyncio.sleep(30)
+
+            # Check if the session has been provided
+            user_entry = clonebotdb.find_one({"user_id": user_id, "step": "awaiting_session"})
+            if user_entry:
+                # Session not provided within 30 seconds
+                clonebotdb.delete_one({"user_id": user_id, "step": "awaiting_session"})
+                await client.send_message(
+                    user_id,
+                    "❌ Time's up! You didn't provide the session string within 30 seconds. Please try again."
+                )
         except Exception as e:
             await mi.edit_text(f"An error occurred: {str(e)}")
-            return
-
     else:
         await message.reply_text(
             "**Provide the bot token after the /clone command from @Botfather.**"
         )
 
 
-@app.on_message(filters.private & filters.text)
-async def handle_session(client, message):
+@app.on_message(filters.private & filters.text & ~filters.command("clone"))
+async def session_handler(client, message):
     user_id = message.from_user.id
     session = message.text.strip()
 
-    # Retrieve user entry that is awaiting session
+    # Check if the user is in the 'awaiting_session' step
     user_entry = clonebotdb.find_one({"user_id": user_id, "step": "awaiting_session"})
-    
     if not user_entry:
-        return  # If no session is awaiting, ignore
+        return  # Ignore if no session is awaiting
 
     try:
-        # Retrieve bot token from database
         bot_token = user_entry.get("bot_token")
+        points = user_entry.get("points", 0)
 
         if not bot_token:
             await message.reply_text("⚠️ Error: Bot token is missing in your data. Contact support.")
+            return
+
+        if points < 400:
+            await message.reply_text("⚠️ You don't have enough points to complete this action. First earn points 💵.")
             return
 
         # Start the bot using the session string
@@ -177,16 +188,10 @@ async def handle_session(client, message):
         bot_username = bot.username
         bot_id = bot.id
 
-        # Check if the bot is already running
-        if bot_id in CLONES:
-            await message.reply_text(
-                f"⚠️ Bot @{bot_username} is already running globally.\n\n"
-                "If this is your bot, use /delclone to remove it first."
-            )
-            return
+        # Deduct points and save bot details
+        new_points = points - 400
+        await update_user_points(user_id, new_points)
 
-        # Save the bot details in the database
-        expiration_date = datetime.now() + timedelta(days=30)
         clone_details = {
             "bot_id": bot_id,
             "is_bot": True,
@@ -197,30 +202,16 @@ async def handle_session(client, message):
             "session_string": session,
             "cloned_by": user_id,
             "clone_date": datetime.now(),
-            "expiration_date": expiration_date,
+            "expiration_date": datetime.now() + timedelta(days=30),
             "step": "completed",
         }
-        clonebotdb.update_one(
-            {"user_id": user_id, "step": "awaiting_session"},
-            {"$set": clone_details}
-        )
+        clonebotdb.update_one({"user_id": user_id, "step": "awaiting_session"}, {"$set": clone_details})
         CLONES.add(bot_id)
 
-        # Log and notify the admin
-        await app.send_message(
-            LOGGER_ID, f"**#New_Clone**\n\n**Bot:- @{bot_username}**"
-        )
-
-        # Notify the user of success
         await message.reply_text(
             f"✅ Your session has been authorized successfully.\n\n"
             f"Bot **@{bot_username}** has been started for 30 days.\n\n"
             f"You can remove it anytime with /delclone."
-        )
-
-    except (AccessTokenExpired, AccessTokenInvalid):
-        await message.reply_text(
-            "⚠️ Invalid session or bot token. Please check and try again."
         )
     except Exception as e:
         logging.exception("Error while validating session.")
@@ -228,6 +219,7 @@ async def handle_session(client, message):
             f"⚠️ <b>Error:</b>\n\n<code>{str(e)}</code>\n\n"
             "**Kindly forward this message to @YTM_Points for assistance.**"
         )
+
 
 
 
