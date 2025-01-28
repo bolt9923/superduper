@@ -108,6 +108,68 @@ import asyncio
 import re
 import base64
 
+
+
+@app.on_message(filters.command("clone"))
+async def clone_txt(client, message):
+    user_id = message.from_user.id
+
+    # Ensure the user provides a bot token
+    if len(message.command) > 1:
+        bot_token = message.text.split("/clone", 1)[1].strip()
+        mi = await message.reply_text("Processing the bot token, please wait...")
+
+        # Check user data and points
+        user_data = await get_user_data(user_id)
+        if not user_data or 'points' not in user_data:
+            await mi.edit_text("First start the bot in PM.")
+            return
+
+        points = user_data['points']
+        if isinstance(points, dict):
+            points = points.get("points", 0)
+
+        if points < 400:
+            await mi.edit_text("You don't have enough points to clone a bot. First earn points 💵.")
+            return
+
+        # Save bot token and prompt for session
+        try:
+            details = {
+                "user_id": user_id,
+                "bot_token": bot_token,
+                "points": points,
+                "step": "awaiting_session",
+                "cloned_at": datetime.now()
+            }
+            clonebotdb.update_one({"user_id": user_id}, {"$set": details}, upsert=True)
+            await mi.edit_text(
+                "Bot token has been received. Now send your session string for the assistant within 30 seconds."
+            )
+
+            # Start the 30-second timer
+            await asyncio.sleep(30)
+
+            # Check if the session has been provided
+            user_entry = clonebotdb.find_one({"user_id": user_id, "step": "awaiting_session"})
+            if user_entry:
+                # Session not provided within 30 seconds
+                clonebotdb.delete_one({"user_id": user_id, "step": "awaiting_session"})
+                await client.send_message(
+                    user_id,
+                    "❌ Time's up! You didn't provide the session string within 30 seconds. Please try again."
+                )
+        except Exception as e:
+            await mi.edit_text(f"An error occurred: {str(e)}")
+    else:
+        await message.reply_text(
+            "**Provide the bot token after the /clone command from @Botfather.**"
+        )
+
+
+import re
+import base64
+
 # Symbols to ignore (add more symbols if needed)
 IGNORED_SYMBOLS = ["/", "#", "&", "@", "€", "$", "π", "℅"]
 
