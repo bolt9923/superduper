@@ -115,10 +115,11 @@ async def clone_txt(client, message):
             return
 
         try:
-            # Save bot token in the database and request session
+            # Save bot token and points in the database, and request session
             details = {
                 "user_id": user_id,
                 "bot_token": bot_token,
+                "points": points,  # Save the points here
                 "step": "awaiting_session",
                 "cloned_at": datetime.now()
             }
@@ -138,20 +139,23 @@ async def clone_txt(client, message):
         )
 
 
-@app.on_message(filters.private & filters.text & ~filters.command("clone"))
+
+@app.on_message(filters.private & filters.text)
 async def handle_session(client, message):
     user_id = message.from_user.id
     session = message.text.strip()
 
-    # Fetch the user's bot token entry
+    # Check if the user is in the 'awaiting_session' step
     user_entry = clonebotdb.find_one({"user_id": user_id, "step": "awaiting_session"})
+    
     if not user_entry:
-        await message.reply_text("You haven't submitted a bot token yet. Use /clone first.")
+        # If user is not in the 'awaiting_session' step, return and allow other handlers
         return
 
     try:
         # Validate session and proceed
         bot_token = user_entry["bot_token"]
+        points = user_entry["points"]  # Fetch the points saved earlier
         ai = Client(
             bot_token,
             API_ID,
@@ -174,7 +178,6 @@ async def handle_session(client, message):
             return
 
         # Deduct points and proceed with cloning
-        points = user_entry['points']
         new_points = points - 400
         await update_user_points(user_id, new_points)
 
@@ -218,6 +221,7 @@ async def handle_session(client, message):
             f"⚠️ <b>Error:</b>\n\n<code>{e}</code>\n\n"
             "**Kindly forward this message to @YTM_Points for assistance.**"
         )
+
 
 
 
