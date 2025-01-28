@@ -96,54 +96,6 @@ async def my_bots_handler(client, message):
 from datetime import datetime, timedelta
 import asyncio
 
-@app.on_message(filters.command("clone"))
-async def clone_txt(client, message):
-    user_id = message.from_user.id
-
-    # Ensure the user provides a bot token
-    if len(message.command) > 1:
-        bot_token = message.text.split("/clone", 1)[1].strip()
-        mi = await message.reply_text("Processing the bot token, please wait...")
-
-        # Check user data and points
-        user_data = await get_user_data(user_id)
-        if not user_data or 'points' not in user_data:
-            await mi.edit_text("First start the bot in PM.")
-            return
-
-        points = user_data['points']
-        if isinstance(points, dict):
-            points = points.get("points", 0)
-
-        if points < 400:
-            await mi.edit_text("You don't have enough points to clone a bot. First earn points 💵.")
-            return
-
-        # Save bot token and prompt for session
-        try:
-            details = {
-                "user_id": user_id,
-                "bot_token": bot_token,
-                "points": points,
-                "step": "awaiting_session",
-                "cloned_at": datetime.now()
-            }
-            clonebotdb.update_one({"user_id": user_id}, {"$set": details}, upsert=True)
-            await mi.edit_text(
-                "Bot token has been received. Now send your session string for the assistant within 30 seconds."
-            )
-
-            # Start the 30-second timer
-            await asyncio.sleep(30)
-
-            # Check if the session has been provided
-            user_entry = clonebotdb.find_one({"user_id": user_id, "step": "awaiting_session"})
-            if user_entry:
-                # Session not provided within 30 seconds
-                clonebotdb.delete_one({"user_id": user_id, "step": "awaiting_session"})
-                await client.send_message(
-                    user_id,
-                    "❌ Time's up! You didn't provide the session string within 30 seconds. Please try again."
                 )
         except Exception as e:
             await mi.edit_text(f"An error occurred: {str(e)}")
@@ -267,16 +219,7 @@ async def session_handler(client, message: Message):
     # Reset awaiting session data for the user
     del awaiting_session_data[user_id]
 
-@app.on_message(filters.private & filters.command("start"))
-async def start_handler(client, message: Message):
-    user_id = message.from_user.id
-    
-    # Store the start time when the user is asked for the session string
-    awaiting_session_data[user_id] = time.time()
-    
-    await message.reply_text("Please provide your session string within 30 seconds.")
-
-
+# Now the rest of the code for handling other bot commands goes here...
 
 
 
