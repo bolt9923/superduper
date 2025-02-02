@@ -41,8 +41,7 @@
 > 🌐 More info. Join Update channel 📢
 
 ---
-[![YT-DLP](https://raw.githubusercontent.com/YT-Music/yt-music/master/.github/banner.svg)](#readme)
-
+![YouTube GIF](.github/assets/youtube.gif)
 
 <p align="center">
   <img src="https://img.shields.io/github/stars/BABY-MUSIC/SPOTIFY_MUSIC?style=for-the-badge&color=blue" alt="GitHub stars">
