@@ -4,7 +4,7 @@
   <img src="https://files.catbox.moe/kyrbwc.jpg" alt="yt Music Logo" width="600" height="150">
 </p>
 
-🎶 About Music Bot Clone Features 🎧
+```🎶 About Music Bot Clone Features 🎧```
 
 > Our Music Bot Clone comes with advanced features to make your streaming experience even better! 🚀
 
