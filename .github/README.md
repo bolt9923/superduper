@@ -4,8 +4,6 @@
   <img src="https://files.catbox.moe/kyrbwc.jpg" alt="yt Music Logo" width="600" height="150">
 </p>
 
-[![YT-DLP](https://raw.githubusercontent.com/yt-dlp/yt-dlp/master/.github/banner.svg)](#readme)
-
 ```🎶 About Music Bot Clone Features 🎧```
 
 > Our Music Bot Clone comes with advanced features to make your streaming experience even better! 🚀
@@ -43,6 +41,8 @@
 > 🌐 More info. Join Update channel 📢
 
 ---
+[![YT-DLP](https://raw.githubusercontent.com/yt-dlp/yt-dlp/master/.github/banner.svg)](#readme)
+
 
 <p align="center">
   <img src="https://img.shields.io/github/stars/BABY-MUSIC/SPOTIFY_MUSIC?style=for-the-badge&color=blue" alt="GitHub stars">
