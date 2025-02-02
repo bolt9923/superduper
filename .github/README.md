@@ -19,15 +19,10 @@
 ---
 
 <p align="center">
-  <a href="https://github.com/BABY-MUSIC/YBB">
-    <img src="https://img.shields.io/github/stars/BABY-MUSIC/YBB?style=for-the-badge" alt="GitHub Stars">
-  </a>
-  <a href="https://github.com/BABY-MUSIC/YBB/fork">
-    <img src="https://img.shields.io/github/forks/BABY-MUSIC/YBB?style=for-the-badge" alt="GitHub Forks">
-  </a>
-  <a href="https://github.com/BABY-MUSIC/YBB">
-    <img src="https://img.shields.io/github/views/BABY-MUSIC/YBB?style=for-the-badge" alt="GitHub Views">
-  </a>
+  <img src="https://img.shields.io/github/stars/BABY-MUSIC/YBB?style=for-the-badge&color=blue" alt="GitHub stars">
+  <img src="https://img.shields.io/github/forks/BABY-MUSIC/YBB?style=for-the-badge&color=blue" alt="GitHub forks">
+  <img src="https://img.shields.io/github/issues/BABY-MUSIC/YBB?style=for-the-badge&color=red" alt="GitHub issues">
+  <img src="https://img.shields.io/github/license/BABY-MUSIC/YBB?style=for-the-badge&color=green" alt="GitHub license">
 </p>
 <p align="center">
   <a href="https://t.me/+HQxOZTSj3yY4M2U1">
