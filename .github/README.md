@@ -41,7 +41,10 @@
 > 🌐 More info. Join Update channel 📢
 
 ---
-![YouTube GIF](.github/youtube.gif)
+
+<div align="center">
+    <img src="./youtube.gif" alt="Youtube GIF" />
+</div>
 
 <p align="center">
   <img src="https://img.shields.io/github/stars/BABY-MUSIC/SPOTIFY_MUSIC?style=for-the-badge&color=blue" alt="GitHub stars">
