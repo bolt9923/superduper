@@ -19,10 +19,10 @@
 ---
 
 <p align="center">
-  <img src="https://img.shields.io/github/stars/BABY-MUSIC/YBB?style=for-the-badge&color=blue" alt="GitHub stars">
-  <img src="https://img.shields.io/github/forks/BABY-MUSIC/YBB?style=for-the-badge&color=blue" alt="GitHub forks">
-  <img src="https://img.shields.io/github/issues/BABY-MUSIC/YBB?style=for-the-badge&color=red" alt="GitHub issues">
-  <img src="https://img.shields.io/github/license/BABY-MUSIC/YBB?style=for-the-badge&color=green" alt="GitHub license">
+  <img src="https://img.shields.io/github/stars/BABY-MUSIC/SPOTIFY_MUSIC?style=for-the-badge&color=blue" alt="GitHub stars">
+  <img src="https://img.shields.io/github/forks/BABY-MUSIC/SPOTIFY_MUSIC?style=for-the-badge&color=blue" alt="GitHub forks">
+  <img src="https://img.shields.io/github/issues/BABY-MUSIC/SPOTIFY_MUSIC?style=for-the-badge&color=red" alt="GitHub issues">
+  <img src="https://img.shields.io/github/license/BABY-MUSIC/SPOTIFY_MUSIC?style=for-the-badge&color=green" alt="GitHub license">
 </p>
 <p align="center">
   <a href="https://t.me/+HQxOZTSj3yY4M2U1">
