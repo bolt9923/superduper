@@ -38,7 +38,7 @@
 
 > 👥 Role-based Access – Grant different levels of access to users.
 
-> 🌐 More info. Join Support channel 📢
+> 🌐 More info. Join Update channel 📢
 
 ---
 
