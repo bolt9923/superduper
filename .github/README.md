@@ -1,8 +1,8 @@
-<p align="center">
-  <img src="https://files.catbox.moe/krqmz8.jpg" alt="YouTube Music Logo" width="150" style="border-radius: 50%; border: 3px solid gold;">
-</p>
+<h1 align="center">🎵 Aviax Music Bot 🎵</h1>
 
-# 🎶 Welcome to YouTube Music 🎧
+<p align="center">
+  <img src="https://telegra.ph/file/29808c1fd50add3b1bfc6.jpg" alt="Aviax Music Logo" width="600" height="150">
+</p>
 
 > **"Music is not just sound; it's an emotion that connects hearts.  
 > YouTube Music 🎵 brings you a unique experience –  
