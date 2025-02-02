@@ -46,7 +46,10 @@
   <img src="https://files.catbox.moe/kyrbwc.jpg" alt="yt Music Logo" width="600" height="150">
 </p>
 
-<a href="https://www.animatedimages.org/cat-lines-562.htm"><img src="https://www.animatedimages.org/data/media/562/animated-line-image-0031.gif" border="0" alt="animated-line-image-0031" /></a>
+<a href="https://www.animatedimages.org/cat-lines-562.htm">
+  <img src="https://www.animatedimages.org/data/media/562/animated-line-image-0031.gif" border="0" alt="animated-line-image-0031" width="100%" />
+</a>
+
 
 <p align="center">
   <img src="https://img.shields.io/github/stars/BABY-MUSIC/SPOTIFY_MUSIC?style=for-the-badge&color=blue" alt="GitHub stars">
