@@ -8,35 +8,24 @@
 
 > Our Music Bot Clone comes with advanced features to make your streaming experience even better! 🚀
 
-✨ Top Features:
+```✨ Top Features:```
   
 > 🔊 High-Quality Audio – Enjoy crystal-clear sound on all tracks.
-
 > 🎥 Video Streaming – Supports video as well as audio streaming.
-
 > ⚡ Fast Response Time – Instant playback without any lag.
-
 > 🛡️ No YouTube IP Block – Stream without any interruptions.
-
 > 🧑‍💻 Customizable Commands – Tailor the bot's commands to fit your needs.
-
 > 🎚️ Adjust Playback Speed – Control audio speed in both group and channel.
-
 > 💬 Interactive Features – Includes user commands like play, pause, skip, volume control, and more.
-
 > 💻 Supports Multiple Sources – Works with YouTube, SoundCloud, and other media platforms.
-
 > 📈 Minimal Downtime – High uptime with a reliable server structure.
-
 > 🛠️ Regular Updates – Stay up-to-date with continuous improvements.
 
-🔒 Security and Privacy:
+```🔒 Security and Privacy:```
+
 > 🔑 Admin Control – Only admins can modify settings and manage playback.
-
 > 🚫 Anti-Spam – Protects groups and channels from spam.
-
 > 👥 Role-based Access – Grant different levels of access to users.
-
 > 🌐 More info. Join Support channel 📢
 
 ---
