@@ -3,6 +3,8 @@
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?template=https://github.com/BABY-MUSIC/YBB)
 
 ---
+<details>
+  <summary>Deploy to Heroku</summary>
 
 ### 🔧 Quick Setup
 
@@ -53,3 +55,4 @@
     ```
 
 ---
+</details>
