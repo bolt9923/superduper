@@ -41,7 +41,7 @@
 > 🌐 More info. Join Update channel 📢
 
 ---
-[![YT-DLP](https://raw.githubusercontent.com/YT Music/yt-dlp/master/.github/banner.svg)](#readme)
+[![YT-DLP](https://raw.githubusercontent.com/YT-Music/yt-music/master/.github/banner.svg)](#readme)
 
 
 <p align="center">
