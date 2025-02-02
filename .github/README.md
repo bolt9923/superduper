@@ -63,3 +63,70 @@
 
 ---
 </details>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Music Intro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #121212;
+            color: white;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .logo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid gold;
+            object-fit: cover;
+        }
+        .quote {
+            font-style: italic;
+            font-size: 18px;
+            margin: 20px 0;
+            color: #ffcc00;
+        }
+        .buttons a {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: gold;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: 0.3s;
+        }
+        .buttons a:hover {
+            background-color: #ffcc00;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Logo -->
+        <img src="https://files.catbox.moe/krqmz8.jpg" alt="YouTube Music Logo" class="logo">
+
+        <!-- Introduction -->
+        <h2>🎵 Welcome to YouTube Music</h2>
+        <p class="quote">"Music that touches your soul, anytime, anywhere!"</p>
+
+        <!-- GitHub Buttons -->
+        <div class="buttons">
+            <a href="https://github.com/BABY-MUSIC/YBB" target="_blank">⭐ Star</a>
+            <a href="https://github.com/BABY-MUSIC/YBB" target="_blank">🔄 Fork</a>
+            <a href="https://github.com/BABY-MUSIC/YBB" target="_blank">📊 View Stats</a>
+        </div>
+    </div>
+
+</body>
+</html>
