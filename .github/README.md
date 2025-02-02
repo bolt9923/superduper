@@ -4,8 +4,6 @@
   <img src="https://files.catbox.moe/kyrbwc.jpg" alt="yt Music Logo" width="600" height="150">
 </p>
 
-<div align="center">
-
 [![YT-DLP](https://raw.githubusercontent.com/yt-dlp/yt-dlp/master/.github/banner.svg)](#readme)
 
 ```🎶 About Music Bot Clone Features 🎧```
