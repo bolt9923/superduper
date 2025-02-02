@@ -1,10 +1,13 @@
-
+<details>
+  <summary>Tap to open heroku 🔎</summary>
 ## 🚀 Deploy on Heroku 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?template=https://github.com/BABY-MUSIC/YBB)
 
 ---
+</details>
+
 <details>
-  <summary>Deploy to Heroku</summary>
+  <summary>Tap to open VPS 🔎</summary>
 
 ### 🔧 Quick Setup
 
