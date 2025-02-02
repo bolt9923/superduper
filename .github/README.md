@@ -10,7 +10,7 @@
 
 ```✨ Top Features:```
   
-> 🔊 High-Quality Audio – Enjoy crystal-clear sound on all tracks.
+> 🔊 High-Quality Audio – Enjoy crystal-clear sound on all tracks.\n
 > 🎥 Video Streaming – Supports video as well as audio streaming.
 > ⚡ Fast Response Time – Instant playback without any lag.
 > 🛡️ No YouTube IP Block – Stream without any interruptions.
