@@ -1,8 +1,8 @@
 <h1 align="center">🎵 YT Official Bot 🎵</h1>
 
-<p align="center">
-  <img src="https://files.catbox.moe/kyrbwc.jpg" alt="yt Music Logo" width="600" height="150">
-</p>
+<div align="center">
+    <img src="./youtube.gif" alt="Youtube GIF" />
+</div>
 
 ```🎶 About Music Bot Clone Features 🎧```
 
@@ -41,10 +41,6 @@
 > 🌐 More info. Join Update channel 📢
 
 ---
-
-<div align="center">
-    <img src="./youtube.gif" alt="Youtube GIF" />
-</div>
 
 <p align="center">
   <img src="https://img.shields.io/github/stars/BABY-MUSIC/SPOTIFY_MUSIC?style=for-the-badge&color=blue" alt="GitHub stars">
