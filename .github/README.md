@@ -10,8 +10,10 @@
 
 ```✨ Top Features:```
   
-> 🔊 High-Quality Audio – Enjoy crystal-clear sound on all tracks.\n
+> 🔊 High-Quality Audio – Enjoy crystal-clear sound on all tracks.
+
 > 🎥 Video Streaming – Supports video as well as audio streaming.
+
 > ⚡ Fast Response Time – Instant playback without any lag.
 > 🛡️ No YouTube IP Block – Stream without any interruptions.
 > 🧑‍💻 Customizable Commands – Tailor the bot's commands to fit your needs.
