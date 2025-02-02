@@ -138,3 +138,5 @@
     bash start
     ```
 </details>
+<script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+<dotlottie-player src="https://lottie.host/e59c5c78-ac03-48df-a53f-3fb6ab9d122f/EaruMHRQ3s.lottie" background="transparent" speed="1" style="width: 300px; height: 300px" loop autoplay></dotlottie-player>
