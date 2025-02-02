@@ -41,7 +41,7 @@
 > 🌐 More info. Join Update channel 📢
 
 ---
-![YouTube GIF](BABYMUSIC/assets/assets/play_icons.png)
+![YT GIF](https://media.tenor.com/7RZZm5Kbdc0AAAAC/yt-youtube-logo.gif)
 
 <p align="center">
   <img src="https://img.shields.io/github/stars/BABY-MUSIC/SPOTIFY_MUSIC?style=for-the-badge&color=blue" alt="GitHub stars">
