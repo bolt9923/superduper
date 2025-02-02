@@ -1,7 +1,7 @@
 <h1 align="center">🎵 Aviax Music Bot 🎵</h1>
 
 <p align="center">
-  <img src="https://files.catbox.moe/idhcxa.jpg" alt="Aviax Music Logo" width="600" height="150">
+  <img src="https://files.catbox.moe/kyrbwc.jpg" alt="Aviax Music Logo" width="600" height="150">
 </p>
 
 > **"Music is not just sound; it's an emotion that connects hearts.  
