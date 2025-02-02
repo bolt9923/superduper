@@ -43,6 +43,10 @@
 ---
 
 <p align="center">
+  <img src="https://files.catbox.moe/kyrbwc.jpg" alt="Aviax Music Logo" width="600" height="150">
+</p>
+
+<p align="center">
   <img src="https://img.shields.io/github/stars/BABY-MUSIC/SPOTIFY_MUSIC?style=for-the-badge&color=blue" alt="GitHub stars">
   <img src="https://img.shields.io/github/forks/BABY-MUSIC/SPOTIFY_MUSIC?style=for-the-badge&color=blue" alt="GitHub forks">
   <img src="https://img.shields.io/github/issues/BABY-MUSIC/SPOTIFY_MUSIC?style=for-the-badge&color=red" alt="GitHub issues">
