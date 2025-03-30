@@ -12,7 +12,7 @@ load_dotenv()
 API_ID = int(getenv("API_ID", "16457832"))
 API_HASH = getenv("API_HASH", "3030874d0befdb5d05597deacc3e83ab")
 # ------------------------------------------------------
-BOT_TOKEN = getenv("BOT_TOKEN", "7190561306:AAHHN5MCgvBG7UO_S3XUIr12TM_b_OFhEVw")
+BOT_TOKEN = getenv("BOT_TOKEN", "8048009371:AAF6CYASYj8Z0vEKxUmL6PYoIFVMC6m0OUk")
 # -------------------------------------------------------
 OWNER_USERNAME = getenv("OWNER_USERNAME","untold_coder")
 # --------------------------------------------------------
@@ -36,7 +36,7 @@ DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 17000))
 # ----------------------------------------------------------------
 
 # ----------------------------------------------------------------
-LOGGER_ID = int(getenv("LOGGER_ID", -1002043570167))
+LOGGER_ID = int(getenv("LOGGER_ID", -1002620430291))
 # ----------------------------------------------------------------
 SERVER_PLAYLIST_LIMIT = int(getenv("SERVER_PLAYLIST_LIMIT", 25))
 # ----------------------------------------------------------------
