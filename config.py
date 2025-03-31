@@ -27,7 +27,9 @@ ASSUSERNAME = getenv("ASSUSERNAME" , "lehar")
 #---------------------------------------------------------------
 #---------------------------------------------------------------
 MONGO_DB_URI = getenv("MONGO_DB_URI", "mongodb+srv://coder:coder@coder.htbxi.mongodb.net/?retryWrites=true&w=majority")
-API_KEY = getenv("API_KEY")
+API_URL = getenv("API_URL", "https://api.nexgenbots.in") #youtube song url
+API_KEY = getenv("API_KEY", "30DxNexGenBotslbnOaw") # youtube song api key, get it from https://t.me/RahulTC
+
 #---------------------------------------------------------------
 #---------------------------------------------------------------
 
