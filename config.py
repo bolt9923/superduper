@@ -9,10 +9,10 @@ from pyrogram import filters
 load_dotenv()
 # ------------------------------------
 # -----------------------------------------------------
-API_ID = int(getenv("API_ID", ""))
+API_ID = int(getenv("API_ID", "29057094"))
 API_HASH = getenv("API_HASH", "3030874d0befdb5d05597deacc3e83ab")
 # ------------------------------------------------------
-BOT_TOKEN = getenv("BOT_TOKEN", "8048009371:AAFBuFiJKwkNverfIvYzeIe6r6_WkJViRLk")
+BOT_TOKEN = getenv("BOT_TOKEN", "")
 # -------------------------------------------------------
 OWNER_USERNAME = getenv("OWNER_USERNAME","NLTRIDE")
 # --------------------------------------------------------
@@ -38,7 +38,7 @@ DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 17000))
 # ----------------------------------------------------------------
 
 # ----------------------------------------------------------------
-LOGGER_ID = int(getenv("LOGGER_ID", -1002653658491))
+LOGGER_ID = int(getenv("LOGGER_ID", ))
 # ----------------------------------------------------------------
 SERVER_PLAYLIST_LIMIT = int(getenv("SERVER_PLAYLIST_LIMIT", 25))
 # ----------------------------------------------------------------
