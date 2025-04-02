@@ -9,18 +9,18 @@ from pyrogram import filters
 load_dotenv()
 # ------------------------------------
 # -----------------------------------------------------
-API_ID = int(getenv("API_ID", "16457832"))
+API_ID = int(getenv("API_ID", ""))
 API_HASH = getenv("API_HASH", "3030874d0befdb5d05597deacc3e83ab")
 # ------------------------------------------------------
 BOT_TOKEN = getenv("BOT_TOKEN", "8048009371:AAFBuFiJKwkNverfIvYzeIe6r6_WkJViRLk")
 # -------------------------------------------------------
-OWNER_USERNAME = getenv("OWNER_USERNAME","untold_coder")
+OWNER_USERNAME = getenv("OWNER_USERNAME","NLTRIDE")
 # --------------------------------------------------------
-BOT_USERNAME = getenv("BOT_USERNAME" , "leharmusic_bot")
+BOT_USERNAME = getenv("BOT_USERNAME" , "X1_HOSTER_BOT")
 # --------------------------------------------------------
-BOT_NAME = getenv("BOT_NAME" , "lehar")
+BOT_NAME = getenv("BOT_NAME" , "X1 HOSTER")
 # ---------------------------------------------------------
-ASSUSERNAME = getenv("ASSUSERNAME" , "lehar")
+ASSUSERNAME = getenv("ASSUSERNAME" , "Dostsysh")
 # ---------------------------------------------------------
 
 
@@ -38,11 +38,11 @@ DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 17000))
 # ----------------------------------------------------------------
 
 # ----------------------------------------------------------------
-LOGGER_ID = int(getenv("LOGGER_ID", -1002126863199))
+LOGGER_ID = int(getenv("LOGGER_ID", -1002653658491))
 # ----------------------------------------------------------------
 SERVER_PLAYLIST_LIMIT = int(getenv("SERVER_PLAYLIST_LIMIT", 25))
 # ----------------------------------------------------------------
-OWNER_ID = int(getenv("OWNER_ID", 6657539971))
+OWNER_ID = int(getenv("OWNER_ID", 5487734890))
 # -----------------------------------------------------------------
 # -----------------------------------------------------------------
 # config.py
@@ -57,7 +57,7 @@ HEROKU_API_KEY = getenv("HEROKU_API_KEY")
 # ----------------------------------------------------------------
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
-    "https://github.com/BABY-MUSIC/YTM",
+    "https://github.com/bolt9923/superduper",
 )
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "master")
 GIT_TOKEN = getenv(
@@ -71,10 +71,10 @@ GIT_TOKEN = getenv(
 
 # ------------------------------------------------------------------------
 # -------------------------------------------------------------------------
-SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/YOUTUBE_RROBOT_UPDATES")
-SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/+7jH9qwaLWPsxNWNl")
-SOURCE = getenv("SOURCE", "https://github.com/BABY-MUSIC/SPOTIFY_MUSIC")
-CHAT = getenv("CHAT", "https://t.me/+7jH9qwaLWPsxNWNl")
+SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/NLTRIDE")
+SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/the_friend_junction")
+SOURCE = getenv("SOURCE", "https://t.me/the_friend_junction")
+CHAT = getenv("CHAT", "https://t.me/the_friend_junction")
 # ------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------
 
@@ -120,7 +120,7 @@ TG_VIDEO_FILESIZE_LIMIT = int(getenv("TG_VIDEO_FILESIZE_LIMIT", "5242880000"))
 # ------------------------------------
 # ------------------------------------
 # ------------------------------------
-STRING1 = getenv("STRING_SESSION", "BQD7IGgATmnUWClBCZ1VRLl_nlv9-OF2YiZjomBOGPw5mfnAh1LzPE3lEC5Q8Sva-UleA9LWjT6HSoYGs0cqwPaGoJBg_9dOkMvdAhm3J3LjmUHNqAgf6WO0XDzDPEnoTyvL74pXnqXcrD15iH2Nu-SzdV3ctCgCe7YzNwzD1qBvUipjHdIIzWgSFMFrrPWqVbrfRtdgTH-vrUQxpG0y7AOBuRjZPbwLygPA5Cc4ETDexe7WiSzhYIanqquufDCa9cfKYpIIkqu4X7_8NqD5SGqo0Uc4JJp9NFk6rRbhypRN7nKHsFldyPlVQ6axmI9ifEqnl-rF9BIJ7uI8NVS6iOkSs8BH1gAAAAGF4OEZAA")
+STRING1 = getenv("STRING_SESSION", "")
 STRING2 = getenv("STRING_SESSION2", None)
 STRING3 = getenv("STRING_SESSION3", None)
 STRING4 = getenv("STRING_SESSION4", None)
